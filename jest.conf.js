@@ -1,5 +1,3 @@
-const { pathsToModuleNameMapper } = require('ts-jest');
-
 module.exports = {
   preset: 'jest-preset-angular',
   setupFilesAfterEnv: ['<rootDir>/src/main/webapp/setup-jest.ts'],
@@ -9,17 +7,13 @@ module.exports = {
   reporters: [
     'default',
     ['jest-junit', { outputDirectory: '<rootDir>/target/test-results/jest', outputName: 'TESTS-results-jest.xml' }],
-    ['jest-sonar-reporter', { outputDirectory: '<rootDir>/target/test-results/jest', outputName: 'TESTS-results-sonar.xml' }],
   ],
   testMatch: ['<rootDir>/src/main/webapp/**/*.spec.ts'],
-  moduleNameMapper: pathsToModuleNameMapper(
-    {
-      app: ['src/main/webapp/app'],
-    },
-    { prefix: '<rootDir>/' }
-  ),
+  moduleNameMapper: {
+    '^app/(.*)$': '<rootDir>/src/main/webapp/app/$1',
+  },
   testEnvironmentOptions: {
     url: 'http://localhost/',
   },
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|dayjs|@angular|@ngx-translate|@fortawesome|ngx-webstorage)'],
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|dayjs|@angular|@ngx-translate|@fortawesome|ngx-webstorage|jalali-moment|moment)'],
 };
