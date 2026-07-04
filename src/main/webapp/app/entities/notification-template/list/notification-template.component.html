@@ -1,0 +1,131 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="NotificationTemplateHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="npgPortalApp.notificationTemplate.home.title">Notification Templates</span>
+
+          <div>
+            <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+
+            <button
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              *jhiHasPermission="['notificationTemplate', 'create']"
+              class="btn btn-primary jh-create-entity create-notification-template"
+              [routerLink]="['/notification-template/new']"
+            >
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+  <mat-card-content>
+    @if (notificationTemplates?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.notificationTemplate.home.notFound">No notificationTemplates found</span>
+    </div>
+    } @if (notificationTemplates && notificationTemplates.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="templateCode">
+              <span jhiTranslate="npgPortalApp.notificationTemplate.templateCode">Template Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="language">
+              <span jhiTranslate="npgPortalApp.notificationTemplate.language">Language</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="content">
+              <span jhiTranslate="npgPortalApp.notificationTemplate.content">Content</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="type">
+              <span jhiTranslate="npgPortalApp.notificationTemplate.type">Type</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (notificationTemplate of notificationTemplates; track trackId($index, notificationTemplate)) {
+          <tr data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/notification-template', notificationTemplate.id, 'view']">{{ notificationTemplate.id }}</a>
+            </td>
+            <td>{{ notificationTemplate.templateCode }}</td>
+            <td>{{ notificationTemplate.language }}</td>
+            <td>{{ notificationTemplate.content }}</td>
+            <td>{{ notificationTemplate.type }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/notification-template', notificationTemplate.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+                <button
+                  type="submit"
+                  [routerLink]="['/notification-template', notificationTemplate.id, 'edit']"
+                  *jhiHasPermission="['notificationTemplate', 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button
+                  type="submit"
+                  (click)="delete(notificationTemplate)"
+                  class="btn btn-danger btn-sm"
+                  *jhiHasPermission="['notificationTemplate', 'delete']"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (notificationTemplates && notificationTemplates.length > 0) {
+    <div>
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

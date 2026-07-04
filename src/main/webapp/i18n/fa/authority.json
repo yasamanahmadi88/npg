@@ -1,0 +1,26 @@
+{
+  "npgPortalApp": {
+    "authority": {
+      "home": {
+        "title": "دسترسی ها",
+        "createLabel": "ایجاد دسترسی جدید",
+        "createOrEditLabel": "ایجاد دسترسی جدید",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} خذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "دسترسی"
+      },
+      "name": "Name",
+      "displayName": "Display Name",
+      "parent": "Parent",
+      "search": "Search",
+      "refreshListLabel": "به روز رسانی لیست"
+    }
+  }
+}

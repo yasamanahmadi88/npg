@@ -1,0 +1,171 @@
+@if (isLoading) {
+<jhi-overlay-loading></jhi-overlay-loading>
+}
+
+<mat-card appearance="outlined" *jhiHasPermission="['fileReportGenerationLog', 'view']">
+  <mat-card-header class="mb-2">
+    <mat-card-title id="page-heading" data-cy="FileReportGenerationLogHeading">
+      <span jhiTranslate="npgPortalApp.fileReportGenerationLog.home.title">File Report Generation Logs</span>
+    </mat-card-title>
+    <!-- ضربدر -->
+    <button mat-icon-button class="close-button" (click)="goHome()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="expanded">
+      <mat-expansion-panel-header (click)="checkExpanded()">
+        <mat-panel-title jhiTranslate="npgPortalApp.fileReportGenerationLog.fileReportGenerationLogSearch"></mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form class="file-report-search-form" [formGroup]="searchForm" (ngSubmit)="search()">
+        <table class="table file-report-search-table" aria-describedby="showHealthLabel">
+          <tbody>
+            <tr>
+              <td class="d-flex justify-content-start">
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.fileReportGenerationLog.reportName">Report Name</label>
+              </td>
+              <td>
+                <mat-select class="form-control" formControlName="reportName">
+                  <mat-option value=""></mat-option>
+                  <mat-option value="PORTIN_PORTED">PORTIN_PORTED</mat-option>
+                  <mat-option value="PORTIN_NOTPORTED">PORTIN_NOTPORTED</mat-option>
+                  <mat-option value="PORTOUT_PORTED">PORTOUT_PORTED</mat-option>
+                  <mat-option value="PORTOUT_NOTPORTED">PORTOUT_NOTPORTED</mat-option>
+                  <mat-option value="OLO_PORTED">OLO_PORTED</mat-option>
+                  <mat-option value="MSISDN_IN_TERMINATE">MSISDN_IN_TERMINATE</mat-option>
+                  <mat-option value="MSISDN_OUT_TERMINATE">MSISDN_OUT_TERMINATE</mat-option>
+                  <mat-option value="expportabilityrapport">expportabilityrapport</mat-option>
+                  <mat-option value="PORTIN_PORTED_MCI">PORTIN_PORTED_MCI</mat-option>
+                  <mat-option value="ALL_PORTIN_PORTED_MCI">ALL_PORTIN_PORTED_MCI</mat-option>
+                  <mat-option value="ALL_PORTOUT_PORTED_MCI">ALL_PORTOUT_PORTED_MCI</mat-option>
+                  <mat-option value="BULKFIE">BULKFIE</mat-option>
+                </mat-select>
+              </td>
+              <td colspan="7"></td>
+            </tr>
+
+            <tr>
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.fileReportGenerationLog.reportDate">Report Date</label>
+              </td>
+              <td>
+                <mat-form-field appearance="outline" class="w-100 file-report-date-field" subscriptSizing="dynamic">
+                  <input matInput [matDatepicker]="reportDatePicker" formControlName="reportDate" />
+                  <mat-datepicker-toggle matSuffix [for]="reportDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #reportDatePicker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td colspan="7"></td>
+            </tr>
+
+            <tr>
+              <td class="d-flex justify-content-start">
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.fileReportGenerationLog.porNumber">Por Number</label>
+              </td>
+              <td>
+                <input class="form-control" type="text" formControlName="porNumber" />
+              </td>
+              <td colspan="7"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center my-3">
+          <button class="btn btn-danger mx-2" type="button" (click)="clear()">
+            <fa-icon [icon]="'trash-alt'"></fa-icon>
+            <span jhiTranslate="global.actions.clear" class="d-none d-md-inline">Clear</span>
+          </button>
+          <button class="btn btn-primary mx-2" type="submit">
+            <fa-icon [icon]="'search'"></fa-icon>
+            <span jhiTranslate="global.actions.search" class="d-none d-md-inline">Search</span>
+          </button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  @if (fileReportGenerationLogs?.length === 0 && isDataLoaded) {
+  <div class="alert alert-warning" id="no-result">
+    <span jhiTranslate="npgPortalApp.fileReportGenerationLog.home.notFound">No fileReportGenerationLogs found</span>
+  </div>
+  }
+
+  <div
+    class="example-container mat-elevation-z8"
+    [hidden]="!fileReportGenerationLogs || (fileReportGenerationLogs && fileReportGenerationLogs.length === 0)"
+  >
+    <mat-table matSort matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" [hiddenColumns]="[5]" #empTbSort="matSort">
+      <ng-container matColumnDef="fileName">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          <span jhiTranslate="npgPortalApp.fileReportGenerationLog.fileName">File Name</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"> {{ element.fileName }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="rowNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          <span jhiTranslate="npgPortalApp.fileReportGenerationLog.rowNumber">Row Number</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"> {{ element.rowNumber }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="porNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          <span jhiTranslate="npgPortalApp.fileReportGenerationLog.porNumber">Por Number</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"> {{ element.porNumber }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="content">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          <span jhiTranslate="npgPortalApp.fileReportGenerationLog.content">Content</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"> {{ element.content }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="reportDate">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          <span jhiTranslate="npgPortalApp.fileReportGenerationLog.reportDate">Report Date</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"> {{ element.reportDate }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>
+          <span jhiTranslate="global.menu.entities.action">action</span>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="action-cell">
+          <button
+            mat-icon-button
+            color="primary"
+            [routerLink]="['/file-report-generation-log', element.id, 'view']"
+            data-cy="entityDetailsButton"
+            matTooltip="{{ 'entity.action.view' | translate }}"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <button
+      class="btn btn-sm btn-outline-success mx-2 my-2"
+      [hidden]="!fileReportGenerationLogs || (fileReportGenerationLogs && fileReportGenerationLogs.length === 0)"
+      (click)="exporter.exportTable('xlsx', { fileName: 'npg_fileLogs', sheet: 'fileReportGenerationLogs' })"
+    >
+      <i class="fas fa-file-excel" style="font-size: 24px"></i>
+    </button>
+    <div class="row justify-content-center w-100">
+      <mat-paginator
+        [length]="totalItems"
+        (page)="loadPage($event)"
+        [pageSizeOptions]="[20, 50, 75, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</mat-card>

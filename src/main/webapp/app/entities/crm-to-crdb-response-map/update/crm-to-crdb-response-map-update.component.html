@@ -1,0 +1,136 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-crm-to-crdb-response-map-heading"
+        data-cy="CrmToCrdbResponseMapCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.crmToCrdbResponseMap.home.createOrEditLabel"
+      >
+        Create or edit a Crm To Crdb Response Map
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.crmToCrdbResponseMap.code" for="field_code">Code</label>
+          <input type="text" class="form-control" name="code" id="field_code" data-cy="code" formControlName="code" />
+          @if (editForm.get('code')!.invalid && (editForm.get('code')!.dirty || editForm.get('code')!.touched)) {
+          <div>
+            @if (editForm.get('code')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('code')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 20 }">
+              This field cannot be longer than 20 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.crmToCrdbResponseMap.description" for="field_description"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) {
+          <div>
+            @if (editForm.get('description')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('description')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+              This field cannot be longer than 200 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.crmToCrdbResponseMap.crmInterface" for="field_crmInterface"
+            >Crm Interface</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="crmInterface"
+            id="field_crmInterface"
+            data-cy="crmInterface"
+            formControlName="crmInterface"
+          />
+          @if (editForm.get('crmInterface')!.invalid && (editForm.get('crmInterface')!.dirty || editForm.get('crmInterface')!.touched)) {
+          <div>
+            @if (editForm.get('crmInterface')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('crmInterface')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+              This field cannot be longer than 200 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.crmToCrdbResponseMap.rspCode" for="field_rspCode">Rsp Code</label>
+          <input type="text" class="form-control" name="rspCode" id="field_rspCode" data-cy="rspCode" formControlName="rspCode" />
+          @if (editForm.get('rspCode')!.invalid && (editForm.get('rspCode')!.dirty || editForm.get('rspCode')!.touched)) {
+          <div>
+            @if (editForm.get('rspCode')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('rspCode')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 20 }">
+              This field cannot be longer than 20 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.crmToCrdbResponseMap.rspNote" for="field_rspNote">Rsp Note</label>
+          <input type="text" class="form-control" name="rspNote" id="field_rspNote" data-cy="rspNote" formControlName="rspNote" />
+          @if (editForm.get('rspNote')!.invalid && (editForm.get('rspNote')!.dirty || editForm.get('rspNote')!.touched)) {
+          <div>
+            @if (editForm.get('rspNote')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('rspNote')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+              This field cannot be longer than 200 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

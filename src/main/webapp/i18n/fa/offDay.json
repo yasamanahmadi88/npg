@@ -1,0 +1,26 @@
+{
+  "npgPortalApp": {
+    "offDay": {
+      "home": {
+        "title": "روز های تعطیل",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد روز تعطیل جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش روز تعطیل",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطعمئن هستید؟"
+      },
+      "detail": {
+        "title": "روز های تعطیل"
+      },
+      "id": "شناسه",
+      "offDate": "Off Date",
+      "fullOff": "Full Off",
+      "search": "جستجو"
+    }
+  }
+}

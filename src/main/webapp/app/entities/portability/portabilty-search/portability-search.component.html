@@ -1,0 +1,176 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel [ngClass]="expanded ? 'expand' : 'notExpand'">
+        <mat-expansion-panel-header (click)="checkExpanded()">
+          <mat-panel-title jhiTranslate="npgPortalApp.portability.portalSearch"> </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="editForm" (ngSubmit)="search()">
+          <table class="table table-striped" aria-describedby="showHealthLabel">
+            <tbody>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porRequestId"></label>
+                </td>
+                <td>
+                  <input class="form-control" type="number" formControlName="porRequestId" />
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porNumber"></label>
+                </td>
+                <td>
+                  <input type="number" class="form-control" formControlName="porNumber" />
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porCrDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porCrDate"
+                    [config]="dpConfig"
+                    mode="daytime"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porPortedDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porPortedDate"
+                    [config]="dpConfig"
+                    mode="daytime"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porDeadline"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porDeadline"
+                    [config]="dpConfig"
+                    mode="daytime"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porUpdDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porUpdDate"
+                    [config]="dpConfig"
+                    mode="daytime"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porIdNumber"></label>
+                </td>
+                <td>
+                  <input class="form-control" formControlName="porIdNumber" type="number" />
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porMnpid"></label>
+                </td>
+                <td>
+                  <input class="form-control" formControlName="porMnpid" type="number" />
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porReceiver"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porReceiver">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="MCI">MCI</mat-option>
+                    <mat-option value="ITSC">ITSC</mat-option>
+                    <mat-option value="RCSC">RCSC</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porAccType"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porAccType">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="prepaid">Prepaid</mat-option>
+                    <mat-option value="postpaid">Postpaid</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porType"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porType">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="IN">IN</mat-option>
+                    <mat-option value="EMERGENCY_RESTORE_OUT">EMERGENCY RESTORE OUT</mat-option>
+                    <mat-option value="OUT">OUT</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porStatus"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="cancelled IN">cancelled IN</mat-option>
+                    <mat-option value="closed OUT">closed OUT</mat-option>
+                    <mat-option value="create OUT">create OUT</mat-option>
+                    <mat-option value="ported IN">ported IN</mat-option>
+                    <mat-option value="restored EMERGENCY_RESTORE OUT">restored EMERGENCY_RESTORE OUT</mat-option>
+                    <mat-option value="submitFailed OUT">submitFailed OUT</mat-option>
+                    <mat-option value="waitingExec OUT">waitingExec OUT</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-1" jhiTranslate="npgPortalApp.portability.porErr"></label>
+                </td>
+                <td>
+                  <input type="checkbox" class="form-check-input" formControlName="porErr" />
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porRouting"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porRouting">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="D21">D21</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-danger mr-1" type="button" (click)="clear()">
+              <fa-icon [icon]="'trash-alt'"></fa-icon>
+              <span jhiTranslate="global.actions.clear" class="d-none d-md-inline">Clear</span>
+            </button>
+            <button class="btn btn-primary mr-1" type="submit">
+              <fa-icon [icon]="'search'"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="global.actions.search">Search</span>
+            </button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+</mat-card>

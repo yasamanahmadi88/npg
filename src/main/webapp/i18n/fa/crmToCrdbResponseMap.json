@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "crmToCrdbResponseMap": {
+      "home": {
+        "title": "مپ پاسخ CRM به CRDB",
+        "refreshListLabel": "به روز رسانی",
+        "createLabel": "ایجاد مپ پاسخ CRM به CRDB جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش مپ پاسخ CRM به CRDB",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }}ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "مپ پاسخ CRM به CRDB"
+      },
+      "id": "شناسه",
+      "code": "کد",
+      "description": "توضیحات",
+      "crmInterface": "رابط CRM",
+      "rspCode": "کد پاسخ",
+      "rspNote": "متن پاسخ",
+      "search": "جستجو"
+    }
+  }
+}

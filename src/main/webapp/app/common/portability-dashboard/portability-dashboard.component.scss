@@ -1,0 +1,113 @@
+﻿@import '../../../content/scss/ngp_theme';
+
+.dashboard {
+  border: 2px solid map-get($npg-theme-color, C12) !important;
+  border-radius: 7px;
+  text-align: center;
+  min-height: calc(110vh - 70px);
+  padding-bottom: 20px;
+}
+
+.dashboard h2 {
+  margin: 0;
+  background: map-get($npg-theme-color, C12) !important;
+}
+
+.dashboard h4 {
+  color: map-get($npg-theme-color, C12) !important;
+}
+
+.borderStyle {
+  border-right: 1px dashed map-get($npg-theme-color, C12) !important;
+}
+
+ngx-charts-pie-chart {
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+ngx-charts-bar-vertical {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  margin: 0 1%;
+}
+ngx-charts-bar-vertical-2d {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  margin: 0 1%;
+}
+
+.leftInsight {
+  text-align: center;
+  color: black;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  min-height: 60px;
+  height: 100px;
+  margin: 0 2%;
+}
+
+.details {
+  font-weight: 300;
+  font-size: 20px;
+  /*margin-top: 2%;*/
+}
+
+.details span {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.centerInsight {
+  color: black;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  min-height: 60px;
+  height: 100px;
+  margin: 0 2%;
+}
+
+.rightInsight {
+  color: black;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  height: 100px;
+  margin: 0 2%;
+}
+
+.charts {
+  border-top: 1px solid map-get($npg-theme-color, C12) !important;
+}
+
+.lastInsight {
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+  height: 100px;
+  margin: 0 2%;
+}
+
+.advanceChart {
+  background: #b0edf3;
+}
+
+.legend-items {
+  height: 100px !important;
+  overflow: hidden !important;
+}
+
+::ng-deep .advanced-pie-legend .legend-items-container .legend-items {
+  overflow: hidden !important;
+  height: 100px !important;
+}
+.dp-date-picker {
+  ::ng-deep {
+    input {
+      border: 1px solid black !important;
+    }
+  }
+}
+::ng-deep .ngx-charts .grid-panel.odd rect {
+  fill: #d0e1f7b0 !important;
+}

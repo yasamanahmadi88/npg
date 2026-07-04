@@ -1,0 +1,41 @@
+{
+  "npgPortalApp": {
+    "eventLog": {
+      "home": {
+        "title": "لاگ رویداد",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد لاگ رویداد جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش لاگ رویداد",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف  {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "لاگ رویداد"
+      },
+      "id": "ID",
+      "conversationId": "Conversation Id",
+      "sender": "Sender",
+      "receiver": "Receiver",
+      "message": "Message",
+      "interface": "Interface",
+      "requestBody": "Request Body",
+      "responseBody": "Response Body",
+      "flg0Ordinary1Exception": "Ordinary/Exception",
+      "eventSource": "Event Source",
+      "exceptionBody": "Exception Body",
+      "httpStatus": "Http Status",
+      "insertTimestamp": "Insert Timestamp",
+      "searchEvenLog": "search EvenLog",
+      "requestId": "Request Id",
+      "source": "Source",
+      "destination": "Destination",
+      "dateFrom": "Date From",
+      "dateTo": "dateTo"
+    }
+  }
+}

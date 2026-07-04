@@ -33,7 +33,7 @@
         <npm.version>10.9.0</npm.version>
 
         <spring-boot.version>${project.parent.version}</spring-boot.version>
-        <jhipster-framework.version>9.0.0</jhipster-framework.version>
+        <jhipster-framework.version>8.11.0</jhipster-framework.version>
         <bucket4j.version>7.6.0</bucket4j.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <problem-spring-web.version>0.29.1</problem-spring-web.version>
@@ -136,14 +136,33 @@
             <version>${problem-spring-web.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>jackson-datatype-problem</artifactId>
-            <version>${problem-spring-web.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-hibernate7</artifactId>
             <version>${jackson.hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -170,6 +189,28 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-api</artifactId>
+            <version>1.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-engine</artifactId>
+            <version>1.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -225,7 +266,8 @@
                         </path>
                         <path>
                             <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-processor</artifactId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${hibernate.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -246,8 +288,8 @@
                                     <message>JHipster requires Maven ${maven.version} or newer.</message>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[25,26)</version>
-                                    <message>JHipster supports Java 25 for this project.</message>
+                                    <version>[21,26)</version>
+                                    <message>This project requires Java 21 or newer.</message>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>

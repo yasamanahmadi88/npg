@@ -1,0 +1,41 @@
+{
+  "npgPortalApp": {
+    "eventLog": {
+      "home": {
+        "title": "Event Logs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Event Log",
+        "createOrEditLabel": "Create or edit a Event Log",
+        "notFound": "No Event Logs found"
+      },
+      "created": "A new Event Log is created with identifier {{ param }}",
+      "updated": "A Event Log is updated with identifier {{ param }}",
+      "deleted": "A Event Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Event Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Event Log"
+      },
+      "id": "ID",
+      "conversationId": "Conversation Id",
+      "sender": "Sender",
+      "receiver": "Receiver",
+      "message": "Message",
+      "interface": "Interface",
+      "requestBody": "Request Body",
+      "responseBody": "Response Body",
+      "flg0Ordinary1Exception": "Ordinary/Exception",
+      "eventSource": "Event Source",
+      "exceptionBody": "Exception Body",
+      "httpStatus": "Http Status",
+      "insertTimestamp": "Insert Timestamp",
+      "searchEvenLog": "search EvenLog",
+      "requestId": "Request Id",
+      "source": "Source",
+      "destination": "Destination",
+      "dateFrom": "Date From",
+      "dateTo": "dateTo"
+    }
+  }
+}

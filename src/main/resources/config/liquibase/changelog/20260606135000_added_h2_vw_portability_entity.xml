@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260606135000-1" author="manual" dbms="h2">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="VW_PORTABILITY_ENTITY"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="VW_PORTABILITY_ENTITY">
+            <column name="POR_ID" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="PK_VW_PORTABILITY_ENTITY" nullable="false"/>
+            </column>
+            <column name="POR_REQUEST_ID" type="varchar(26)"/>
+            <column name="POR_NUMBER" type="varchar(16)"/>
+            <column name="POR_LEGAL_TERM" type="integer"/>
+            <column name="POR_OPR" type="varchar(50)"/>
+            <column name="POR_ACC_TYPE" type="varchar(16)"/>
+            <column name="POR_ID_NUMBER" type="varchar(128)"/>
+            <column name="POR_CONTACT_NUMBER" type="varchar(16)"/>
+            <column name="POR_STATUS" type="varchar(50)"/>
+            <column name="POR_PORTED_DATE" type="${datetimeType}"/>
+            <column name="POR_ROUTING" type="varchar(50)"/>
+            <column name="POR_TYPE" type="varchar(32)"/>
+            <column name="POR_OP_ORG" type="varchar(50)"/>
+            <column name="POR_RSP_CODE" type="varchar(20)"/>
+            <column name="POR_RSP_NOTE" type="varchar(4000)"/>
+            <column name="POR_CANCEL_NOTE" type="varchar(256)"/>
+            <column name="POR_MNPID" type="varchar(26)"/>
+            <column name="PORTATION_DATE" type="${datetimeType}"/>
+            <column name="PORTA_CODE" type="varchar(32)"/>
+            <column name="MVNO" type="varchar(50)"/>
+            <column name="CONTEXT" type="varchar(100)"/>
+            <column name="POR_ERR_CODE" type="varchar(50)"/>
+            <column name="POR_ERR_MESSAGE" type="varchar(4000)"/>
+            <column name="POR_OPD" type="varchar(50)"/>
+            <column name="POR_NUM_TYPE" type="varchar(20)"/>
+            <column name="POR_NOTE" type="varchar(200)"/>
+            <column name="POR_DEADLINE" type="${datetimeType}"/>
+            <column name="POR_RESPONSE_TIMESTAMP" type="bigint"/>
+            <column name="POR_ELIGIBLE" type="integer"/>
+            <column name="POR_BILLING_OK" type="integer"/>
+            <column name="INTERMEDIARY_ACTION_STATE" type="varchar(100)"/>
+            <column name="POR_CR_DATE" type="${datetimeType}"/>
+            <column name="POR_CR_DATE_SEARCH" type="${datetimeType}"/>
+            <column name="POR_UPD_DATE" type="${datetimeType}"/>
+            <column name="POR_TECH_STATUS" type="varchar(100)"/>
+            <column name="POR_TECH_DEADLINE" type="${datetimeType}"/>
+            <column name="NEED_MANUAL_RETRY" type="integer"/>
+            <column name="REF_POR_ID" type="bigint"/>
+            <column name="RETRY_COUNT" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,26 @@
+{
+  "npgPortalApp": {
+    "setting": {
+      "home": {
+        "title": "تنظیمات",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد تنظیمات جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش تنظیم",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "تنظیمات"
+      },
+      "id": "شناسه",
+      "name": "نام",
+      "key": "کلید",
+      "value": "مقدار"
+    }
+  }
+}

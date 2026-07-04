@@ -1,0 +1,188 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (portabilityLog) {
+    <div>
+      <h2 data-cy="portabilityLogDetailsHeading"><span jhiTranslate="npgPortalApp.portabilityLog.detail.title">Portability Log</span></h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ portabilityLog.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porId">Por Id</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porId }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porRequestId">Por Request Id</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porRequestId }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porNumber">Por Number</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porLegalTerm">Por Legal Term</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porLegalTerm }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porOpr">Por Opr</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porOpr }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porAccType">Por Acc Type</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porAccType }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porIdNumber">Por Id Number</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porIdNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porContactNumber">Por Contact Number</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porContactNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porStatus">Por Status</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porPortedDate">Por Ported Date</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porPortedDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porRouting">Por Routing</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porRouting }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porType">Por Type</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porType }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porOpOrg">Por Op Org</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porOpOrg }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porRspCode">Por Rsp Code</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porRspCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porRspNote">Por Rsp Note</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porRspNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porCancelNote">Por Cancel Note</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porCancelNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porMnpid">Por Mnpid</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porMnpid }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.portationDate">Portation Date</span></dt>
+        <dd>
+          <span>{{ portabilityLog.portationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.portaCode">Porta Code</span></dt>
+        <dd>
+          <span>{{ portabilityLog.portaCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.mvno">Mvno</span></dt>
+        <dd>
+          <span>{{ portabilityLog.mvno }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.context">Context</span></dt>
+        <dd>
+          <span>{{ portabilityLog.context }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porErrCode">Por Err Code</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porErrCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porErrMessage">Por Err Message</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porErrMessage }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porOpd">Por Opd</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porOpd }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porNumType">Por Num Type</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porNumType }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porNote">Por Note</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porNote }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porDeadline">Por Deadline</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porDeadline | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porResponseTimestamp">Por Response Timestamp</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porResponseTimestamp }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porEligible">Por Eligible</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porEligible }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porBillingOk">Por Billing Ok</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porBillingOk }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.intermediaryActionState">Intermediary Action State</span></dt>
+        <dd>
+          <span>{{ portabilityLog.intermediaryActionState }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porCrDate">Por Cr Date</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porCrDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porUpdDate">Por Upd Date</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porUpdDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porTechStatus">Por Tech Status</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porTechStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.porTechDeadline">Por Tech Deadline</span></dt>
+        <dd>
+          <span>{{ portabilityLog.porTechDeadline | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.refPorId">Ref Por Id</span></dt>
+        <dd>
+          <span>{{ portabilityLog.refPorId }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.needManualRetry">Need Manual Retry</span></dt>
+        <dd>
+          <span>{{ portabilityLog.needManualRetry }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.retryCount">Retry Count</span></dt>
+        <dd>
+          <span>{{ portabilityLog.retryCount }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.action">Action</span></dt>
+        <dd>
+          <span>{{ portabilityLog.action }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.request">Request</span></dt>
+        <dd>
+          <span>{{ portabilityLog.request }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.portabilityLog.insertTimestamp">Insert Timestamp</span></dt>
+        <dd>
+          <span>{{ portabilityLog.insertTimestamp | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button type="button" [routerLink]="['/portability-log', portabilityLog.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+    }
+  </div>
+</div>

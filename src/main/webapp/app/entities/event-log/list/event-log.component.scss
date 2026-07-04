@@ -1,0 +1,398 @@
+﻿@import '../../../../content/scss/ngp_theme';
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card {
+  border: 1px solid map-get($npg-theme-color, C12) !important;
+  border-top: 2px solid map-get($npg-theme-color, C12) !important;
+  border-right: 2px solid map-get($npg-theme-color, C12) !important;
+  margin: -2.7% 0 0 0;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card-header {
+  background-color: map-get($npg-theme-color, C11);
+  border-bottom: 2px solid map-get($npg-theme-color, C12);
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: start;
+  color: #ffffff !important;
+}
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+:host ::ng-deep .mat-card-header-text {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+/* Ø¹Ù†ÙˆØ§Ù† */
+.header-title h6 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 18px;
+  color: white;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  color: map-get($npg-theme-color, C21);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.2);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+@media (max-width: 768px) {
+  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+  mat-card-header {
+    padding: 12px;
+  }
+
+  .header-title h6 {
+    font-size: 18px;
+  }
+
+  .close-button {
+    top: 8px;
+    right: 8px;
+  }
+}
+.checkButton {
+  color: map-get($npg-theme-color, C11) !important;
+}
+
+.closeButton {
+  color: map-get($npg-theme-color, C21) !important;
+}
+
+.expand {
+  height: 500px;
+}
+
+.notExpand {
+  height: 6vh;
+}
+
+mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.searchButtons button {
+  margin: 0 3%;
+  padding: 10px 40px;
+  font-size: 17px;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 100%;
+  border: 1px solid;
+}
+
+mat-accordion {
+  border: none !important;
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+}
+
+::ng-deep dp-date-picker.dp-material .dp-picker-input {
+  border: 0 !important;
+}
+
+mat-expansion-panel-header {
+  background-color: map-get($npg-theme-color, C11) !important;
+}
+
+mat-panel-title {
+  font-size: 16px;
+  color: #ffffff !important;
+}
+
+.datePickerStyle {
+  ::ng-deep {
+    input {
+      font-size: 23px;
+      border: none;
+      margin: 0 1%;
+      color: #212121;
+      font-family: inherit;
+    }
+
+    input::placeholder {
+      color: #212121;
+      opacity: 0.6;
+    }
+  }
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 100%;
+}
+
+.mainCols {
+  display: table !important;
+}
+
+.excelStyle i {
+  font-size: 24px;
+  cursor: pointer !important;
+}
+
+/* ========== Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ø¬Ø¯ÛŒØ¯ Ø¨Ø±Ø§ÛŒ ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† Ø¬Ø¯ÙˆÙ„ ========== */
+
+::ng-deep {
+  // ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† ØªÙ…Ø§Ù… Ø³Ù„ÙˆÙ„â€ŒÙ‡Ø§ÛŒ Ù‡Ø¯Ø±
+  .mat-mdc-header-cell {
+    text-align: center !important;
+    justify-content: center !important;
+    font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+    background-color: #f5f5f5 !important;
+    padding: 12px 8px !important;
+
+    // ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† Ø¢ÛŒÚ©ÙˆÙ† sort
+    .mat-sort-header-container {
+      justify-content: center !important;
+    }
+  }
+
+  // ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† ØªÙ…Ø§Ù… Ø³Ù„ÙˆÙ„â€ŒÙ‡Ø§ÛŒ Ø¨Ø¯Ù†Ù‡ Ø¬Ø¯ÙˆÙ„
+  .mat-mdc-cell {
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 12px 8px !important;
+  }
+
+  // Ø§Ø³ØªØ§ÛŒÙ„ Ù…Ø®ØµÙˆØµ Ø³ØªÙˆÙ† action
+  .mat-column-action {
+    flex: 0 0 100px !important;
+
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      justify-content: center !important;
+      text-align: center !important;
+    }
+
+    // ØªÙ†Ø¸ÛŒÙ… Ø¯Ú©Ù…Ù‡ Ø¯Ø± ÙˆØ³Ø· Ø³Ù„ÙˆÙ„
+    .action-cell {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100% !important;
+    }
+  }
+
+  // Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ø±Ø¯ÛŒÙâ€ŒÙ‡Ø§ÛŒ Ø¬Ø¯ÙˆÙ„
+  .mat-mdc-row {
+    transition: background-color 0.2s ease !important;
+    min-height: 48px !important;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04) !important;
+    }
+  }
+
+  // Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ù‡Ø¯Ø± Ø±Ø¯ÛŒÙ
+  .mat-mdc-header-row {
+    min-height: 56px !important;
+    background-color: #f5f5f5 !important;
+    border-bottom: 2px solid map-get($npg-theme-color, C11) !important;
+  }
+
+  // ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† paginator
+  .mat-mdc-paginator {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 16px !important;
+    background: transparent !important;
+
+    .mat-mdc-paginator-container {
+      justify-content: center !important;
+      padding: 8px 0 !important;
+      min-height: auto !important;
+    }
+
+    .mat-mdc-paginator-range-actions {
+      justify-content: center !important;
+    }
+
+    .mat-mdc-paginator-range-label {
+      margin: 0 24px !important;
+    }
+  }
+
+  // Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ù…ØªÙ†â€ŒÙ‡Ø§ÛŒ Ø·ÙˆÙ„Ø§Ù†ÛŒ
+  .mat-mdc-cell {
+    span,
+    div {
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+/* ========== Ú©Ù„Ø§Ø³â€ŒÙ‡Ø§ÛŒ Ú©Ù…Ú©ÛŒ Ø¨Ø±Ø§ÛŒ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ø¯Ø± HTML ========== */
+
+// Ú©Ù„Ø§Ø³ Ø¨Ø±Ø§ÛŒ ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† Ù‡Ø¯Ø±
+.centered-header {
+  text-align: center !important;
+  justify-content: center !important;
+
+  .mat-sort-header-container {
+    justify-content: center !important;
+  }
+}
+
+// Ú©Ù„Ø§Ø³ Ø¨Ø±Ø§ÛŒ ÙˆØ³Ø·â€ŒÚ†ÛŒÙ† Ú©Ø±Ø¯Ù† Ø³Ù„ÙˆÙ„
+.centered-cell {
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+// Ú©Ù„Ø§Ø³ Ø¨Ø±Ø§ÛŒ Ø³Ù„ÙˆÙ„ Ø§Ú©Ø´Ù†
+.action-cell {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 4px !important;
+
+  button {
+    transition: transform 0.2s ease !important;
+
+    &:hover {
+      transform: scale(1.1) !important;
+    }
+  }
+}
+
+// Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ø¯Ú©Ù…Ù‡â€ŒÙ‡Ø§ÛŒ Ø¬Ø¯ÙˆÙ„
+.mat-mdc-icon-button {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+
+  .mat-icon {
+    font-size: 20px !important;
+    line-height: 20px !important;
+  }
+
+  &[color='primary']:hover {
+    color: map-get($npg-theme-color, C11) !important;
+  }
+}
+
+/* ========== Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ø±ÛŒØ³Ù¾Ø§Ù†Ø³ÛŒÙˆ Ø¨Ø±Ø§ÛŒ Ø¬Ø¯Ø§ÙˆÙ„ ========== */
+
+@media screen and (max-width: 960px) {
+  ::ng-deep {
+    // Ú©Ø§Ù‡Ø´ padding Ø¯Ø± Ù…ÙˆØ¨Ø§ÛŒÙ„
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      padding: 8px 4px !important;
+    }
+
+    .mat-column-action {
+      flex: 0 0 80px !important;
+    }
+
+    // ØªÙ†Ø¸ÛŒÙ… paginator Ø¨Ø±Ø§ÛŒ Ù…ÙˆØ¨Ø§ÛŒÙ„
+    .mat-mdc-paginator {
+      .mat-mdc-paginator-container {
+        flex-wrap: wrap !important;
+      }
+
+      .mat-mdc-paginator-range-label {
+        margin: 8px 0 !important;
+      }
+    }
+  }
+}
+
+/* ========== Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ø¨Ù‡Ø¨ÙˆØ¯ Ù†Ù…Ø§ÛŒØ´ Ø¬Ø¯ÙˆÙ„ ========== */
+
+// Ø­Ø°Ù borderÙ‡Ø§ÛŒ Ø§Ø¶Ø§ÙÛŒ
+.mat-mdc-table {
+  width: 100%;
+  background: transparent !important;
+
+  .mat-mdc-header-cell {
+    border-bottom-color: map-get($npg-theme-color, C11) !important;
+  }
+
+  .mat-mdc-cell {
+    border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+// Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ Ø²Ù…Ø§Ù†ÛŒ Ú©Ù‡ Ø¯ÛŒØªØ§ ÙˆØ¬ÙˆØ¯ Ù†Ø¯Ø§Ø±Ø¯
+.alert-warning {
+  text-align: center !important;
+  padding: 20px !important;
+  margin: 20px 0 !important;
+  border-radius: 4px !important;
+  background-color: #fff3cd !important;
+  border-color: #ffeeba !important;
+  color: #856404 !important;
+}
+
+// Ø§Ø³ØªØ§ÛŒÙ„ Ø¨Ø±Ø§ÛŒ container Ø¬Ø¯ÙˆÙ„
+.example-container {
+  margin-top: 20px !important;
+  overflow-x: auto !important;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: map-get($npg-theme-color, C11);
+    border-radius: 4px;
+
+    &:hover {
+      background: darken(map-get($npg-theme-color, C11), 10%);
+    }
+  }
+}
+.centered-form-field {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.centered-select {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .centered-form-field {
+    width: 100%;
+  }
+}
+.header-with-close {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  margin-left: auto;
+}

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20210629112859-0-sequence" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_NPG_PORT_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_NPG_PORT_ID" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="20210629112859-1" author="jhipster">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TBL_PORTABILITY_ENTITY"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="TBL_PORTABILITY_ENTITY">
+            <column name="POR_ID" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="PK_TBL_PORTABILITY_ENTITY" nullable="false"/>
+            </column>
+            <column name="POR_REQUEST_ID" type="varchar(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POR_NUMBER" type="varchar(16)"/>
+            <column name="POR_LEGAL_TERM" type="integer"/>
+            <column name="POR_OPR" type="varchar(50)"/>
+            <column name="POR_ACC_TYPE" type="varchar(16)"/>
+            <column name="POR_ID_NUMBER" type="varchar(128)"/>
+            <column name="POR_CONTACT_NUMBER" type="varchar(16)"/>
+            <column name="POR_STATUS" type="varchar(50)"/>
+            <column name="POR_PORTED_DATE" type="${datetimeType}"/>
+            <column name="POR_ROUTING" type="varchar(50)"/>
+            <column name="POR_TYPE" type="varchar(32)"/>
+            <column name="POR_OP_ORG" type="varchar(50)"/>
+            <column name="POR_RSP_CODE" type="varchar(20)"/>
+            <column name="POR_RSP_NOTE" type="varchar(4000)"/>
+            <column name="POR_CANCEL_NOTE" type="varchar(256)"/>
+            <column name="POR_MNPID" type="varchar(26)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PORTATION_DATE" type="${datetimeType}"/>
+            <column name="PORTA_CODE" type="varchar(32)"/>
+            <column name="MVNO" type="varchar(50)"/>
+            <column name="CONTEXT" type="varchar(100)"/>
+            <column name="POR_ERR_CODE" type="varchar(50)"/>
+            <column name="POR_ERR_MESSAGE" type="varchar(4000)"/>
+            <column name="POR_OPD" type="varchar(50)"/>
+            <column name="POR_NUM_TYPE" type="varchar(20)"/>
+            <column name="POR_NOTE" type="varchar(200)"/>
+            <column name="POR_DEADLINE" type="${datetimeType}"/>
+            <column name="POR_RESPONSE_TIMESTAMP" type="bigint"/>
+            <column name="POR_ELIGIBLE" type="integer"/>
+            <column name="POR_BILLING_OK" type="integer"/>
+            <column name="INTERMEDIARY_ACTION_STATE" type="varchar(100)"/>
+            <column name="POR_CR_DATE" type="${datetimeType}"/>
+            <column name="POR_UPD_DATE" type="${datetimeType}"/>
+            <column name="POR_TECH_STATUS" type="varchar(100)"/>
+            <column name="POR_TECH_DEADLINE" type="${datetimeType}"/>
+            <column name="NEED_MANUAL_RETRY" type="integer"/>
+            <column name="REF_POR_ID" type="bigint"/>
+            <column name="RETRY_COUNT" type="integer" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POR_TYPE_COMPLETE_TIMESTAMP" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210629112859-2-uk-request-id" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TBL_PORTABILITY_ENTITY"/>
+            <not>
+                <uniqueConstraintExists tableName="TBL_PORTABILITY_ENTITY" constraintName="UK_REQUEST_ID"/>
+            </not>
+        </preConditions>
+
+        <addUniqueConstraint
+            tableName="TBL_PORTABILITY_ENTITY"
+            columnNames="POR_REQUEST_ID"
+            constraintName="UK_REQUEST_ID"/>
+    </changeSet>
+
+    <changeSet id="20210629112859-3-uk-por-type-ongoing" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="TBL_PORTABILITY_ENTITY"/>
+            <not>
+                <uniqueConstraintExists tableName="TBL_PORTABILITY_ENTITY" constraintName="UK_POR_TYPE_ONGOING"/>
+            </not>
+        </preConditions>
+
+        <addUniqueConstraint
+            tableName="TBL_PORTABILITY_ENTITY"
+            columnNames="POR_NUMBER, POR_TYPE_COMPLETE_TIMESTAMP, POR_TYPE"
+            constraintName="UK_POR_TYPE_ONGOING"/>
+    </changeSet>
+
+    <changeSet id="20210629112859-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/TBL_PORTABILITY_ENTITY.csv"
+                  separator=";"
+                  tableName="TBL_PORTABILITY_ENTITY">
+            <column name="POR_ID" type="numeric"/>
+            <column name="POR_REQUEST_ID" type="string"/>
+            <column name="POR_NUMBER" type="string"/>
+            <column name="POR_LEGAL_TERM" type="numeric"/>
+            <column name="POR_OPR" type="string"/>
+            <column name="POR_ACC_TYPE" type="string"/>
+            <column name="POR_ID_NUMBER" type="string"/>
+            <column name="POR_CONTACT_NUMBER" type="string"/>
+            <column name="POR_STATUS" type="string"/>
+            <column name="POR_PORTED_DATE" type="date"/>
+            <column name="POR_ROUTING" type="string"/>
+            <column name="POR_TYPE" type="string"/>
+            <column name="POR_OP_ORG" type="string"/>
+            <column name="POR_RSP_CODE" type="string"/>
+            <column name="POR_RSP_NOTE" type="string"/>
+            <column name="POR_CANCEL_NOTE" type="string"/>
+            <column name="POR_MNPID" type="string"/>
+            <column name="PORTATION_DATE" type="date"/>
+            <column name="PORTA_CODE" type="string"/>
+            <column name="MVNO" type="string"/>
+            <column name="CONTEXT" type="string"/>
+            <column name="POR_ERR_CODE" type="string"/>
+            <column name="POR_ERR_MESSAGE" type="string"/>
+            <column name="POR_OPD" type="string"/>
+            <column name="POR_NUM_TYPE" type="string"/>
+            <column name="POR_NOTE" type="string"/>
+            <column name="POR_DEADLINE" type="date"/>
+            <column name="POR_RESPONSE_TIMESTAMP" type="numeric"/>
+            <column name="POR_ELIGIBLE" type="numeric"/>
+            <column name="POR_BILLING_OK" type="numeric"/>
+            <column name="INTERMEDIARY_ACTION_STATE" type="string"/>
+            <column name="POR_CR_DATE" type="date"/>
+            <column name="POR_UPD_DATE" type="date"/>
+            <column name="POR_TECH_STATUS" type="string"/>
+            <column name="POR_TECH_DEADLINE" type="date"/>
+            <column name="NEED_MANUAL_RETRY" type="numeric"/>
+            <column name="REF_POR_ID" type="numeric"/>
+            <column name="RETRY_COUNT" type="numeric"/>
+            <column name="POR_TYPE_COMPLETE_TIMESTAMP" type="numeric"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

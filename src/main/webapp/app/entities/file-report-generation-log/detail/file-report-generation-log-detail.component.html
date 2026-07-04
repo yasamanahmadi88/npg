@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (fileReportGenerationLog) {
+    <div>
+      <h2 data-cy="fileReportGenerationLogDetailsHeading">
+        <span jhiTranslate="npgPortalApp.fileReportGenerationLog.detail.title">File Report Generation Log</span>
+      </h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.reportName">Report Name</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.reportName }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.reportDate">Report Date</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.reportDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.fileName">File Name</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.fileName }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.rowNumber">Row Number</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.rowNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.porNumber">Por Number</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.porNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.fileReportGenerationLog.content">Content</span></dt>
+        <dd>
+          <span>{{ fileReportGenerationLog.content }}</span>
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <!--      <button type="button" [routerLink]="['/file-report-generation-log', fileReportGenerationLog.id, 'edit']" class="btn btn-primary">-->
+      <!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+      <!--      </button>-->
+    </div>
+    }
+  </div>
+</div>

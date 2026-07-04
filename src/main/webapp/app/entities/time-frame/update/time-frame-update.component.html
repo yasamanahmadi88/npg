@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-time-frame-heading" data-cy="TimeFrameCreateUpdateHeading" jhiTranslate="npgPortalApp.timeFrame.home.createOrEditLabel">
+        Create or edit a Time Frame
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.timeFrame.begin" for="field_begin">Begin</label>
+          <!--<input type="number" required class="form-control" name="begin" id="field_begin" data-cy="begin" formControlName="begin" />-->
+          <dp-date-picker
+            class="form-control"
+            formControlName="begin"
+            id="field_startDate"
+            [config]="dpConfig"
+            mode="time"
+            theme="dp-material"
+          ></dp-date-picker>
+          <div>
+            @if (editForm.get('begin')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="global.messages.validate.field.required"> Your password is required. </small>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.timeFrame.end" for="field_end">End</label>
+          <!--          <input type="number" required class="form-control" name="end" id="field_end" data-cy="end" formControlName="end" />-->
+          <dp-date-picker
+            class="form-control"
+            formControlName="end"
+            id="field_startDate"
+            [config]="dpConfig"
+            mode="time"
+            theme="dp-material"
+          ></dp-date-picker>
+          <div>
+            @if (editForm.get('end')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="global.messages.validate.field.required"> Your password is required. </small>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.timeFrame.offDayId" for="field_offDayId">Off Day Id</label>
+          <!--<input type="number" class="form-control" name="offDayId" id="field_offDayId" data-cy="offDayId" formControlName="offDayId" />-->
+          <select
+            class="form-control"
+            class="form-control"
+            name="offDayId"
+            id="field_offDayId"
+            data-cy="offDayId"
+            formControlName="offDayId"
+          >
+            <option [ngValue]="null"></option>
+            @for (offDay of offDays; track offDay) {
+            <option [ngValue]="offDay.id === editForm.get('offDayId')!.value?.id ? editForm.get('offDayId')!.value : offDay.id">
+              {{ offDay.offDate | formatMediumDatetime }}
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

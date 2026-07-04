@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-resource-authority-heading"
+        data-cy="ResourceAuthorityCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.resourceAuthority.home.createOrEditLabel"
+      >
+        Create or edit a Resource Authority
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resourceAuthority.verb" for="field_verb">Verb</label>
+          <select class="form-control" name="verb" formControlName="verb" id="field_verb" data-cy="verb">
+            <option [ngValue]="null">{{ 'npgPortalApp.Verb.null' | translate }}</option>
+            <option value="NO_GRANT">{{ 'npgPortalApp.Verb.NO_GRANT' | translate }}</option>
+            <option value="VIEW">{{ 'npgPortalApp.Verb.VIEW' | translate }}</option>
+            <option value="CREATE">{{ 'npgPortalApp.Verb.CREATE' | translate }}</option>
+            <option value="EDIT">{{ 'npgPortalApp.Verb.EDIT' | translate }}</option>
+            <option value="DELETE">{{ 'npgPortalApp.Verb.DELETE' | translate }}</option>
+          </select>
+          @if (editForm.get('verb')!.invalid && (editForm.get('verb')!.dirty || editForm.get('verb')!.touched)) {
+          <div>
+            @if (editForm.get('verb')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resourceAuthority.authorityId" for="field_authorityId"
+            >Authority Id</label
+          >
+          <!-- <input
+            type="number"
+            class="form-control"
+            name="authorityId"
+            id="field_authorityId"
+            data-cy="authorityId"
+            formControlName="authorityId"
+            />-->
+
+          <select class="form-control" id="field_authorityId" data-cy="authorityId" name="authorityId" formControlName="authorityId">
+            <option [ngValue]="null"></option>
+            @for (authority of authoritiesSharedCollection; track authority) {
+            <option [ngValue]="authority.id === editForm.get('authorityId')!.value?.id ? editForm.get('authorityId')!.value : authority.id">
+              {{ authority.displayName }}
+            </option>
+            }
+          </select>
+
+          @if (editForm.get('authorityId')!.invalid && (editForm.get('authorityId')!.dirty || editForm.get('authorityId')!.touched)) {
+          <div>
+            @if (editForm.get('authorityId')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('authorityId')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resourceAuthority.resource" for="field_resource">Resource</label>
+          <select class="form-control" id="field_resource" data-cy="resource" name="resource" formControlName="resource">
+            <option [ngValue]="null"></option>
+            @for (resourceOption of resourcesSharedCollection; track trackResourceById($index, resourceOption)) {
+            <option
+              [ngValue]="resourceOption.id === editForm.get('resource')!.value?.id ? editForm.get('resource')!.value : resourceOption"
+            >
+              {{ resourceOption.displayName }}
+            </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

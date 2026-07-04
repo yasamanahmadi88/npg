@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (checkStatus) {
+    <div>
+      <h2 data-cy="checkStatusDetailsHeading"><span jhiTranslate="npgPortalApp.checkStatus.detail.title">Check Status</span></h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ checkStatus.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.porStatus">Por Status</span></dt>
+        <dd>
+          <span>{{ checkStatus.porStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.porTechStatus">Por Tech Status</span></dt>
+        <dd>
+          <span>{{ checkStatus.porTechStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.porErrCode">Por Err Code</span></dt>
+        <dd>
+          <span>{{ checkStatus.porErrCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.porRspCode">Por Rsp Code</span></dt>
+        <dd>
+          <span>{{ checkStatus.porRspCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.statusMessageFa">Status Message Fa</span></dt>
+        <dd>
+          <span>{{ checkStatus.statusMessageFa }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.checkStatus.statusMessageEn">Status Message En</span></dt>
+        <dd>
+          <span>{{ checkStatus.statusMessageEn }}</span>
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button type="button" [routerLink]="['/check-status', checkStatus.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+    }
+  </div>
+</div>

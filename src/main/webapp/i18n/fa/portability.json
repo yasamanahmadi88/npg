@@ -1,0 +1,73 @@
+{
+  "npgPortalApp": {
+    "portability": {
+      "home": {
+        "title": "ترابرد",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد ترابرد جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش ترابرد",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف شد",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "ترابرد"
+      },
+      "id": "شناسه",
+      "porRequestId": "شناسه درخواست",
+      "porRequestDay": "روز درخواست ترابرد",
+      "porNumber": "شماره تلفن",
+      "porLegalTerm": "Por Legal Term",
+      "porOpr": "Por Opr",
+      "porAccType": "نوع شماره",
+      "porIdNumber": "کد ملی",
+      "porContactNumber": "Por Contact Number",
+      "porStatus": "وضعیت",
+      "porPortedDate": "تاریخ تکمیل ترابرد",
+      "porRouting": "مسیریابی",
+      "porType": "فلوی ترابرد",
+      "porOpOrg": "Por Op Org",
+      "porRspCode": "پاسخ ترابرد",
+      "porRspNote": "Por Rsp Note",
+      "porCancelNote": "Por Cancel Note",
+      "porMnpid": "شناسه ترابرد",
+      "portationDate": "portationDate",
+      "portaCode": "Porta Code",
+      "mvno": "Mvno",
+      "context": "Context",
+      "porErrCode": "کد درخواست های دارای خطا",
+      "porErr": "دارای خطا",
+      "porErrMessage": "پیام درخواست های دارای خطا",
+      "porOpd": "Por Opd",
+      "porNumType": "Por Num Type",
+      "porNote": "Por Note",
+      "porDeadline": "موعد ترابرد",
+      "porResponseTimestamp": "Por Response Timestamp",
+      "porEligible": "Por Eligible",
+      "porBillingOk": "Por Billing Ok",
+      "intermediaryActionState": "Intermediary Action State",
+      "porCrDate": "تاریخ ایجاد",
+      "porUpdDate": "تاریخ بروز رسانی",
+      "porTechStatus": "Por Tech Status",
+      "porTechDeadline": "Por Tech Deadline",
+      "needManualRetry": "Need Manual Retry",
+      "refPorId": "Ref Por Id",
+      "dashboard": "dashboard",
+      "search": "Search",
+      "porReceiver": "اپراتور دریافت کننده",
+      "portalSearch": "سرچ پورتال",
+      "retryCount": "Retry Count",
+      "search.startDate": "شروع بازه",
+      "search.endDate": "پایان بازه",
+      "invalidDatesForSearch": "بازه انتخابی نباید بیشتر از 90 روز باشد.",
+      "startEndRequire": "وارد کردن تاریخ شروع و پایان الزامیست",
+      "porTypeFirst": "ابتدا فلوی ترابرد را انتخاب نمایید",
+      "from": "مبدا",
+      "to": "مقصد"
+    }
+  }
+}

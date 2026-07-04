@@ -1,0 +1,24 @@
+{
+  "npgPortalApp": {
+    "businessConfig": {
+      "home": {
+        "title": "پیکربندی کسب و کار",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد پیکربندی کسب و کار جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش پیکربندی کسب و کار",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "پیکربندی کسب و کار جدید {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }}حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "پیکربندی کسب و کار"
+      },
+      "id": "شناسه",
+      "value": "مقدار"
+    }
+  }
+}

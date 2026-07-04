@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (eventLog) {
+    <div>
+      <h2 data-cy="eventLogDetailsHeading"><span jhiTranslate="npgPortalApp.eventLog.detail.title">Event Log</span></h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ eventLog.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.conversationId">Conversation Id</span></dt>
+        <dd>
+          <span>{{ eventLog.conversationId }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.sender">Sender</span></dt>
+        <dd>
+          <span>{{ eventLog.sender }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.receiver">Receiver</span></dt>
+        <dd>
+          <span>{{ eventLog.receiver }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.message">Message</span></dt>
+        <dd>
+          <span>{{ eventLog.message }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.requestBody">Request Body</span></dt>
+        <dd>
+          <span>{{ eventLog.requestBody }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.responseBody">Response Body</span></dt>
+        <dd>
+          <span>{{ eventLog.responseBody }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.flg0Ordinary1Exception">Flg 0 Ordinary 1 Exception</span></dt>
+        <dd>
+          <span>{{ eventLog.flg0Ordinary1Exception }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.eventSource">Event Source</span></dt>
+        <dd>
+          <span>{{ eventLog.eventSource }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.exceptionBody">Exception Body</span></dt>
+        <dd>
+          <span>{{ eventLog.exceptionBody }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.httpStatus">Http Status</span></dt>
+        <dd>
+          <span>{{ eventLog.httpStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.eventLog.insertTimestamp">Insert Timestamp</span></dt>
+        <dd>
+          <span>{{ eventLog.insertTimestamp | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <!--      <button type="button" [routerLink]="['/event-log', eventLog.id, 'edit']" class="btn btn-primary">-->
+      <!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+      <!--      </button>-->
+    </div>
+    }
+  </div>
+</div>

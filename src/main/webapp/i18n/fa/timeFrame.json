@@ -1,0 +1,27 @@
+{
+  "npgPortalApp": {
+    "timeFrame": {
+      "home": {
+        "title": "دوره ی زمانی",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد دوره ی زمانی جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش دوره ی زمانی",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف شد",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }}مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "دوره زمانی"
+      },
+      "id": "شناسه",
+      "begin": "ساعت شروع",
+      "end": "ساعت پایان",
+      "offDayId": "شناسه روز تعطیل",
+      "search": "جستجو"
+    }
+  }
+}

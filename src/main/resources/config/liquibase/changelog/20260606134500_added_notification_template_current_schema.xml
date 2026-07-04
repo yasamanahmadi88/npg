@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260606134500-1" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_NOTIFICATION_TEMPLATE_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_NOTIFICATION_TEMPLATE_ID" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="20260606134500-2" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TBL_NOTIFICATION_TEMPLATE"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="TBL_NOTIFICATION_TEMPLATE">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="PK_NOTIFICATION_TEMPLATE" nullable="false"/>
+            </column>
+            <column name="template_code" type="varchar(100)"/>
+            <column name="language" type="varchar(6)"/>
+            <column name="content" type="varchar(4000)"/>
+            <column name="type" type="varchar(12)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

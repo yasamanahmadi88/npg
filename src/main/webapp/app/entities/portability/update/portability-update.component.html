@@ -1,0 +1,704 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-portability-heading"
+        data-cy="PortabilityCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.portability.home.createOrEditLabel"
+      >
+        Create or edit a Portability
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <!--<div class="form-group">
+        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porRequestId" for="field_porRequestId"
+          >Por Request Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="porRequestId"
+            id="field_porRequestId"
+            data-cy="porRequestId"
+            formControlName="porRequestId"
+            />
+            <div
+              *ngIf="editForm.get('porRequestId')!.invalid && (editForm.get('porRequestId')!.dirty || editForm.get('porRequestId')!.touched)"
+              >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('porRequestId')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 32 }"
+                >
+                This field cannot be longer than 32 characters.
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porNumber" for="field_porNumber">Por Number</label>
+            <input type="text" class="form-control" name="porNumber" id="field_porNumber" data-cy="porNumber" formControlName="porNumber" />
+            <div *ngIf="editForm.get('porNumber')!.invalid && (editForm.get('porNumber')!.dirty || editForm.get('porNumber')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('porNumber')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 16 }"
+                >
+                This field cannot be longer than 16 characters.
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porLegalTerm" for="field_porLegalTerm"
+              >Por Legal Term</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                name="porLegalTerm"
+                id="field_porLegalTerm"
+                data-cy="porLegalTerm"
+                formControlName="porLegalTerm"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porOpr" for="field_porOpr">Por Opr</label>
+                <input type="text" class="form-control" name="porOpr" id="field_porOpr" data-cy="porOpr" formControlName="porOpr" />
+                <div *ngIf="editForm.get('porOpr')!.invalid && (editForm.get('porOpr')!.dirty || editForm.get('porOpr')!.touched)">
+                  <small
+                    class="form-text text-danger"
+                    *ngIf="editForm.get('porOpr')?.errors?.maxlength"
+                    jhiTranslate="entity.validation.maxlength"
+                    [translateValues]="{ max: 50 }"
+                    >
+                    This field cannot be longer than 50 characters.
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porAccType" for="field_porAccType">Por Acc Type</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="porAccType"
+                  id="field_porAccType"
+                  data-cy="porAccType"
+                  formControlName="porAccType"
+                  />
+                  <div *ngIf="editForm.get('porAccType')!.invalid && (editForm.get('porAccType')!.dirty || editForm.get('porAccType')!.touched)">
+                    <small
+                      class="form-text text-danger"
+                      *ngIf="editForm.get('porAccType')?.errors?.maxlength"
+                      jhiTranslate="entity.validation.maxlength"
+                      [translateValues]="{ max: 16 }"
+                      >
+                      This field cannot be longer than 16 characters.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porIdNumber" for="field_porIdNumber"
+                    >Por Id Number</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="porIdNumber"
+                      id="field_porIdNumber"
+                      data-cy="porIdNumber"
+                      formControlName="porIdNumber"
+                      />
+                      <div *ngIf="editForm.get('porIdNumber')!.invalid && (editForm.get('porIdNumber')!.dirty || editForm.get('porIdNumber')!.touched)">
+                        <small
+                          class="form-text text-danger"
+                          *ngIf="editForm.get('porIdNumber')?.errors?.maxlength"
+                          jhiTranslate="entity.validation.maxlength"
+                          [translateValues]="{ max: 128 }"
+                          >
+                          This field cannot be longer than 128 characters.
+                        </small>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porContactNumber" for="field_porContactNumber"
+                        >Por Contact Number</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="porContactNumber"
+                          id="field_porContactNumber"
+                          data-cy="porContactNumber"
+                          formControlName="porContactNumber"
+                          />
+                          <div
+            *ngIf="
+              editForm.get('porContactNumber')!.invalid &&
+              (editForm.get('porContactNumber')!.dirty || editForm.get('porContactNumber')!.touched)
+            "
+                            >
+                            <small
+                              class="form-text text-danger"
+                              *ngIf="editForm.get('porContactNumber')?.errors?.maxlength"
+                              jhiTranslate="entity.validation.maxlength"
+                              [translateValues]="{ max: 16 }"
+                              >
+                              This field cannot be longer than 16 characters.
+                            </small>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porStatus" for="field_porStatus">Por Status</label>
+                          <input type="text" class="form-control" name="porStatus" id="field_porStatus" data-cy="porStatus" formControlName="porStatus" />
+                          <div *ngIf="editForm.get('porStatus')!.invalid && (editForm.get('porStatus')!.dirty || editForm.get('porStatus')!.touched)">
+                            <small
+                              class="form-text text-danger"
+                              *ngIf="editForm.get('porStatus')?.errors?.maxlength"
+                              jhiTranslate="entity.validation.maxlength"
+                              [translateValues]="{ max: 50 }"
+                              >
+                              This field cannot be longer than 50 characters.
+                            </small>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porPortedDate" for="field_porPortedDate"
+                            >Por Ported Date</label
+                            >
+                            <div class="d-flex">
+                              <input
+                                id="field_porPortedDate"
+                                data-cy="porPortedDate"
+                                type="datetime-local"
+                                class="form-control"
+                                name="porPortedDate"
+                                formControlName="porPortedDate"
+                                placeholder="YYYY-MM-DD HH:mm"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porRouting" for="field_porRouting">Por Routing</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="porRouting"
+                                id="field_porRouting"
+                                data-cy="porRouting"
+                                formControlName="porRouting"
+                                />
+                                <div *ngIf="editForm.get('porRouting')!.invalid && (editForm.get('porRouting')!.dirty || editForm.get('porRouting')!.touched)">
+                                  <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.get('porRouting')?.errors?.maxlength"
+                                    jhiTranslate="entity.validation.maxlength"
+                                    [translateValues]="{ max: 50 }"
+                                    >
+                                    This field cannot be longer than 50 characters.
+                                  </small>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porType" for="field_porType">Por Type</label>
+                                <input type="text" class="form-control" name="porType" id="field_porType" data-cy="porType" formControlName="porType" />
+                                <div *ngIf="editForm.get('porType')!.invalid && (editForm.get('porType')!.dirty || editForm.get('porType')!.touched)">
+                                  <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.get('porType')?.errors?.maxlength"
+                                    jhiTranslate="entity.validation.maxlength"
+                                    [translateValues]="{ max: 32 }"
+                                    >
+                                    This field cannot be longer than 32 characters.
+                                  </small>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porOpOrg" for="field_porOpOrg">Por Op Org</label>
+                                <input type="text" class="form-control" name="porOpOrg" id="field_porOpOrg" data-cy="porOpOrg" formControlName="porOpOrg" />
+                                <div *ngIf="editForm.get('porOpOrg')!.invalid && (editForm.get('porOpOrg')!.dirty || editForm.get('porOpOrg')!.touched)">
+                                  <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.get('porOpOrg')?.errors?.maxlength"
+                                    jhiTranslate="entity.validation.maxlength"
+                                    [translateValues]="{ max: 50 }"
+                                    >
+                                    This field cannot be longer than 50 characters.
+                                  </small>
+                                </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porRspCode" for="field_porRspCode">Por Rsp Code</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  name="porRspCode"
+                                  id="field_porRspCode"
+                                  data-cy="porRspCode"
+                                  formControlName="porRspCode"
+                                  />
+                                  <div *ngIf="editForm.get('porRspCode')!.invalid && (editForm.get('porRspCode')!.dirty || editForm.get('porRspCode')!.touched)">
+                                    <small
+                                      class="form-text text-danger"
+                                      *ngIf="editForm.get('porRspCode')?.errors?.maxlength"
+                                      jhiTranslate="entity.validation.maxlength"
+                                      [translateValues]="{ max: 20 }"
+                                      >
+                                      This field cannot be longer than 20 characters.
+                                    </small>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porRspNote" for="field_porRspNote">Por Rsp Note</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    name="porRspNote"
+                                    id="field_porRspNote"
+                                    data-cy="porRspNote"
+                                    formControlName="porRspNote"
+                                    />
+                                    <div *ngIf="editForm.get('porRspNote')!.invalid && (editForm.get('porRspNote')!.dirty || editForm.get('porRspNote')!.touched)">
+                                      <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.get('porRspNote')?.errors?.maxlength"
+                                        jhiTranslate="entity.validation.maxlength"
+                                        [translateValues]="{ max: 256 }"
+                                        >
+                                        This field cannot be longer than 256 characters.
+                                      </small>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porCancelNote" for="field_porCancelNote"
+                                      >Por Cancel Note</label
+                                      >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        name="porCancelNote"
+                                        id="field_porCancelNote"
+                                        data-cy="porCancelNote"
+                                        formControlName="porCancelNote"
+                                        />
+                                        <div
+            *ngIf="
+              editForm.get('porCancelNote')!.invalid && (editForm.get('porCancelNote')!.dirty || editForm.get('porCancelNote')!.touched)
+            "
+                                          >
+                                          <small
+                                            class="form-text text-danger"
+                                            *ngIf="editForm.get('porCancelNote')?.errors?.maxlength"
+                                            jhiTranslate="entity.validation.maxlength"
+                                            [translateValues]="{ max: 256 }"
+                                            >
+                                            This field cannot be longer than 256 characters.
+                                          </small>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porMnpid" for="field_porMnpid">Por Mnpid</label>
+                                        <input type="text" class="form-control" name="porMnpid" id="field_porMnpid" data-cy="porMnpid" formControlName="porMnpid" />
+                                        <div *ngIf="editForm.get('porMnpid')!.invalid && (editForm.get('porMnpid')!.dirty || editForm.get('porMnpid')!.touched)">
+                                          <small
+                                            class="form-text text-danger"
+                                            *ngIf="editForm.get('porMnpid')?.errors?.maxlength"
+                                            jhiTranslate="entity.validation.maxlength"
+                                            [translateValues]="{ max: 32 }"
+                                            >
+                                            This field cannot be longer than 32 characters.
+                                          </small>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.portationDate" for="field_portationDate"
+                                          >Portation Date</label
+                                          >
+                                          <div class="d-flex">
+                                            <input
+                                              id="field_portationDate"
+                                              data-cy="portationDate"
+                                              type="datetime-local"
+                                              class="form-control"
+                                              name="portationDate"
+                                              formControlName="portationDate"
+                                              placeholder="YYYY-MM-DD HH:mm"
+                                              />
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.portaCode" for="field_portaCode">Porta Code</label>
+                                            <input type="text" class="form-control" name="portaCode" id="field_portaCode" data-cy="portaCode" formControlName="portaCode" />
+                                            <div *ngIf="editForm.get('portaCode')!.invalid && (editForm.get('portaCode')!.dirty || editForm.get('portaCode')!.touched)">
+                                              <small
+                                                class="form-text text-danger"
+                                                *ngIf="editForm.get('portaCode')?.errors?.maxlength"
+                                                jhiTranslate="entity.validation.maxlength"
+                                                [translateValues]="{ max: 32 }"
+                                                >
+                                                This field cannot be longer than 32 characters.
+                                              </small>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.mvno" for="field_mvno">Mvno</label>
+                                            <input type="text" class="form-control" name="mvno" id="field_mvno" data-cy="mvno" formControlName="mvno" />
+                                            <div *ngIf="editForm.get('mvno')!.invalid && (editForm.get('mvno')!.dirty || editForm.get('mvno')!.touched)">
+                                              <small
+                                                class="form-text text-danger"
+                                                *ngIf="editForm.get('mvno')?.errors?.maxlength"
+                                                jhiTranslate="entity.validation.maxlength"
+                                                [translateValues]="{ max: 50 }"
+                                                >
+                                                This field cannot be longer than 50 characters.
+                                              </small>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.context" for="field_context">Context</label>
+                                            <input type="text" class="form-control" name="context" id="field_context" data-cy="context" formControlName="context" />
+                                            <div *ngIf="editForm.get('context')!.invalid && (editForm.get('context')!.dirty || editForm.get('context')!.touched)">
+                                              <small
+                                                class="form-text text-danger"
+                                                *ngIf="editForm.get('context')?.errors?.maxlength"
+                                                jhiTranslate="entity.validation.maxlength"
+                                                [translateValues]="{ max: 100 }"
+                                                >
+                                                This field cannot be longer than 100 characters.
+                                              </small>
+                                            </div>
+                                          </div>
+
+                                          <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porErrCode" for="field_porErrCode">Por Err Code</label>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              name="porErrCode"
+                                              id="field_porErrCode"
+                                              data-cy="porErrCode"
+                                              formControlName="porErrCode"
+                                              />
+                                              <div *ngIf="editForm.get('porErrCode')!.invalid && (editForm.get('porErrCode')!.dirty || editForm.get('porErrCode')!.touched)">
+                                                <small
+                                                  class="form-text text-danger"
+                                                  *ngIf="editForm.get('porErrCode')?.errors?.maxlength"
+                                                  jhiTranslate="entity.validation.maxlength"
+                                                  [translateValues]="{ max: 20 }"
+                                                  >
+                                                  This field cannot be longer than 20 characters.
+                                                </small>
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porErrMessage" for="field_porErrMessage"
+                                                >Por Err Message</label
+                                                >
+                                                <input
+                                                  type="text"
+                                                  class="form-control"
+                                                  name="porErrMessage"
+                                                  id="field_porErrMessage"
+                                                  data-cy="porErrMessage"
+                                                  formControlName="porErrMessage"
+                                                  />
+                                                  <div
+            *ngIf="
+              editForm.get('porErrMessage')!.invalid && (editForm.get('porErrMessage')!.dirty || editForm.get('porErrMessage')!.touched)
+            "
+                                                    >
+                                                    <small
+                                                      class="form-text text-danger"
+                                                      *ngIf="editForm.get('porErrMessage')?.errors?.maxlength"
+                                                      jhiTranslate="entity.validation.maxlength"
+                                                      [translateValues]="{ max: 256 }"
+                                                      >
+                                                      This field cannot be longer than 256 characters.
+                                                    </small>
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porOpd" for="field_porOpd">Por Opd</label>
+                                                  <input type="text" class="form-control" name="porOpd" id="field_porOpd" data-cy="porOpd" formControlName="porOpd" />
+                                                  <div *ngIf="editForm.get('porOpd')!.invalid && (editForm.get('porOpd')!.dirty || editForm.get('porOpd')!.touched)">
+                                                    <small
+                                                      class="form-text text-danger"
+                                                      *ngIf="editForm.get('porOpd')?.errors?.maxlength"
+                                                      jhiTranslate="entity.validation.maxlength"
+                                                      [translateValues]="{ max: 50 }"
+                                                      >
+                                                      This field cannot be longer than 50 characters.
+                                                    </small>
+                                                  </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porNumType" for="field_porNumType">Por Num Type</label>
+                                                  <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    name="porNumType"
+                                                    id="field_porNumType"
+                                                    data-cy="porNumType"
+                                                    formControlName="porNumType"
+                                                    />
+                                                    <div *ngIf="editForm.get('porNumType')!.invalid && (editForm.get('porNumType')!.dirty || editForm.get('porNumType')!.touched)">
+                                                      <small
+                                                        class="form-text text-danger"
+                                                        *ngIf="editForm.get('porNumType')?.errors?.maxlength"
+                                                        jhiTranslate="entity.validation.maxlength"
+                                                        [translateValues]="{ max: 20 }"
+                                                        >
+                                                        This field cannot be longer than 20 characters.
+                                                      </small>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porNote" for="field_porNote">Por Note</label>
+                                                    <input type="text" class="form-control" name="porNote" id="field_porNote" data-cy="porNote" formControlName="porNote" />
+                                                    <div *ngIf="editForm.get('porNote')!.invalid && (editForm.get('porNote')!.dirty || editForm.get('porNote')!.touched)">
+                                                      <small
+                                                        class="form-text text-danger"
+                                                        *ngIf="editForm.get('porNote')?.errors?.maxlength"
+                                                        jhiTranslate="entity.validation.maxlength"
+                                                        [translateValues]="{ max: 200 }"
+                                                        >
+                                                        This field cannot be longer than 200 characters.
+                                                      </small>
+                                                    </div>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porDeadline" for="field_porDeadline">Por Deadline</label>
+                                                    <div class="d-flex">
+                                                      <input
+                                                        id="field_porDeadline"
+                                                        data-cy="porDeadline"
+                                                        type="datetime-local"
+                                                        class="form-control"
+                                                        name="porDeadline"
+                                                        formControlName="porDeadline"
+                                                        placeholder="YYYY-MM-DD HH:mm"
+                                                        />
+                                                      </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                      <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porResponseTimestamp" for="field_porResponseTimestamp"
+                                                        >Por Response Timestamp</label
+                                                        >
+                                                        <input
+                                                          type="number"
+                                                          class="form-control"
+                                                          name="porResponseTimestamp"
+                                                          id="field_porResponseTimestamp"
+                                                          data-cy="porResponseTimestamp"
+                                                          formControlName="porResponseTimestamp"
+                                                          />
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porEligible" for="field_porEligible">Por Eligible</label>
+                                                          <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            name="porEligible"
+                                                            id="field_porEligible"
+                                                            data-cy="porEligible"
+                                                            formControlName="porEligible"
+                                                            />
+                                                          </div>
+
+                                                          <div class="form-group">
+                                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porBillingOk" for="field_porBillingOk"
+                                                              >Por Billing Ok</label
+                                                              >
+                                                              <input
+                                                                type="number"
+                                                                class="form-control"
+                                                                name="porBillingOk"
+                                                                id="field_porBillingOk"
+                                                                data-cy="porBillingOk"
+                                                                formControlName="porBillingOk"
+                                                                />
+                                                              </div>
+
+                                                              <div class="form-group">
+                                                                <label
+                                                                  class="form-control-label"
+                                                                  jhiTranslate="npgPortalApp.portability.intermediaryActionState"
+                                                                  for="field_intermediaryActionState"
+                                                                  >Intermediary Action State</label
+                                                                  >
+                                                                  <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    name="intermediaryActionState"
+                                                                    id="field_intermediaryActionState"
+                                                                    data-cy="intermediaryActionState"
+                                                                    formControlName="intermediaryActionState"
+                                                                    />
+                                                                    <div
+            *ngIf="
+              editForm.get('intermediaryActionState')!.invalid &&
+              (editForm.get('intermediaryActionState')!.dirty || editForm.get('intermediaryActionState')!.touched)
+            "
+                                                                      >
+                                                                      <small
+                                                                        class="form-text text-danger"
+                                                                        *ngIf="editForm.get('intermediaryActionState')?.errors?.maxlength"
+                                                                        jhiTranslate="entity.validation.maxlength"
+                                                                        [translateValues]="{ max: 100 }"
+                                                                        >
+                                                                        This field cannot be longer than 100 characters.
+                                                                      </small>
+                                                                    </div>
+                                                                  </div>
+
+                                                                  <div class="form-group">
+                                                                    <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porCrDate" for="field_porCrDate">Por Cr Date</label>
+                                                                    <div class="d-flex">
+                                                                      <input
+                                                                        id="field_porCrDate"
+                                                                        data-cy="porCrDate"
+                                                                        type="datetime-local"
+                                                                        class="form-control"
+                                                                        name="porCrDate"
+                                                                        formControlName="porCrDate"
+                                                                        placeholder="YYYY-MM-DD HH:mm"
+                                                                        />
+                                                                      </div>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                      <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porUpdDate" for="field_porUpdDate">Por Upd Date</label>
+                                                                      <div class="d-flex">
+                                                                        <input
+                                                                          id="field_porUpdDate"
+                                                                          data-cy="porUpdDate"
+                                                                          type="datetime-local"
+                                                                          class="form-control"
+                                                                          name="porUpdDate"
+                                                                          formControlName="porUpdDate"
+                                                                          placeholder="YYYY-MM-DD HH:mm"
+                                                                          />
+                                                                        </div>
+                                                                      </div>
+
+                                                                      <div class="form-group">
+                                                                        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.porTechStatus" for="field_porTechStatus"
+                                                                          >Por Tech Status</label
+                                                                          >
+                                                                          <input
+                                                                            type="text"
+                                                                            class="form-control"
+                                                                            name="porTechStatus"
+                                                                            id="field_porTechStatus"
+                                                                            data-cy="porTechStatus"
+                                                                            formControlName="porTechStatus"
+                                                                            />
+                                                                            <div
+            *ngIf="
+              editForm.get('porTechStatus')!.invalid && (editForm.get('porTechStatus')!.dirty || editForm.get('porTechStatus')!.touched)
+            "
+                                                                              >
+                                                                              <small
+                                                                                class="form-text text-danger"
+                                                                                *ngIf="editForm.get('porTechStatus')?.errors?.maxlength"
+                                                                                jhiTranslate="entity.validation.maxlength"
+                                                                                [translateValues]="{ max: 100 }"
+                                                                                >
+                                                                                This field cannot be longer than 100 characters.
+                                                                              </small>
+                                                                            </div>
+                                                                          </div>
+
+                                                                          <div class="form-group">
+                                                                            <label class="form-control-label" jhiTranslate="npgPortalApp.portability.refPorId" for="field_refPorId">Ref Por Id</label>
+                                                                            <input type="number" class="form-control" name="refPorId" id="field_refPorId" data-cy="refPorId" formControlName="refPorId" />
+                                                                          </div>
+                                                                          -->
+
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="needManualRetry"
+            id="field_needManualRetry"
+            data-cy="needManualRetry"
+            formControlName="needManualRetry"
+          />
+          <label class="form-check-inline" jhiTranslate="npgPortalApp.portability.needManualRetry" for="field_needManualRetry"
+            >Need Manual Retry</label
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.portability.retryCount" for="field_retryCount">Retry Count</label>
+          <input
+            type="number"
+            class="form-control"
+            name="retryCount"
+            id="field_retryCount"
+            data-cy="retryCount"
+            formControlName="retryCount"
+          />
+          @if (editForm.get('retryCount')!.invalid && (editForm.get('retryCount')!.dirty || editForm.get('retryCount')!.touched)) {
+          <div>
+            @if (editForm.get('retryCount')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('retryCount')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

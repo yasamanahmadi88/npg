@@ -1,0 +1,23 @@
+﻿@import '../../../../content/scss/ngp_theme';
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card {
+  border: 1px solid map-get($npg-theme-color, C12) !important;
+  border-top: 2px solid map-get($npg-theme-color, C12) !important;
+  border-right: 2px solid map-get($npg-theme-color, C12) !important;
+}
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card-header {
+  display: block;
+  background-color: map-get($npg-theme-color, C11) !important;
+  color: white;
+  margin-bottom: 1%;
+}
+::ng-deep .mat-mdc-tooltip {
+  font-size: 12px;
+  color: white !important;
+  background-color: map-get($npg-theme-color, C12) !important;
+  border: none;
+  max-width: unset !important;
+  padding: 0;
+}

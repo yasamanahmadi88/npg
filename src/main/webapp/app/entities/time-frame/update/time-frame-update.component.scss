@@ -1,0 +1,33 @@
+.date-picker {
+  ::ng-deep {
+    input {
+      font-size: 20px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      border-radius: 15px;
+      border: solid 1px transparent;
+      background-color: transparent;
+    }
+  }
+}
+
+.datePickerStyle {
+  ::ng-deep {
+    input {
+      font-size: 13px;
+      border: none !important;
+      margin: 0 1%;
+      color: #212121;
+      font-family: inherit;
+    }
+    input::placeholder {
+      color: #212121;
+      opacity: 0.6;
+    }
+  }
+}
+::ng-deep dp-date-picker.dp-material .dp-picker-input {
+  border: 0 !important;
+}
