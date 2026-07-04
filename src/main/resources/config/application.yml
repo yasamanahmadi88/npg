@@ -74,6 +74,8 @@ spring:
     # Otherwise, it will be filled in by Maven when building the JAR file.
     active: #spring.profiles.active#
     group:
+      localrun:
+        - localrun
       dev:
         - dev
         - api-docs
