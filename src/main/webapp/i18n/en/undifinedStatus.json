@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "undifinedStatus": {
+      "home": {
+        "title": "Undifined Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Undifined Status",
+        "createOrEditLabel": "Create or edit a Undifined Status",
+        "notFound": "No Undifined Statuses found"
+      },
+      "created": "A new Undifined Status is created with identifier {{ param }}",
+      "updated": "A Undifined Status is updated with identifier {{ param }}",
+      "deleted": "A Undifined Status is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Undifined Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Undifined Status"
+      },
+      "id": "ID",
+      "porStatus": "Por Status",
+      "porTechStatus": "Por Tech Status",
+      "porErrCode": "Por Err Code",
+      "porRspCode": "Por Rsp Code",
+      "porRequestId": "Por Request Id",
+      "insertDate": "Insert Date"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260606133000-1" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TBL_BUSINESS_CONFIG"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="TBL_BUSINESS_CONFIG">
+            <column name="NAME" type="varchar(255)">
+                <constraints primaryKey="true" primaryKeyName="PK_TBL_BUSINESS_CONFIG" nullable="false" unique="true" uniqueConstraintName="UK_TBL_BUSINESS_CONFIG_NAME"/>
+            </column>
+            <column name="value" type="varchar(512)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

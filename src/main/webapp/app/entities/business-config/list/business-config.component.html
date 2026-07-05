@@ -1,0 +1,116 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="BusinessConfigHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="npgPortalApp.businessConfig.home.title">Business Configs</span>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+
+            <button
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              class="btn btn-primary jh-create-entity create-business-config"
+              *jhiHasPermission="['businessConfig', 'create']"
+              [routerLink]="['/business-config/new']"
+            >
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+  <mat-card-content>
+    @if (businessConfigs?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.businessConfig.home.notFound">No businessConfigs found</span>
+    </div>
+    } @if (businessConfigs && businessConfigs.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="value">
+              <span jhiTranslate="npgPortalApp.businessConfig.value">Value</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (businessConfig of businessConfigs; track trackId($index, businessConfig)) {
+          <tr data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/business-config', businessConfig.id, 'view']">{{ businessConfig.id }}</a>
+            </td>
+            <td>{{ businessConfig.value }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/business-config', businessConfig.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+                <button
+                  type="submit"
+                  [routerLink]="['/business-config', businessConfig.id, 'edit']"
+                  *jhiHasPermission="['businessConfig', 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button
+                  type="submit"
+                  (click)="delete(businessConfig)"
+                  *jhiHasPermission="['businessConfig', 'delete']"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (businessConfigs && businessConfigs.length > 0) {
+    <div>
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

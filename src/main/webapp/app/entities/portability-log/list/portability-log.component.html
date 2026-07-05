@@ -1,0 +1,309 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="PortabilityLogHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="npgPortalApp.portabilityLog.home.title">Portability Logs</span>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+
+            <!-- <button
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+            class="btn btn-primary jh-create-entity create-portability-log"
+            [routerLink]="['/portability-log/new']"
+            >
+            <fa-icon icon="plus"></fa-icon>
+          </button>-->
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (portabilityLogs?.length === 0) {
+  <div class="alert alert-warning" id="no-result">
+    <span jhiTranslate="npgPortalApp.portabilityLog.home.notFound">No portabilityLogs found</span>
+  </div>
+  }
+  <mat-card-content>
+    @if (portabilityLogs && portabilityLogs.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porId">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porId">Por Id</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porRequestId">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porRequestId">Por Request Id</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porNumber">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porNumber">Por Number</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porLegalTerm">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porLegalTerm">Por Legal Term</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porOpr">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porOpr">Por Opr</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porAccType">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porAccType">Por Acc Type</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porIdNumber">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porIdNumber">Por Id Number</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porContactNumber">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porContactNumber">Por Contact Number</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porStatus">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porStatus">Por Status</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porPortedDate">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porPortedDate">Por Ported Date</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porRouting">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porRouting">Por Routing</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porType">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porType">Por Type</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porOpOrg">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porOpOrg">Por Op Org</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porRspCode">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porRspCode">Por Rsp Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porRspNote">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porRspNote">Por Rsp Note</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porCancelNote">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porCancelNote">Por Cancel Note</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porMnpid">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porMnpid">Por Mnpid</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="portationDate">
+              <span jhiTranslate="npgPortalApp.portabilityLog.portationDate">Portation Date</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="portaCode">
+              <span jhiTranslate="npgPortalApp.portabilityLog.portaCode">Porta Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="mvno">
+              <span jhiTranslate="npgPortalApp.portabilityLog.mvno">Mvno</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="context">
+              <span jhiTranslate="npgPortalApp.portabilityLog.context">Context</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porErrCode">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porErrCode">Por Err Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porErrMessage">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porErrMessage">Por Err Message</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porOpd">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porOpd">Por Opd</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porNumType">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porNumType">Por Num Type</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porNote">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porNote">Por Note</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porDeadline">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porDeadline">Por Deadline</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porResponseTimestamp">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porResponseTimestamp">Por Response Timestamp</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porEligible">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porEligible">Por Eligible</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porBillingOk">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porBillingOk">Por Billing Ok</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="intermediaryActionState">
+              <span jhiTranslate="npgPortalApp.portabilityLog.intermediaryActionState">Intermediary Action State</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porCrDate">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porCrDate">Por Cr Date</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porUpdDate">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porUpdDate">Por Upd Date</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porTechStatus">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porTechStatus">Por Tech Status</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="porTechDeadline">
+              <span jhiTranslate="npgPortalApp.portabilityLog.porTechDeadline">Por Tech Deadline</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="refPorId">
+              <span jhiTranslate="npgPortalApp.portabilityLog.refPorId">Ref Por Id</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="needManualRetry">
+              <span jhiTranslate="npgPortalApp.portabilityLog.needManualRetry">Need Manual Retry</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="retryCount">
+              <span jhiTranslate="npgPortalApp.portabilityLog.retryCount">Retry Count</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="action">
+              <span jhiTranslate="npgPortalApp.portabilityLog.action">Action</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="request">
+              <span jhiTranslate="npgPortalApp.portabilityLog.request">Request</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="insertTimestamp">
+              <span jhiTranslate="npgPortalApp.portabilityLog.insertTimestamp">Insert Timestamp</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (portabilityLog of portabilityLogs; track trackId($index, portabilityLog)) {
+          <tr data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/portability-log', portabilityLog.id, 'view']">{{ portabilityLog.id }}</a>
+            </td>
+            <td>{{ portabilityLog.porId }}</td>
+            <td>{{ portabilityLog.porRequestId }}</td>
+            <td>{{ portabilityLog.porNumber }}</td>
+            <td>{{ portabilityLog.porLegalTerm }}</td>
+            <td>{{ portabilityLog.porOpr }}</td>
+            <td>{{ portabilityLog.porAccType }}</td>
+            <td>{{ portabilityLog.porIdNumber }}</td>
+            <td>{{ portabilityLog.porContactNumber }}</td>
+            <td>{{ portabilityLog.porStatus }}</td>
+            <td>{{ portabilityLog.porPortedDate | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.porRouting }}</td>
+            <td>{{ portabilityLog.porType }}</td>
+            <td>{{ portabilityLog.porOpOrg }}</td>
+            <td>{{ portabilityLog.porRspCode }}</td>
+            <td>{{ portabilityLog.porRspNote }}</td>
+            <td>{{ portabilityLog.porCancelNote }}</td>
+            <td>{{ portabilityLog.porMnpid }}</td>
+            <td>{{ portabilityLog.portationDate | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.portaCode }}</td>
+            <td>{{ portabilityLog.mvno }}</td>
+            <td>{{ portabilityLog.context }}</td>
+            <td>{{ portabilityLog.porErrCode }}</td>
+            <td>{{ portabilityLog.porErrMessage }}</td>
+            <td>{{ portabilityLog.porOpd }}</td>
+            <td>{{ portabilityLog.porNumType }}</td>
+            <td>{{ portabilityLog.porNote }}</td>
+            <td>{{ portabilityLog.porDeadline | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.porResponseTimestamp }}</td>
+            <td>{{ portabilityLog.porEligible }}</td>
+            <td>{{ portabilityLog.porBillingOk }}</td>
+            <td>{{ portabilityLog.intermediaryActionState }}</td>
+            <td>{{ portabilityLog.porCrDate | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.porUpdDate | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.porTechStatus }}</td>
+            <td>{{ portabilityLog.porTechDeadline | formatMediumDatetime }}</td>
+            <td>{{ portabilityLog.refPorId }}</td>
+            <td>{{ portabilityLog.needManualRetry }}</td>
+            <td>{{ portabilityLog.retryCount }}</td>
+            <td>{{ portabilityLog.action }}</td>
+            <td>{{ portabilityLog.request }}</td>
+            <td>{{ portabilityLog.insertTimestamp | formatMediumDatetime }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/portability-log', portabilityLog.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+                <button
+                  type="submit"
+                  [routerLink]="['/portability-log', portabilityLog.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button type="submit" (click)="delete(portabilityLog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (portabilityLogs && portabilityLogs.length > 0) {
+    <div>
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

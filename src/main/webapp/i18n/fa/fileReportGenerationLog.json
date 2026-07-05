@@ -1,0 +1,30 @@
+{
+  "npgPortalApp": {
+    "fileReportGenerationLog": {
+      "home": {
+        "title": "گزارش‌های تولید فایل",
+        "refreshListLabel": "به‌روزرسانی فهرست",
+        "createLabel": "ایجاد گزارش تولید فایل جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش گزارش تولید فایل",
+        "notFound": "هیچ گزارش تولید فایلی یافت نشد"
+      },
+      "created": "گزارش تولید فایل جدید با شناسه {{ param }} ایجاد شد",
+      "updated": "گزارش تولید فایل با شناسه {{ param }} به‌روزرسانی شد",
+      "deleted": "گزارش تولید فایل با شناسه {{ param }} حذف شد",
+      "delete": {
+        "question": "آیا از حذف گزارش تولید فایل با شناسه {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "گزارش تولید فایل"
+      },
+      "id": "شناسه",
+      "reportName": "نام گزارش",
+      "reportDate": "تاریخ گزارش",
+      "fileName": "نام فایل",
+      "rowNumber": "شماره ردیف",
+      "porNumber": "شماره POR",
+      "content": "محتوا",
+      "fileReportGenerationLogSearch": "جستجوی گزارش تولید فایل"
+    }
+  }
+}

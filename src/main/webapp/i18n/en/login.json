@@ -1,0 +1,26 @@
+{
+  "login": {
+    "title": "Sign in",
+    "form": {
+      "password": "Password",
+      "password.placeholder": "Your password",
+      "rememberme": "Remember me",
+      "button": "Sign in"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+      }
+    },
+    "password": {
+      "forgot": "Did you forget your password?"
+    },
+    "error": {
+      "captcha": "Wrong Entries For Captcha",
+      "permissionNeeded": "Permission Needed",
+      "close": "Close",
+      "haveNot": "You dont have permission to access to request page",
+      "tooManyFailedReq": "Too many attempts. try again later."
+    }
+  }
+}

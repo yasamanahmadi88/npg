@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Agreement.
+    -->
+    <changeSet id="20210704125354-1" author="jhipster">
+        <createTable tableName="agreement">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="agreement_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="time_to_ack" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="time_to_perform" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="timeout" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="temporary_deactivate" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="start_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="end_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="save_message_header" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="save_message_body" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="threshold" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="allowed_to_request_since" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+            <column name="allowed_to_request_to" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+            <column name="service_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="action_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="consumer_party_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="producer_party_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="agreement" columnName="start_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="agreement" columnName="end_date" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+  <!--  <changeSet id="20210704125354-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/agreement.csv"
+                  separator=";"
+                  tableName="agreement">
+            <column name="id" type="numeric"/>
+            <column name="agreement_number" type="string"/>
+            <column name="time_to_ack" type="numeric"/>
+            <column name="time_to_perform" type="numeric"/>
+            <column name="timeout" type="numeric"/>
+            <column name="temporary_deactivate" type="boolean"/>
+            <column name="start_date" type="${datetimeType}"/>
+            <column name="end_date" type="${datetimeType}"/>
+            <column name="save_message_header" type="boolean"/>
+            <column name="save_message_body" type="boolean"/>
+            <column name="threshold" type="numeric"/>
+            <column name="allowed_to_request_since" type="string"/>
+            <column name="allowed_to_request_to" type="string"/>
+            <column name="service_id" type="numeric"/>
+            <column name="action_id" type="numeric"/>
+            <column name="consumer_party_id" type="numeric"/>
+            <column name="producer_party_id" type="numeric"/>
+            &lt;!&ndash; jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here &ndash;&gt;
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
+-->

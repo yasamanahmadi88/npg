@@ -1,0 +1,9 @@
+{
+  "npgPortalApp": {
+    "NotificationTemplateType": {
+      "null": "",
+      "SMS": "SMS",
+      "EMAIL": "EMAIL"
+    }
+  }
+}

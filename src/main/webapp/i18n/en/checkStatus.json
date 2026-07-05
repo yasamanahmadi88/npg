@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "checkStatus": {
+      "home": {
+        "title": "Check Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Check Status",
+        "createOrEditLabel": "Create or edit a Check Status",
+        "notFound": "No Check Statuses found"
+      },
+      "created": "A new Check Status is created with identifier {{ param }}",
+      "updated": "A Check Status is updated with identifier {{ param }}",
+      "deleted": "A Check Status is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Check Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Check Status"
+      },
+      "id": "ID",
+      "porStatus": "Por Status",
+      "porTechStatus": "Por Tech Status",
+      "porErrCode": "Por Err Code",
+      "porRspCode": "Por Rsp Code",
+      "statusMessageFa": "Status Message Fa",
+      "statusMessageEn": "Status Message En"
+    }
+  }
+}

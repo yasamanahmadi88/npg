@@ -1,0 +1,27 @@
+<!--<div class="row justify-content-center">-->
+<!--  <div class="col-md-12">-->
+<!--    <div>-->
+<!--      @case (true) {-->
+<!--      <jhi-portability-dashboard class="lead"></jhi-portability-dashboard>-->
+<!--      } @case (false) {-->
+<!--      <div class="alert alert-warning">-->
+<!--        <jhi-login></jhi-login>-->
+<!--      </div>-->
+<!--      }-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div>
+      @if (account) {
+      <jhi-portability-dashboard class="lead"></jhi-portability-dashboard>
+      } @else {
+      <div class="alert alert-warning">
+        <jhi-login></jhi-login>
+      </div>
+      }
+    </div>
+  </div>
+</div>

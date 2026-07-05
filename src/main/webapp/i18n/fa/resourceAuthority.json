@@ -1,0 +1,27 @@
+{
+  "npgPortalApp": {
+    "resourceAuthority": {
+      "home": {
+        "title": "دسترسی منابع",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد دسترسی منابع جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش دسترسی منابع",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "دسترسی منابع"
+      },
+      "id": "ID",
+      "verb": "Verb",
+      "authorityId": "Authority Id",
+      "resource": "Resource",
+      "search": "Search "
+    }
+  }
+}

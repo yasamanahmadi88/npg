@@ -1,0 +1,124 @@
+﻿@import 'bootstrap/scss/functions';
+@import 'bootswatch/dist/cosmo/variables';
+@import 'bootstrap/scss/variables';
+@import '../../../content/scss/ngp_theme';
+
+/* ==========================================================================
+Navbar
+========================================================================== */
+
+nav {
+  background-color: #d0e1f7b0;
+  border-bottom: 2px solid map-get($npg-theme-color, C12);
+}
+
+.navbar-version {
+  font-size: 0.65em;
+  color: $navbar-dark-color;
+}
+
+.profile-image {
+  height: 1.75em;
+  width: 1.75em;
+}
+
+.navbar {
+  padding: 0.2rem 1rem;
+
+  .dropdown-item.active,
+  .dropdown-item.active:focus,
+  .dropdown-item.active:hover {
+    background-color: $dark;
+  }
+
+  ul.navbar-nav {
+    .nav-item {
+      margin-left: 0.5em;
+    }
+  }
+
+  a.nav-link {
+    font-weight: 400;
+  }
+
+  .navbar-toggler {
+    &:hover {
+      color: $navbar-dark-hover-color;
+    }
+  }
+}
+
+/* ==========================================================================
+Logo styles
+========================================================================== */
+.logo-img {
+  height: 45px;
+  width: 0px;
+  display: inline-block;
+  vertical-align: middle;
+  /*background: url('../../../content/images/logo-jhipster.png') no-repeat center center;*/
+  background-size: contain;
+}
+
+.navbar a {
+  color: map-get($npg-theme-color, C12) !important;
+  cursor: pointer;
+  background: transparent;
+}
+
+.navbar a:active {
+  color: white !important;
+}
+
+.navbar a:focus {
+  background: map-get($npg-theme-color, C12) !important;
+  color: #ffffff !important;
+}
+
+nav ul,
+nav ul li {
+  background-color: transparent !important;
+}
+
+.dropdown-item {
+  background: #000000 !important;
+}
+.dropdown-item:active {
+  background: map-get($npg-theme-color, C12) !important;
+}
+
+.dropdown-item a:active {
+  color: white !important;
+}
+
+.dropdown-item:hover {
+  color: white !important;
+  border: 1px solid map-get($npg-theme-color, C12) !important;
+}
+
+.flags {
+  cursor: pointer;
+}
+
+.searchBox {
+  border: 2px solid map-get($npg-theme-color, C12) !important;
+}
+
+.searchIcon {
+  color: map-get($npg-theme-color, C12) !important;
+}
+
+input[type='search'] {
+  border: none;
+  font-size: 15px;
+  background: transparent !important;
+}
+
+input[type='search']:focus {
+  border: none !important;
+  outline: none !important;
+}
+a:hover,
+.languageStyle:hover {
+  color: map-get($npg-theme-color, C11) !important;
+}

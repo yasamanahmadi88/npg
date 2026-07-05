@@ -1,0 +1,67 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="CheckStatusHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="global.menu.admin.sessionManagement">Session Management</span>
+
+          <div>
+            <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <jhi-alert-error></jhi-alert-error>
+  <jhi-alert></jhi-alert>
+
+  <mat-card-content>
+    @if (sessionInfos?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.checkStatus.home.notFound">Session Not Found</span>
+    </div>
+    } @if (sessionInfos && sessionInfos.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col"><span jhiTranslate="sessions.table.ipaddress">IP</span></th>
+            <th scope="col"><span jhiTranslate="sessions.table.sessionId">SessionID</span></th>
+            <th scope="col"><span jhiTranslate="sessions.table.useragent">User</span></th>
+            <th scope="col"><span jhiTranslate="sessions.table.loginDate">LoginDate</span></th>
+            <th scope="col"><span jhiTranslate="sessions.table.lastActionDate">LastActionDate</span></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (session of sessionInfos; track session) {
+          <tr class="w-100">
+            <td>{{ session.ip }}</td>
+            <td>{{ session.sessionId }}</td>
+            <td>{{ session.username }}</td>
+            <td>{{ session.loginDate | jalaliFormatter: ['YYYY-MM-DD HH:mm:ss'] }}</td>
+            <td>{{ session.lastActionDate | jalaliFormatter: ['YYYY-MM-DD HH:mm:ss'] }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button type="submit" (click)="delete(session)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="sessions.table.button">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              <span>JWT:</span><span style="color: #598ee8">{{ session.jwtToken }}</span>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

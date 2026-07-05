@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260628000100-1-add-file-report-generation-log-resource" author="security-migration">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM jhi_resource WHERE name = 'fileReportGenerationLog'
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="fileReportGenerationLog"/>
+            <column name="display_name" value="File Report Generation Log"/>
+            <column name="api_uri" value="api/file-report-generation-logs"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260628000100-2-grant-file-report-generation-log-view-to-admin" author="security-migration">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*)
+                FROM JHI_RESOURCE_AUTHORITY ra
+                JOIN jhi_resource r ON r.id = ra.resource_id
+                JOIN jhi_authority a ON a.id = ra.authority_id
+                WHERE r.name = 'fileReportGenerationLog'
+                  AND a.name = 'ROLE_ADMIN'
+                  AND ra.verb = 'VIEW'
+            </sqlCheck>
+        </preConditions>
+
+        <insert tableName="JHI_RESOURCE_AUTHORITY">
+            <column name="id" valueSequenceNext="RES_AUTH_SEQ"/>
+            <column name="verb" value="VIEW"/>
+            <column name="authority_id" valueComputed="(SELECT id FROM jhi_authority WHERE name = 'ROLE_ADMIN')"/>
+            <column name="resource_id" valueComputed="(SELECT id FROM jhi_resource WHERE name = 'fileReportGenerationLog')"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

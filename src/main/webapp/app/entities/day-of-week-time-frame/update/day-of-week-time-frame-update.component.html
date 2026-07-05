@@ -1,0 +1,81 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-day-of-week-time-frame-heading"
+        data-cy="DayOfWeekTimeFrameCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.home.createOrEditLabel"
+      >
+        Create or edit a Day Of Week Time Frame
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.day" for="field_day">Day</label>
+          <select class="form-control" formControlName="day">
+            <option [value]="1">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.saturday' | translate }}</option>
+            <option [value]="2">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.sunday' | translate }}</option>
+            <option [value]="3">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.monday' | translate }}</option>
+            <option [value]="4">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.tuesday' | translate }}</option>
+            <option [value]="5">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.wednesday' | translate }}</option>
+            <option [value]="6">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.thursday' | translate }}</option>
+            <option [value]="7">{{ 'npgPortalApp.dayOfWeekTimeFrame.days.friday' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.begin" for="field_begin">Begin</label>
+          <dp-date-picker
+            class="form-control"
+            formControlName="begin"
+            id="field_startDate"
+            [config]="dpConfig"
+            [displayDate]="editForm.get('begin')?.value"
+            mode="time"
+            theme="dp-material"
+          ></dp-date-picker>
+          <div>
+            @if (editForm.get('begin')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="global.messages.validate.field.required"> Your password is required. </small>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.end" for="field_end">End</label>
+          <dp-date-picker
+            class="form-control"
+            formControlName="end"
+            id="field_startDate"
+            [config]="dpConfig"
+            mode="time"
+            theme="dp-material"
+          ></dp-date-picker>
+          <div>
+            @if (editForm.get('end')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="global.messages.validate.field.required"> Your password is required. </small>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

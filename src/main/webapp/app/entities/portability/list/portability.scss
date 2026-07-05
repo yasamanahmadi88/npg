@@ -1,0 +1,113 @@
+﻿@import '../../../../content/scss/ngp_theme';
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card {
+  border: 1px solid map-get($npg-theme-color, C12) !important;
+  border-top: 2px solid map-get($npg-theme-color, C12) !important;
+  border-right: 2px solid map-get($npg-theme-color, C12) !important;
+  margin: -2.7% 0 0 0;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card-header {
+  display: block;
+  background-color: map-get($npg-theme-color, C11) !important;
+  color: white;
+  margin-bottom: 1%;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card-title {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card-title h2 {
+  margin-top: 8%;
+}
+
+.checkButton {
+  color: map-get($npg-theme-color, C11) !important;
+}
+
+.closeButton {
+  color: map-get($npg-theme-color, C21) !important;
+}
+
+.expand {
+  height: 500px;
+}
+
+.notExpand {
+  height: 6vh;
+}
+
+mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.searchButtons button {
+  margin: 0 3%;
+  padding: 10px 40px;
+  font-size: 17px;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 100%;
+  border: 1px solid;
+}
+
+mat-accordion {
+  border: none !important;
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+}
+
+::ng-deep dp-date-picker.dp-material .dp-picker-input {
+  border: 0 !important;
+}
+
+mat-expansion-panel-header {
+  background-color: map-get($npg-theme-color, C11) !important;
+}
+
+mat-panel-title {
+  font-size: 16px;
+  color: #ffffff !important;
+}
+
+.datePickerStyle {
+  ::ng-deep {
+    input {
+      font-size: 23px;
+      border: none;
+      margin: 0 1%;
+      color: #212121;
+      font-family: inherit;
+    }
+
+    input::placeholder {
+      color: #212121;
+      opacity: 0.6;
+    }
+  }
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 100%;
+}
+
+.mainCols {
+  display: table !important;
+}
+
+.excelStyle i {
+  font-size: 24px;
+  cursor: pointer !important;
+}

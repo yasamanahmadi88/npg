@@ -1,0 +1,26 @@
+{
+  "npgPortalApp": {
+    "offDay": {
+      "home": {
+        "title": "Off Days",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Off Day",
+        "createOrEditLabel": "Create or edit a Off Day",
+        "notFound": "No Off Days found"
+      },
+      "created": "A new Off Day is created with identifier {{ param }}",
+      "updated": "A Off Day is updated with identifier {{ param }}",
+      "deleted": "A Off Day is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Off Day {{ id }}?"
+      },
+      "detail": {
+        "title": "Off Day"
+      },
+      "id": "ID",
+      "offDate": "Off Date",
+      "fullOff": "Full Off",
+      "search": "Search"
+    }
+  }
+}

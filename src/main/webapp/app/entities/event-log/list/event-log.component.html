@@ -1,0 +1,244 @@
+@if (isLoading) {
+<jhi-overlay-loading></jhi-overlay-loading>
+}
+
+<mat-card appearance="outlined" *jhiHasPermission="['eventLog', 'view']">
+  <mat-card-header class="mb-2">
+    <mat-card-title>
+      <span jhiTranslate="npgPortalApp.eventLog.home.title">eventLog</span>
+    </mat-card-title>
+    <button mat-icon-button class="close-button" (click)="goHome()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="expanded">
+      <mat-expansion-panel-header (click)="checkExpanded()">
+        <mat-panel-title jhiTranslate="npgPortalApp.portability.portalSearch"></mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form [formGroup]="searchForm" (ngSubmit)="search()" style="min-height: 450px">
+        <table class="table table-striped" aria-describedby="showHealthLabel">
+          <tbody>
+            <!-- Row 1: Single Input -->
+            <tr>
+              <td class="d-flex justify-content-start">
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.requestId">Conversation Id</label>
+              </td>
+              <td>
+                <input class="form-control" type="text" formControlName="conversationId" />
+              </td>
+              <td colspan="7"></td>
+            </tr>
+
+            <!-- Row 2: Three Inputs -->
+            <tr>
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.source">Sender</label>
+              </td>
+              <td>
+                <mat-select class="form-control" formControlName="sender">
+                  <mat-option value=""></mat-option>
+                  <mat-option value="npg">NPG</mat-option>
+                  <mat-option value="CRDB">CRDB</mat-option>
+                  <mat-option value="CRM">CRM</mat-option>
+                </mat-select>
+              </td>
+
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.destination">Receiver</label>
+              </td>
+              <td>
+                <mat-select class="form-control" formControlName="receiver">
+                  <mat-option value=""></mat-option>
+                  <mat-option value="npg">NPG</mat-option>
+                  <mat-option value="CRM">CRM</mat-option>
+                  <mat-option value="IPCC">IPCC</mat-option>
+                  <mat-option value="CRDB">CRDB</mat-option>
+                  <mat-option value="SMS_SERVICE_PROVIDER">SMS_SERVICE_PROVIDER</mat-option>
+                </mat-select>
+              </td>
+
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.interface">Message</label>
+              </td>
+              <td>
+                <input class="form-control" type="text" formControlName="message" />
+              </td>
+            </tr>
+
+            <!-- Row 3: Select One of Three Options (Radio Buttons) -->
+            <tr>
+              <td colspan="7">
+                <mat-radio-group formControlName="flg0Ordinary1Exception" class="d-flex">
+                  <mat-radio-button class="mx-3" value="0">Ordinary</mat-radio-button>
+                  <mat-radio-button class="mx-3" value="1"> Exception</mat-radio-button>
+                  <mat-radio-button class="mx-3" value=""> Both</mat-radio-button>
+                </mat-radio-group>
+              </td>
+
+              <td colspan="5"></td>
+            </tr>
+
+            <!-- Row 4: Single Select -->
+            <tr>
+              <!--            <td>-->
+              <!--              <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.eventSource">Event Source</label>-->
+              <!--            </td>-->
+              <!--            <td colspan="5">-->
+              <!--              <mat-select class="form-control" formControlName="eventSource">-->
+              <!--                <mat-option value=""></mat-option>-->
+              <!--                <mat-option value="SYSTEM">SYSTEM</mat-option>-->
+              <!--                <mat-option value="USER">USER</mat-option>-->
+              <!--                <mat-option value="API">API</mat-option>-->
+              <!--              </mat-select>-->
+              <!--            </td>-->
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.httpStatus">HttpStatus </label>
+              </td>
+              <td>
+                <mat-select class="form-control" formControlName="httpStatus">
+                  <mat-option value=""></mat-option>
+                  <mat-option value="200 OK">200 OK</mat-option>
+                  <mat-option value="400 BAD_REQUEST">400 BAD_REQUEST</mat-option>
+                </mat-select>
+              </td>
+              <td colspan="5"></td>
+            </tr>
+
+            <!-- Row 5: Two Date Pickers -->
+            <tr>
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.dateFrom">Start Date</label>
+              </td>
+              <td>
+                <dp-date-picker
+                  class="form-control d-flex justify-content-start"
+                  formControlName="startDate"
+                  [config]="dpConfig"
+                  mode="day"
+                  theme="dp-material"
+                ></dp-date-picker>
+              </td>
+
+              <td>
+                <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.dateTo">End Date</label>
+              </td>
+              <td>
+                <dp-date-picker
+                  class="form-control d-flex justify-content-start"
+                  formControlName="endDate"
+                  [config]="dpConfig"
+                  mode="day"
+                  theme="dp-material"
+                ></dp-date-picker>
+              </td>
+              <td colspan="2"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center my-3">
+          <button class="btn btn-danger mr-2" type="button" (click)="clear()">
+            <fa-icon [icon]="'trash-alt'"></fa-icon>
+            <span jhiTranslate="global.actions.clear" class="d-none d-md-inline">Clear</span>
+          </button>
+          <button class="btn btn-primary" type="submit">
+            <fa-icon [icon]="'search'"></fa-icon>
+            <span jhiTranslate="global.actions.search" class="d-none d-md-inline">Search</span>
+          </button>
+        </div>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+  <mat-card-content>
+    @if (eventLogs?.length === 0 && isDataLoaded) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.eventLog.home.notFound">No eventLogs found</span>
+    </div>
+    }
+
+    <div class="example-container mat-elevation-z8" [hidden]="!eventLogs || (eventLogs && eventLogs.length === 0)">
+      <mat-table matSort matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" [hiddenColumns]="[6]" #empTbSort="matSort">
+        <!--        <ng-container matColumnDef="id">-->
+        <!--          <mat-header-cell mat-sort-header *matHeaderCellDef>-->
+        <!--            <span jhiTranslate="global.field.id"> id </span>-->
+        <!--          </mat-header-cell>-->
+        <!--          <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>-->
+        <!--        </ng-container>-->
+
+        <ng-container matColumnDef="conversationId">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.conversationId">Conversation Id</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="text-center"> {{ element.conversationId }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sender">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.sender">Sender</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="text-center"> {{ element.sender }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="receiver">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.receiver">Receiver</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.receiver }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="message">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.message">Message</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.message }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="flg0Ordinary1Exception">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.flg0Ordinary1Exception">Flg0Ordinary 1Exception</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.flg0Ordinary1Exception | eventLogStatusPipe }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="httpStatus">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.httpStatus">Http Status</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.httpStatus }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="insertTimestamp">
+          <mat-header-cell mat-sort-header *matHeaderCellDef>
+            <span jhiTranslate="npgPortalApp.eventLog.insertTimestamp">Insert Timestamp</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.insertTimestamp | formatMediumDatetime }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>
+            <span jhiTranslate="global.menu.entities.action">action</span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="action-cell">
+            <button
+              mat-icon-button
+              color="primary"
+              [routerLink]="['/event-log', element.id, 'view']"
+              data-cy="entityDetailsButton"
+              matTooltip="{{ 'entity.action.view' | translate }}"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+      <mat-paginator
+        [length]="totalItems"
+        (page)="loadPage($event)"
+        [pageSizeOptions]="[20, 50, 75, 100]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,7 @@
+<div class="modal-header bg-danger">
+  <h4 class="modal-title" jhiTranslate="login.error.permissionNeeded">Permission Needed!</h4>
+</div>
+<div class="modal-body text-warning d-flex">{{ description }}!</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')" jhiTranslate="login.error.close">OK</button>
+</div>

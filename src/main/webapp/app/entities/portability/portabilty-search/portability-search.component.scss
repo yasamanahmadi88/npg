@@ -1,0 +1,94 @@
+﻿@import '../../../../content/scss/ngp_theme';
+
+::ng-deep dp-date-picker.dp-material .dp-picker-input {
+  border: 0 !important;
+}
+
+mat-expansion-panel-header {
+  background-color: map-get($npg-theme-color, C11) !important;
+}
+
+mat-panel-title {
+  font-size: 16px;
+  color: #ffffff !important;
+}
+
+.datePickerStyle {
+  ::ng-deep {
+    input {
+      font-size: 23px;
+      border: none;
+      margin: 0 1%;
+      color: #212121;
+      font-family: inherit;
+    }
+
+    input::placeholder {
+      color: #212121;
+      opacity: 0.6;
+    }
+  }
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 60%;
+}
+
+.mainCols {
+  display: table !important;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+mat-card {
+  padding: 10px;
+  border: 1px solid !important;
+}
+
+mat-accordion {
+  border: none !important;
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+}
+
+table {
+  min-height: 400px;
+}
+
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
+mat-select {
+  width: 100%;
+  border: 1px solid;
+}
+
+table tr {
+  border: none;
+}
+
+.expand {
+  height: 600px;
+}
+
+.notExpand {
+  height: 6vh;
+}
+
+mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.searchButtons button {
+  margin: 0 3%;
+  padding: 10px 40px;
+  font-size: 17px;
+}
+
+.checkButton {
+  color: map-get($npg-theme-color, C11) !important;
+}
+
+.closeButton {
+  color: map-get($npg-theme-color, C21) !important;
+}
