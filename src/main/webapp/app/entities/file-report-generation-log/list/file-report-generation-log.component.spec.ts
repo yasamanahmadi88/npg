@@ -51,12 +51,13 @@ describe('Component Tests', () => {
       );
     });
 
-    it('Should initialize without loading from service', () => {
+    it('Should load initial data after view init', () => {
       // WHEN
-      comp.ngOnInit();
+      fixture.detectChanges();
 
       // THEN
-      expect(service.query).not.toHaveBeenCalled();
+      expect(service.query).toHaveBeenCalled();
+      expect(comp.fileReportGenerationLogs?.[0]).toEqual(expect.objectContaining({ id: 123 }));
     });
 
     it('should load a page', () => {

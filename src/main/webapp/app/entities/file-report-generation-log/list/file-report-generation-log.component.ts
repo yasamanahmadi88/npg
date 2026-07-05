@@ -92,8 +92,8 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   ngOnInit(): void {
     this.expanded = true;
-    this.isLoading = false;
   }
+
   ngAfterViewInit(): void {
     const sort = this.empTbSort;
 
@@ -106,6 +106,7 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
     }
 
     this.updatePaginator();
+    this.loadInitialData();
   }
 
   ngOnDestroy(): void {
@@ -175,15 +176,18 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   private loadInitialData(): void {
     this.isLoading = true;
+    this.isDataLoaded = false;
     this.buildQuery();
 
     this.fileReportGenerationLogService.query(this.query).subscribe({
       next: (res: HttpResponse<IFileReportGenerationLog[]>) => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onSuccess(res.body, res.headers);
       },
       error: () => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onError();
       },
     });
@@ -243,19 +247,8 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
   private onSuccess(data: IFileReportGenerationLog[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.fileReportGenerationLogs = data ?? [];
-    // eslint-disable-next-line no-console
-    console.log('Received data:', this.fileReportGenerationLogs);
-    this.fileReportGenerationLogs.forEach(log => {
-      // eslint-disable-next-line no-console
-      console.log('Converted reportDate to dayjs:', log.reportDate);
-    });
-
     this.dataSource.data = this.fileReportGenerationLogs;
-    // eslint-disable-next-line no-console
-    console.log('dataSource is : ----> ', this.dataSource.data);
-    this.isLoading = false;
     this.dataSource.paginator = null;
-    this.isLoading = false;
     this.updatePaginator();
   }
 
