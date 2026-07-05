@@ -42,7 +42,7 @@ const checkStatusRoute: Routes = [
     path: ':id/edit',
     component: CheckStatusUpdateComponent,
     data: {
-      params: ['checkStatus', 'view'],
+      params: ['checkStatus', 'edit'],
     },
     resolve: {
       checkStatus: CheckStatusRoutingResolveService,

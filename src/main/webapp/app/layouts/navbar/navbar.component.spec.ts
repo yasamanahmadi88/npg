@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { SessionStorageService } from 'ngx-webstorage';
 
 import { ProfileInfo } from 'app/layouts/profiles/profile-info.model';
 import { Account } from 'app/core/auth/account.model';
@@ -37,7 +38,18 @@ describe('Component Tests', () => {
         TestBed.configureTestingModule({
           imports: [HttpClientTestingModule, TranslateModule.forRoot()],
           declarations: [NavbarComponent],
-          providers: [Router, LoginService],
+          providers: [
+            Router,
+            LoginService,
+            {
+              provide: SessionStorageService,
+              useValue: {
+                retrieve: jest.fn(),
+                store: jest.fn(),
+                clear: jest.fn(),
+              },
+            },
+          ],
         })
           .overrideTemplate(NavbarComponent, '')
           .compileComponents();

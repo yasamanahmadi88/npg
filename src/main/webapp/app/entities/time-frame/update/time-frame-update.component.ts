@@ -117,11 +117,11 @@ export class TimeFrameUpdateComponent implements OnInit {
   protected createFromForm(): ITimeFrame {
     const startDayH = moment(this.editForm.get(['begin'])!.value).hours() * 3600 * 1000;
     const startDayM = moment(this.editForm.get(['begin'])!.value).minutes() * 60 * 1000;
-    const startDayS = moment(this.editForm.get(['begin'])!.value).hours() * 1000;
+    const startDayS = moment(this.editForm.get(['begin'])!.value).seconds() * 1000;
     const startDay = Number(startDayH) + Number(startDayM) + Number(startDayS);
     const endDayH = moment(this.editForm.get(['end'])!.value).hours() * 3600 * 1000;
     const endDayM = moment(this.editForm.get(['end'])!.value).minutes() * 60 * 1000;
-    const endDayS = moment(this.editForm.get(['end'])!.value).hours() * 1000;
+    const endDayS = moment(this.editForm.get(['end'])!.value).seconds() * 1000;
     const endDay = Number(endDayH) + Number(endDayM) + Number(endDayS);
     return {
       ...new TimeFrame(),

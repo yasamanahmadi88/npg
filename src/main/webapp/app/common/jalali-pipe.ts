@@ -10,8 +10,11 @@ export class JalaliFormatterPipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    const format_ = args ? args[0] : 'YYYY-MM-DD';
-    const MomentDate = jmoment(value, format_);
-    return MomentDate.locale('fa').format(format_);
+    const format = args ? args[0] : 'YYYY-MM-DD';
+    const parsed = jmoment(value);
+    if (!parsed.isValid()) {
+      return '';
+    }
+    return parsed.locale('fa').format(format);
   }
 }

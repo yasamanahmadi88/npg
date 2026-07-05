@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { DayOfWeekTimeFrameDetailComponent } from './day-of-week-time-frame-detail.component';
 
 describe('Component Tests', () => {
@@ -11,6 +13,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
+        imports: [TranslateModule.forRoot()],
         declarations: [DayOfWeekTimeFrameDetailComponent],
         providers: [
           {

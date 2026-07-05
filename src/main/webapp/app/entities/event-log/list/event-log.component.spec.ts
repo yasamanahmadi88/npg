@@ -6,6 +6,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { EventLogService } from '../service/event-log.service';
 
 import { EventLogComponent } from './event-log.component';
@@ -18,7 +20,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, TranslateModule.forRoot()],
         declarations: [EventLogComponent],
         providers: [
           { provide: Router, useValue: { navigate: jest.fn() } },

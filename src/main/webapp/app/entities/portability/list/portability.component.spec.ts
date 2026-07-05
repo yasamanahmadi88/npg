@@ -6,6 +6,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+import { FormBuilder } from '@angular/forms';
+
 import { PortabilityService } from '../service/portability.service';
 
 import { PortabilityComponent } from './portability.component';
@@ -18,10 +21,11 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, TranslateModule.forRoot()],
         declarations: [PortabilityComponent],
         providers: [
           Router,
+          FormBuilder,
           {
             provide: ActivatedRoute,
             useValue: {

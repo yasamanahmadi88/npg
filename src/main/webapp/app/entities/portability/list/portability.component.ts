@@ -112,13 +112,14 @@ export class PortabilityComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ portability }) => {
-      if (portability.length > 0) {
+      if (portability && Array.isArray(portability) && portability.length > 0) {
         this.portabilities = portability;
         this.portability = portability;
       } else {
         this.portabilities = [];
+        this.portability = [];
       }
-      this.dataSource = new MatTableDataSource<IPortability>(this.portability);
+      this.dataSource = new MatTableDataSource<IPortability>(this.portability ?? []);
     });
   }
 

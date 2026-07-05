@@ -7,6 +7,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { DayOfWeekTimeFrameService } from '../service/day-of-week-time-frame.service';
 import { IDayOfWeekTimeFrame, DayOfWeekTimeFrame } from '../day-of-week-time-frame.model';
 
@@ -21,7 +23,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, TranslateModule.forRoot()],
         declarations: [DayOfWeekTimeFrameUpdateComponent],
         providers: [FormBuilder, ActivatedRoute],
       })

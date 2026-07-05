@@ -24,21 +24,24 @@ export class HasPermissionDirective implements OnDestroy {
   @Input()
   set jhiHasPermission(val: any) {
     this.params = val;
+    this.subscribeToAuthChanges();
     this.updateView();
-    this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
   }
 
   @Input()
   set jhiHasPermissionOp(permop: any) {
     this.logicalOp = permop;
+    this.subscribeToAuthChanges();
     this.updateView();
-    this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
   }
 
   ngOnDestroy(): void {
-    if (this.authenticationSubscription) {
-      this.authenticationSubscription.unsubscribe();
-    }
+    this.authenticationSubscription?.unsubscribe();
+  }
+
+  private subscribeToAuthChanges(): void {
+    this.authenticationSubscription?.unsubscribe();
+    this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
   }
 
   private updateView(): void {

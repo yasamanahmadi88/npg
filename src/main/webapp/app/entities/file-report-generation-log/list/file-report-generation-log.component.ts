@@ -141,9 +141,10 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
     this.buildQuery();
     this.fileReportGenerationLogService.query(this.query).subscribe({
       next: (res: HttpResponse<IFileReportGenerationLog[]>) => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.isDataLoaded = true;
         this.onSuccess(res.body, res.headers);
+        this.paginator?.firstPage();
       },
       error: () => {
         this.isLoading = false;

@@ -47,7 +47,7 @@ describe('Component Tests', () => {
       service = TestBed.inject(ResourceAuthorityService);
 
       const headers = new HttpHeaders().append('link', 'link;link');
-      spyOn(service, 'query').and.returnValue(
+      jest.spyOn(service, 'query').mockReturnValue(
         of(
           new HttpResponse({
             body: [{ id: 123 }],

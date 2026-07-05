@@ -19,6 +19,17 @@ const portabilityRoute: Routes = [
     canActivate: [AuthActivateService],
   },
   {
+    path: 'new',
+    component: PortabilityUpdateComponent,
+    resolve: {
+      portability: PortabilityRoutingResolveService,
+    },
+    data: {
+      params: ['portability', 'create'],
+    },
+    canActivate: [AuthActivateService],
+  },
+  {
     path: ':porRequestId/view',
     component: PortabilityDetailComponent,
     resolve: {
@@ -37,17 +48,6 @@ const portabilityRoute: Routes = [
     },
     data: {
       params: ['portability', 'view'],
-    },
-    canActivate: [AuthActivateService],
-  },
-  {
-    path: 'new',
-    component: PortabilityUpdateComponent,
-    resolve: {
-      portability: PortabilityRoutingResolveService,
-    },
-    data: {
-      params: ['portability', 'create'],
     },
     canActivate: [AuthActivateService],
   },

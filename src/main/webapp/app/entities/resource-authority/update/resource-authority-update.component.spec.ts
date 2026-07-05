@@ -46,10 +46,10 @@ describe('Component Tests', () => {
         resourceAuthority.resource = resource;
 
         const resourceCollection: IResource[] = [{ id: 72184 }];
-        spyOn(resourceService, 'queryAll').and.returnValue(of(new HttpResponse({ body: resourceCollection })));
+        jest.spyOn(resourceService, 'queryAll').mockReturnValue(of(new HttpResponse({ body: resourceCollection })));
         const additionalResources = [resource];
         const expectedCollection: IResource[] = [...additionalResources, ...resourceCollection];
-        spyOn(resourceService, 'addResourceToCollectionIfMissing').and.returnValue(expectedCollection);
+        jest.spyOn(resourceService, 'addResourceToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ resourceAuthority });
         comp.ngOnInit();
@@ -75,10 +75,10 @@ describe('Component Tests', () => {
     describe('save', () => {
       it('Should call update service on save for existing entity', () => {
         // GIVEN
-        const saveSubject = new Subject();
+        const saveSubject = new Subject<HttpResponse<IResourceAuthority>>();
         const resourceAuthority = { id: 123 };
-        spyOn(resourceAuthorityService, 'update').and.returnValue(saveSubject);
-        spyOn(comp, 'previousState');
+        jest.spyOn(resourceAuthorityService, 'update').mockReturnValue(saveSubject);
+        jest.spyOn(comp, 'previousState');
         activatedRoute.data = of({ resourceAuthority });
         comp.ngOnInit();
 
@@ -96,10 +96,10 @@ describe('Component Tests', () => {
 
       it('Should call create service on save for new entity', () => {
         // GIVEN
-        const saveSubject = new Subject();
+        const saveSubject = new Subject<HttpResponse<IResourceAuthority>>();
         const resourceAuthority = new ResourceAuthority();
-        spyOn(resourceAuthorityService, 'create').and.returnValue(saveSubject);
-        spyOn(comp, 'previousState');
+        jest.spyOn(resourceAuthorityService, 'create').mockReturnValue(saveSubject);
+        jest.spyOn(comp, 'previousState');
         activatedRoute.data = of({ resourceAuthority });
         comp.ngOnInit();
 
@@ -117,10 +117,10 @@ describe('Component Tests', () => {
 
       it('Should set isSaving to false on error', () => {
         // GIVEN
-        const saveSubject = new Subject();
+        const saveSubject = new Subject<HttpResponse<IResourceAuthority>>();
         const resourceAuthority = { id: 123 };
-        spyOn(resourceAuthorityService, 'update').and.returnValue(saveSubject);
-        spyOn(comp, 'previousState');
+        jest.spyOn(resourceAuthorityService, 'update').mockReturnValue(saveSubject);
+        jest.spyOn(comp, 'previousState');
         activatedRoute.data = of({ resourceAuthority });
         comp.ngOnInit();
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
@@ -77,11 +77,14 @@ export class NavbarComponent implements OnInit {
   }
 
   checkEnter(): void {
-    document.addEventListener('keypress', x => {
-      if (x.key === 'Enter') {
-        this.router.navigate(['./portability', this.searchedNumber]);
-        this.searchedNumber = undefined;
-      }
-    });
+    // handled by keypress listener
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  onDocumentKeypress(event: KeyboardEvent): void {
+    if (event.key === 'Enter' && this.searchedNumber) {
+      this.router.navigate(['./portability', this.searchedNumber]);
+      this.searchedNumber = undefined;
+    }
   }
 }

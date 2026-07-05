@@ -7,7 +7,10 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { TimeFrameService } from '../service/time-frame.service';
+import { OffDayService } from '../../off-day/service/off-day.service';
 import { ITimeFrame, TimeFrame } from '../time-frame.model';
 
 import { TimeFrameUpdateComponent } from './time-frame-update.component';
@@ -21,9 +24,18 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
+        imports: [HttpClientTestingModule, TranslateModule.forRoot()],
         declarations: [TimeFrameUpdateComponent],
-        providers: [FormBuilder, ActivatedRoute],
+        providers: [
+          FormBuilder,
+          ActivatedRoute,
+          {
+            provide: OffDayService,
+            useValue: {
+              queryAll: () => of(new HttpResponse({ body: [] })),
+            },
+          },
+        ],
       })
         .overrideTemplate(TimeFrameUpdateComponent, '')
         .compileComponents();

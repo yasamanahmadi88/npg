@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { AuthActivateService } from 'app/core/auth/auth-activate.service';
 import { FileReportGenerationLogComponent } from '../list/file-report-generation-log.component';
 import { FileReportGenerationLogDetailComponent } from '../detail/file-report-generation-log-detail.component';
 import { FileReportGenerationLogUpdateComponent } from '../update/file-report-generation-log-update.component';
@@ -13,8 +13,9 @@ const fileReportGenerationLogRoute: Routes = [
     component: FileReportGenerationLogComponent,
     data: {
       defaultSort: 'id,asc',
+      params: ['fileReportGenerationLog', 'view'],
     },
-    canActivate: [UserRouteAccessService],
+    canActivate: [AuthActivateService],
   },
   {
     path: ':id/view',
@@ -22,7 +23,10 @@ const fileReportGenerationLogRoute: Routes = [
     resolve: {
       fileReportGenerationLog: FileReportGenerationLogRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+    data: {
+      params: ['fileReportGenerationLog', 'view'],
+    },
+    canActivate: [AuthActivateService],
   },
   {
     path: 'new',
@@ -30,7 +34,10 @@ const fileReportGenerationLogRoute: Routes = [
     resolve: {
       fileReportGenerationLog: FileReportGenerationLogRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+    data: {
+      params: ['fileReportGenerationLog', 'create'],
+    },
+    canActivate: [AuthActivateService],
   },
   {
     path: ':id/edit',
@@ -38,7 +45,10 @@ const fileReportGenerationLogRoute: Routes = [
     resolve: {
       fileReportGenerationLog: FileReportGenerationLogRoutingResolveService,
     },
-    canActivate: [UserRouteAccessService],
+    data: {
+      params: ['fileReportGenerationLog', 'edit'],
+    },
+    canActivate: [AuthActivateService],
   },
 ];
 
