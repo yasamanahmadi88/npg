@@ -17,5 +17,4 @@ export const SERVER_API_URL =
 export const TIMESTAMP =
   typeof __TIMESTAMP__ !== 'undefined' ? String(__TIMESTAMP__) : String(Date.now());
 
-// export const BackUrl = 'http://192.168.21.208:8080';
-export const BackUrl = 'https://tnpg.mci.ir';
+export const BackUrl = SERVER_API_URL || 'https://tnpg.mci.ir';

@@ -1,11 +1,26 @@
-function setupProxy({ tls }) {
-  const serverResources = ['/api', '/services', '/management', '/v3/api-docs', '/h2-console', '/health'];
+// webpack/proxy.conf.js
+// Forwards backend API paths to Spring Boot during ng serve.
+
+function setupProxy({ tls = false } = {}) {
+  const protocol = tls ? 'https' : 'http';
+  const target = `${protocol}://localhost:8080`;
+
+  const serverResources = [
+    '/api',
+    '/services',
+    '/management',
+    '/swagger-resources',
+    '/v3/api-docs',
+    '/h2-console',
+  ];
+
   return [
     {
       context: serverResources,
-      target: `http${tls ? 's' : ''}://localhost:8080`,
+      target,
       secure: false,
-      changeOrigin: tls,
+      changeOrigin: Boolean(tls),
+      logLevel: 'debug',
     },
   ];
 }
