@@ -44,9 +44,10 @@ export class AuthActivateService {
         let hasPerm = false;
         if (this.accountService.userIdentity?.resourceAuthorities) {
           for (const resAuth of this.accountService.userIdentity.resourceAuthorities) {
+            const resourceName = String(resAuth.resource?.name ?? resAuth.resourceName ?? '').toUpperCase();
             if (
               this.params &&
-              this.params[0]?.toUpperCase() === resAuth.resource?.name?.toUpperCase() &&
+              this.params[0]?.toUpperCase() === resourceName &&
               this.params[1]?.toUpperCase() === resAuth.verb?.toUpperCase()
             ) {
               hasPerm = true;
