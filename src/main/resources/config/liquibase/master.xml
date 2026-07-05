@@ -39,5 +39,6 @@
     <include file="config/liquibase/changelog/20210203133525_added_entity_constraints_ResourceAuthority.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="config/liquibase/changelog/20260628000100_add_file_report_generation_log_permission.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260705000100_seed_rbac_resources_and_grants.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

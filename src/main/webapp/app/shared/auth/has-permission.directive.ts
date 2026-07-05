@@ -1,35 +1,27 @@
 import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
-import { Router } from '@angular/router';
 
 @Directive({
   selector: '[jhiHasPermission]',
   standalone: false,
 })
 export class HasPermissionDirective implements OnDestroy {
-  private logicalOp = 'AND';
   private authenticationSubscription?: Subscription;
-  private params?: any[];
+  private resourceName?: string;
+  private verb?: string;
   private isHidden = true;
 
   constructor(
     private accountService: AccountService,
-    protected router: Router,
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef
   ) {}
 
   @Input()
-  set jhiHasPermission(val: any) {
-    this.params = val;
-    this.updateView();
-    this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
-  }
-
-  @Input()
-  set jhiHasPermissionOp(permop: any) {
-    this.logicalOp = permop;
+  set jhiHasPermission(val: string[]) {
+    this.resourceName = val?.[0];
+    this.verb = val?.[1];
     this.updateView();
     this.authenticationSubscription = this.accountService.getAuthenticationState().subscribe(() => this.updateView());
   }
@@ -49,25 +41,14 @@ export class HasPermissionDirective implements OnDestroy {
     } else {
       this.isHidden = true;
       this.viewContainerRef.clear();
-      // this.router.navigate(['/not-permitted/forbidden']);
     }
   }
 
-  private checkPermission(): any {
-    let hasPermission = false;
-    const resources = this.accountService.userIdentity?.resourceAuthorities;
-    if (resources) {
-      for (const resAuth of resources) {
-        if (
-          this.params &&
-          this.params[0]?.toUpperCase().trim() === resAuth.resource?.name?.trim()?.toUpperCase() &&
-          this.params[1]?.toUpperCase().trim() === String(resAuth.verb).toUpperCase()
-        ) {
-          hasPermission = true;
-          break;
-        }
-      }
+  private checkPermission(): boolean {
+    if (!this.resourceName || !this.verb) {
+      return false;
     }
-    return hasPermission;
+
+    return this.accountService.hasResourcePermission(this.resourceName, this.verb);
   }
 }

@@ -2,7 +2,7 @@ package ix.portal.npg.config;
 
 import ix.portal.npg.security.AuthoritiesConstants;
 import ix.portal.npg.security.SecurityCache;
-import ix.portal.npg.security.jwt.JWTConfigurer;
+import ix.portal.npg.security.jwt.JWTFilter;
 import ix.portal.npg.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -101,14 +101,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .anyRequest().permitAll()
             )
-            .httpBasic(httpBasic -> {});
-
-        http.apply(securityConfigurerAdapter());
+            .addFilterBefore(new JWTFilter(tokenProvider, securityCache), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider, securityCache);
     }
 }

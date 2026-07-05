@@ -55,10 +55,9 @@ public class JWTFilter extends GenericFilterBean {
         if (!isPublicRequest(requestUri)) {
             if (jwt == null || sessionInfo == null) {
                 HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-                httpResponse.setContentType("text/plain");
+                httpResponse.setContentType("text/plain;charset=UTF-8");
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 httpResponse.getWriter().append("error.npg.token.empty");
-                httpResponse.sendRedirect("/login");
                 flag = false;
             } else if (!sessionInfo.getValidToken()) {
                 HttpServletResponse httpServletResponse = ((HttpServletResponse) servletResponse);

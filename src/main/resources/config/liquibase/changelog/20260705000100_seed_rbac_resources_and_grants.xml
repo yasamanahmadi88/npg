@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Seed jhi_resource rows used by @Secured("resourceName") and frontend *jhiHasPermission -->
+    <changeSet id="20260705000100-1-seed-rbac-resource-portability" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'portability'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="portability"/>
+            <column name="display_name" value="Portability"/>
+            <column name="api_uri" value="api/portabilities"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-timeFrame" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'timeFrame'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="timeFrame"/>
+            <column name="display_name" value="Time Frame"/>
+            <column name="api_uri" value="api/time-frames"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-undifinedStatus" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'undifinedStatus'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="undifinedStatus"/>
+            <column name="display_name" value="Undefined Status"/>
+            <column name="api_uri" value="api/undifined-statuses"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-setting" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'setting'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="setting"/>
+            <column name="display_name" value="Setting"/>
+            <column name="api_uri" value="api/settings"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-checkStatus" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'checkStatus'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="checkStatus"/>
+            <column name="display_name" value="Check Status"/>
+            <column name="api_uri" value="api/check-statuses"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-crmToCrdbResponseMap" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'crmToCrdbResponseMap'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="crmToCrdbResponseMap"/>
+            <column name="display_name" value="CRM To CRDB Response Map"/>
+            <column name="api_uri" value="api/crm-to-crdb-response-maps"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-businessConfig" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'businessConfig'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="businessConfig"/>
+            <column name="display_name" value="Business Config"/>
+            <column name="api_uri" value="api/business-configs"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-offDay" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'offDay'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="offDay"/>
+            <column name="display_name" value="Off Day"/>
+            <column name="api_uri" value="api/off-days"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-portabilityLog" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'portabilityLog'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="portabilityLog"/>
+            <column name="display_name" value="Portability Log"/>
+            <column name="api_uri" value="api/portability-logs"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-notificationTemplate" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'notificationTemplate'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="notificationTemplate"/>
+            <column name="display_name" value="Notification Template"/>
+            <column name="api_uri" value="api/notification-templates"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-dayOfWeekTimeFrame" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'dayOfWeekTimeFrame'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="dayOfWeekTimeFrame"/>
+            <column name="display_name" value="Day Of Week Time Frame"/>
+            <column name="api_uri" value="api/day-of-week-time-frames"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-eventLog" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'eventLog'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="eventLog"/>
+            <column name="display_name" value="Event Log"/>
+            <column name="api_uri" value="api/event-logs"/>
+            <column name="resource_type" value="DOMAIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-authority" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'authority'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="authority"/>
+            <column name="display_name" value="Authority"/>
+            <column name="api_uri" value="api/authorities"/>
+            <column name="resource_type" value="ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-resource" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'resource'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="resource"/>
+            <column name="display_name" value="Resource"/>
+            <column name="api_uri" value="api/resources"/>
+            <column name="resource_type" value="ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20260705000100-1-seed-rbac-resource-resourceAuthority" author="security-rbac">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM jhi_resource WHERE name = 'resourceAuthority'</sqlCheck>
+        </preConditions>
+        <insert tableName="jhi_resource">
+            <column name="id" valueSequenceNext="RESRC_SEQ"/>
+            <column name="name" value="resourceAuthority"/>
+            <column name="display_name" value="Resource Authority"/>
+            <column name="api_uri" value="api/resource-authorities"/>
+            <column name="resource_type" value="ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <!-- ROLE_ADMIN: full CRUD on all domain/admin resources (H2) -->
+    <changeSet id="20260705000100-2-grant-admin-crud-h2" author="security-rbac" dbms="h2">
+        <sql>
+            INSERT INTO jhi_resource_authority (id, verb, authority_id, resource_id)
+            SELECT NEXT VALUE FOR RES_AUTH_SEQ, verbs.verb, auth.id, res.id
+            FROM jhi_authority auth
+            CROSS JOIN jhi_resource res
+            CROSS JOIN (VALUES ('VIEW'), ('CREATE'), ('EDIT'), ('DELETE')) AS verbs(verb)
+            WHERE auth.name = 'ROLE_ADMIN'
+              AND res.name IN (
+                'portability', 'timeFrame', 'undifinedStatus', 'setting', 'checkStatus',
+                'crmToCrdbResponseMap', 'businessConfig', 'offDay', 'portabilityLog',
+                'notificationTemplate', 'dayOfWeekTimeFrame', 'fileReportGenerationLog', 'eventLog',
+                'authority', 'resource', 'resourceAuthority'
+              )
+              AND NOT EXISTS (
+                SELECT 1 FROM jhi_resource_authority existing
+                WHERE existing.authority_id = auth.id
+                  AND existing.resource_id = res.id
+                  AND existing.verb = verbs.verb
+              );
+        </sql>
+    </changeSet>
+
+    <!-- ROLE_ADMIN: full CRUD on all domain/admin resources (Oracle) -->
+    <changeSet id="20260705000100-2-grant-admin-crud-oracle" author="security-rbac" dbms="oracle">
+        <sql>
+            INSERT INTO jhi_resource_authority (id, verb, authority_id, resource_id)
+            SELECT RES_AUTH_SEQ.NEXTVAL, verbs.verb, auth.id, res.id
+            FROM jhi_authority auth
+            CROSS JOIN jhi_resource res
+            CROSS JOIN (
+                SELECT 'VIEW' AS verb FROM dual UNION ALL
+                SELECT 'CREATE' FROM dual UNION ALL
+                SELECT 'EDIT' FROM dual UNION ALL
+                SELECT 'DELETE' FROM dual
+            ) verbs
+            WHERE auth.name = 'ROLE_ADMIN'
+              AND res.name IN (
+                'portability', 'timeFrame', 'undifinedStatus', 'setting', 'checkStatus',
+                'crmToCrdbResponseMap', 'businessConfig', 'offDay', 'portabilityLog',
+                'notificationTemplate', 'dayOfWeekTimeFrame', 'fileReportGenerationLog', 'eventLog',
+                'authority', 'resource', 'resourceAuthority'
+              )
+              AND NOT EXISTS (
+                SELECT 1 FROM jhi_resource_authority existing
+                WHERE existing.authority_id = auth.id
+                  AND existing.resource_id = res.id
+                  AND existing.verb = verbs.verb
+              );
+        </sql>
+    </changeSet>
+
+    <!-- ROLE_USER: operational permissions for standard portal users (H2) -->
+    <changeSet id="20260705000100-3-grant-user-permissions-h2" author="security-rbac" dbms="h2">
+        <sql>
+            INSERT INTO jhi_resource_authority (id, verb, authority_id, resource_id)
+            SELECT NEXT VALUE FOR RES_AUTH_SEQ, grants.verb, auth.id, res.id
+            FROM jhi_authority auth
+            CROSS JOIN jhi_resource res
+            CROSS JOIN (
+                VALUES
+                    ('portability', 'VIEW'),
+                    ('portability', 'EDIT'),
+                    ('portability', 'DELETE'),
+                    ('timeFrame', 'VIEW'),
+                    ('timeFrame', 'CREATE'),
+                    ('timeFrame', 'EDIT'),
+                    ('timeFrame', 'DELETE'),
+                    ('undifinedStatus', 'VIEW'),
+                    ('setting', 'VIEW'),
+                    ('setting', 'EDIT'),
+                    ('setting', 'DELETE'),
+                    ('checkStatus', 'VIEW'),
+                    ('checkStatus', 'CREATE'),
+                    ('checkStatus', 'EDIT'),
+                    ('checkStatus', 'DELETE'),
+                    ('crmToCrdbResponseMap', 'VIEW'),
+                    ('crmToCrdbResponseMap', 'CREATE'),
+                    ('crmToCrdbResponseMap', 'EDIT'),
+                    ('crmToCrdbResponseMap', 'DELETE'),
+                    ('businessConfig', 'VIEW'),
+                    ('businessConfig', 'CREATE'),
+                    ('businessConfig', 'EDIT'),
+                    ('businessConfig', 'DELETE'),
+                    ('offDay', 'VIEW'),
+                    ('offDay', 'CREATE'),
+                    ('offDay', 'EDIT'),
+                    ('offDay', 'DELETE'),
+                    ('portabilityLog', 'VIEW'),
+                    ('notificationTemplate', 'VIEW'),
+                    ('notificationTemplate', 'CREATE'),
+                    ('notificationTemplate', 'EDIT'),
+                    ('notificationTemplate', 'DELETE'),
+                    ('dayOfWeekTimeFrame', 'VIEW'),
+                    ('dayOfWeekTimeFrame', 'CREATE'),
+                    ('dayOfWeekTimeFrame', 'EDIT'),
+                    ('dayOfWeekTimeFrame', 'DELETE'),
+                    ('fileReportGenerationLog', 'VIEW'),
+                    ('eventLog', 'VIEW')
+            ) AS grants(resource_name, verb)
+            WHERE auth.name = 'ROLE_USER'
+              AND res.name = grants.resource_name
+              AND NOT EXISTS (
+                SELECT 1 FROM jhi_resource_authority existing
+                WHERE existing.authority_id = auth.id
+                  AND existing.resource_id = res.id
+                  AND existing.verb = grants.verb
+              );
+        </sql>
+    </changeSet>
+
+    <!-- ROLE_USER: operational permissions for standard portal users (Oracle) -->
+    <changeSet id="20260705000100-3-grant-user-permissions-oracle" author="security-rbac" dbms="oracle">
+        <sql>
+            INSERT INTO jhi_resource_authority (id, verb, authority_id, resource_id)
+            SELECT RES_AUTH_SEQ.NEXTVAL, grants.verb, auth.id, res.id
+            FROM jhi_authority auth
+            CROSS JOIN jhi_resource res
+            CROSS JOIN (
+                SELECT 'portability' AS resource_name, 'VIEW' AS verb FROM dual UNION ALL
+                SELECT 'portability', 'EDIT' FROM dual UNION ALL
+                SELECT 'portability', 'DELETE' FROM dual UNION ALL
+                SELECT 'timeFrame', 'VIEW' FROM dual UNION ALL
+                SELECT 'timeFrame', 'CREATE' FROM dual UNION ALL
+                SELECT 'timeFrame', 'EDIT' FROM dual UNION ALL
+                SELECT 'timeFrame', 'DELETE' FROM dual UNION ALL
+                SELECT 'undifinedStatus', 'VIEW' FROM dual UNION ALL
+                SELECT 'setting', 'VIEW' FROM dual UNION ALL
+                SELECT 'setting', 'EDIT' FROM dual UNION ALL
+                SELECT 'setting', 'DELETE' FROM dual UNION ALL
+                SELECT 'checkStatus', 'VIEW' FROM dual UNION ALL
+                SELECT 'checkStatus', 'CREATE' FROM dual UNION ALL
+                SELECT 'checkStatus', 'EDIT' FROM dual UNION ALL
+                SELECT 'checkStatus', 'DELETE' FROM dual UNION ALL
+                SELECT 'crmToCrdbResponseMap', 'VIEW' FROM dual UNION ALL
+                SELECT 'crmToCrdbResponseMap', 'CREATE' FROM dual UNION ALL
+                SELECT 'crmToCrdbResponseMap', 'EDIT' FROM dual UNION ALL
+                SELECT 'crmToCrdbResponseMap', 'DELETE' FROM dual UNION ALL
+                SELECT 'businessConfig', 'VIEW' FROM dual UNION ALL
+                SELECT 'businessConfig', 'CREATE' FROM dual UNION ALL
+                SELECT 'businessConfig', 'EDIT' FROM dual UNION ALL
+                SELECT 'businessConfig', 'DELETE' FROM dual UNION ALL
+                SELECT 'offDay', 'VIEW' FROM dual UNION ALL
+                SELECT 'offDay', 'CREATE' FROM dual UNION ALL
+                SELECT 'offDay', 'EDIT' FROM dual UNION ALL
+                SELECT 'offDay', 'DELETE' FROM dual UNION ALL
+                SELECT 'portabilityLog', 'VIEW' FROM dual UNION ALL
+                SELECT 'notificationTemplate', 'VIEW' FROM dual UNION ALL
+                SELECT 'notificationTemplate', 'CREATE' FROM dual UNION ALL
+                SELECT 'notificationTemplate', 'EDIT' FROM dual UNION ALL
+                SELECT 'notificationTemplate', 'DELETE' FROM dual UNION ALL
+                SELECT 'dayOfWeekTimeFrame', 'VIEW' FROM dual UNION ALL
+                SELECT 'dayOfWeekTimeFrame', 'CREATE' FROM dual UNION ALL
+                SELECT 'dayOfWeekTimeFrame', 'EDIT' FROM dual UNION ALL
+                SELECT 'dayOfWeekTimeFrame', 'DELETE' FROM dual UNION ALL
+                SELECT 'fileReportGenerationLog', 'VIEW' FROM dual UNION ALL
+                SELECT 'eventLog', 'VIEW' FROM dual
+            ) grants
+            WHERE auth.name = 'ROLE_USER'
+              AND res.name = grants.resource_name
+              AND NOT EXISTS (
+                SELECT 1 FROM jhi_resource_authority existing
+                WHERE existing.authority_id = auth.id
+                  AND existing.resource_id = res.id
+                  AND existing.verb = grants.verb
+              );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

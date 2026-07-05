@@ -66,6 +66,7 @@ public class FileReportGenerationLogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/file-report-generation-logs")
+    @Secured(ENTITY_NAME)
     public ResponseEntity<FileReportGenerationLogDTO> createFileReportGenerationLog(
         @Valid @RequestBody FileReportGenerationLogDTO fileReportGenerationLogDTO
     ) throws URISyntaxException {
@@ -91,6 +92,7 @@ public class FileReportGenerationLogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/file-report-generation-logs/{id}")
+    @Secured(ENTITY_NAME)
     public ResponseEntity<FileReportGenerationLogDTO> updateFileReportGenerationLog(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody FileReportGenerationLogDTO fileReportGenerationLogDTO

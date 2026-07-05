@@ -12,7 +12,7 @@ const dayOfWeekTimeFrameRoute: Routes = [
     component: DayOfWeekTimeFrameComponent,
     data: {
       defaultSort: 'id,asc',
-      params: ['DayOfWeekTimeFrame', 'view'],
+      params: ['dayOfWeekTimeFrame', 'view'],
     },
     canActivate: [AuthActivateService],
   },

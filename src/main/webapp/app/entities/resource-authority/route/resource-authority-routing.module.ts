@@ -12,7 +12,7 @@ const resourceAuthorityRoute: Routes = [
     component: ResourceAuthorityComponent,
     data: {
       defaultSort: 'id,asc',
-      params: ['ResourceAuthority', 'view'],
+      params: ['resourceAuthority', 'view'],
     },
     canActivate: [AuthActivateService],
   },
@@ -23,7 +23,7 @@ const resourceAuthorityRoute: Routes = [
       resourceAuthority: ResourceAuthorityRoutingResolveService,
     },
     data: {
-      params: ['ResourceAuthority', 'view'],
+      params: ['resourceAuthority', 'view'],
     },
     canActivate: [AuthActivateService],
   },
@@ -34,7 +34,7 @@ const resourceAuthorityRoute: Routes = [
       resourceAuthority: ResourceAuthorityRoutingResolveService,
     },
     data: {
-      params: ['ResourceAuthority', 'create'],
+      params: ['resourceAuthority', 'create'],
     },
     canActivate: [AuthActivateService],
   },
@@ -45,7 +45,7 @@ const resourceAuthorityRoute: Routes = [
       resourceAuthority: ResourceAuthorityRoutingResolveService,
     },
     data: {
-      params: ['ResourceAuthority', 'edit'],
+      params: ['resourceAuthority', 'edit'],
     },
     canActivate: [AuthActivateService],
   },

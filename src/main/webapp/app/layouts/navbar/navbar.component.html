@@ -216,6 +216,7 @@
               routerLink="/file-report-generation-log"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
+              *jhiHasPermission="['fileReportGenerationLog', 'view']"
               (click)="collapseNavbar()"
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>

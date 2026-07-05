@@ -112,8 +112,9 @@ class JWTFilterTest {
 
         jwtFilter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-        assertThat(response.getRedirectedUrl()).isEqualTo("/login");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(response.getRedirectedUrl()).isNull();
+        assertThat(response.getContentAsString()).isEqualTo("error.npg.token.empty");
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
@@ -128,8 +129,9 @@ class JWTFilterTest {
 
         jwtFilter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-        assertThat(response.getRedirectedUrl()).isEqualTo("/login");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(response.getRedirectedUrl()).isNull();
+        assertThat(response.getContentAsString()).isEqualTo("error.npg.token.empty");
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
@@ -145,8 +147,9 @@ class JWTFilterTest {
 
         jwtFilter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-        assertThat(response.getRedirectedUrl()).isEqualTo("/login");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(response.getRedirectedUrl()).isNull();
+        assertThat(response.getContentAsString()).isEqualTo("error.npg.token.empty");
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
@@ -165,8 +168,9 @@ class JWTFilterTest {
 
         jwtFilter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.FOUND.value());
-        assertThat(response.getRedirectedUrl()).isEqualTo("/login");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(response.getRedirectedUrl()).isNull();
+        assertThat(response.getContentAsString()).isEqualTo("error.npg.token.empty");
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 

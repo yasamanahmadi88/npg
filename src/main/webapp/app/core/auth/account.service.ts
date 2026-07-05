@@ -65,6 +65,27 @@ export class AccountService {
     return this.userIdentity.authorities.some((authority: string) => authoritiesToCheck.includes(authority));
   }
 
+  isAdmin(): boolean {
+    return this.hasAnyAuthority('ROLE_ADMIN');
+  }
+
+  hasResourcePermission(resourceName: string, verb: string): boolean {
+    if (this.isAdmin()) {
+      return true;
+    }
+
+    const normalizedResource = resourceName?.trim().toUpperCase();
+    const normalizedVerb = verb?.trim().toUpperCase();
+
+    return (
+      this.userIdentity?.resourceAuthorities?.some(
+        resAuth =>
+          resAuth.resource?.name?.trim().toUpperCase() === normalizedResource &&
+          String(resAuth.verb).trim().toUpperCase() === normalizedVerb
+      ) ?? false
+    );
+  }
+
   identity(force?: boolean): Observable<Account | null> {
     if (!this.accountCache$ || force || !this.isAuthenticated()) {
       this.accountCache$ = this.fetch().pipe(
