@@ -1,4 +1,11 @@
 ######################
+# Project Specific
+######################
+/src/main/webapp/content/css/main.css
+/target/classes/static/**
+/src/test/javascript/coverage/
+
+######################
 # Node
 ######################
 /node/
@@ -7,7 +14,6 @@ node_modules/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
-/dist/
 
 ######################
 # SASS
@@ -21,6 +27,7 @@ npm-debug.log.*
 .project
 .metadata
 tmp/
+tmp/**/*
 *.tmp
 *.bak
 *.swp
@@ -30,6 +37,7 @@ local.properties
 .settings/
 .loadpath
 .factorypath
+/src/main/resources/rebel.xml
 
 # External tool builders
 .externalToolBuilders/**
@@ -79,8 +87,6 @@ out/
 ######################
 .gradle/
 /build/
-/buildSrc/.gradle/
-/buildSrc/build/
 
 ######################
 # Package Files
@@ -149,5 +155,11 @@ Desktop.ini
 ######################
 # Code coverage
 ######################
-coverage/
-.nyc_output/
+/coverage/
+/.nyc_output/
+
+.angular/cache/
+# Local migration/patch backup artifacts
+*.before-*
+*.backup
+backup-before-*/

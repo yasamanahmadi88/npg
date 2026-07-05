@@ -13,6 +13,11 @@
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
+        <repository>
+            <id>captcha</id>
+            <name>BotDetect Captcha Repository</name>
+            <url>https://git.captcha.com/botdetect-java-captcha.git/blob_plain/HEAD:/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -26,7 +31,7 @@
         <maven.version>3.8.8</maven.version>
         <java.version>25</java.version>
         <node.version>v22.22.2</node.version>
-        <npm.version>10.9.7</npm.version>
+        <npm.version>7.11.2</npm.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -44,8 +49,9 @@
 
         <!-- Dependency versions -->
         <jhipster-framework.version>9.1.0</jhipster-framework.version>
-        <!-- Spring Boot dependency versions are managed by the imported spring-boot-dependencies BOM. -->
-        <spring-boot.version>4.0.7</spring-boot.version>
+        <!-- The spring-boot version should match the one managed by
+        https://mvnrepository.com/artifact/tech.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
+        <spring-boot.version>4.0.6</spring-boot.version>
         <!-- The hibernate version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <hibernate.version>7.2.12.Final</hibernate.version>
@@ -54,8 +60,8 @@
         <javassist.version>3.27.0-GA</javassist.version>
         <!-- The liquibase version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <liquibase.version>5.0.3</liquibase.version>
-        <liquibase-hibernate7.version>5.0.3</liquibase-hibernate7.version>
+        <liquibase.version>4.27.0</liquibase.version>
+        <liquibase-hibernate6.version>4.27.0</liquibase-hibernate6.version>
         <jakarta-validation-api.version>3.1.1</jakarta-validation-api.version>
         <infinispan-spring-boot.version>16.1.4</infinispan-spring-boot.version>
         <dropwizard-metrics.version>4.2.39</dropwizard-metrics.version>
@@ -98,22 +104,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- Explicit convergence overrides after Java 25 / Spring Boot 4 migration. -->
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>2.3.1</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.22.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-text</artifactId>
-                <version>1.15.0</version>
-            </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
@@ -144,7 +134,7 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hibernate7</artifactId>
+            <artifactId>jackson-datatype-hibernate6</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -153,10 +143,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jdk8</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -237,11 +223,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-liquibase</artifactId>
         </dependency>
+        '@ + $m.Value
+        },
+        1
+    )
+}
+
+# Add Jackson 2 JDK8 datatype module if missing.
+if ($content -notmatch '<artifactId>jackson-datatype-jdk8</artifactId>') {
+    $jsr310Pattern = '(?s)<dependency>\s*<groupId>com\.fasterxml\.jackson\.datatype</groupId>\s*<artifactId>jackson-datatype-jsr310</artifactId>\s*</dependency>'
+
+    $content = [regex]::Replace(
+        $content,
+        $jsr310Pattern,
+        [System.Text.RegularExpressions.MatchEvaluator]{
+            param($m)
+$m.Value + @'
+
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <!-- Inherited version from Spring Boot can't be used because of regressions -->
-            <version>${liquibase.version}</version>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -307,10 +308,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-access</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
@@ -328,11 +325,6 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -392,6 +384,7 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
         </dependency>
+        <!-- Removed: legacy BotDetect Servlet dependency is not used in the Boot 3/Jakarta build. -->
 
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -507,7 +500,6 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <release>${java.version}</release>
-                        <parameters>true</parameters>
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.springframework.boot</groupId>
@@ -659,7 +651,7 @@
                     <version>${jib-maven-plugin.version}</version>
                     <configuration>
                         <from>
-                            <image>eclipse-temurin:25-jre</image>
+                            <image>eclipse-temurin:17-jre</image>
                         </from>
                         <to>
                             <image>npgportal:latest</image>
@@ -713,15 +705,35 @@
                         <contexts>!test</contexts>
                     </configuration>
                     <dependencies>
+                        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-liquibase</artifactId>
+        </dependency>
+        '@ + $m.Value
+        },
+        1
+    )
+}
+
+# Add Jackson 2 JDK8 datatype module if missing.
+if ($content -notmatch '<artifactId>jackson-datatype-jdk8</artifactId>') {
+    $jsr310Pattern = '(?s)<dependency>\s*<groupId>com\.fasterxml\.jackson\.datatype</groupId>\s*<artifactId>jackson-datatype-jsr310</artifactId>\s*</dependency>'
+
+    $content = [regex]::Replace(
+        $content,
+        $jsr310Pattern,
+        [System.Text.RegularExpressions.MatchEvaluator]{
+            param($m)
+$m.Value + @'
+
         <dependency>
-                            <groupId>org.liquibase</groupId>
-                            <artifactId>liquibase-core</artifactId>
-                            <version>${liquibase.version}</version>
-                        </dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+        </dependency>
                         <dependency>
                             <groupId>org.liquibase.ext</groupId>
-                            <artifactId>liquibase-hibernate7</artifactId>
-                            <version>${liquibase-hibernate7.version}</version>
+                            <artifactId>liquibase-hibernate6</artifactId>
+                            <version>${liquibase-hibernate6.version}</version>
                         </dependency>
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
@@ -1014,6 +1026,7 @@
                                 </goals>
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <!--<execution>
@@ -1100,6 +1113,7 @@
                                 </goals>
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
                                 </configuration>
                             </execution>
                             <!-- <execution>
@@ -1269,6 +1283,3 @@
         <!-- jhipster-needle-maven-add-profile -->
     </profiles>
 </project>
-
-
-

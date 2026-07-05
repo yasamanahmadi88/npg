@@ -107,14 +107,41 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "configPath": ["jest.conf.js"]
+            "configPath": [ "jest.conf.js" ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false,
+    "analytics": "b98f0cb6-3d72-4f31-896a-217e6224a5cb",
     "packageManager": "npm"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
   }
 }
+
