@@ -469,6 +469,24 @@
         </profile>
 
         <profile>
+            <id>localrun</id>
+            <properties>
+                <spring.profiles.active>localrun</spring.profiles.active>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <mainClass>ix.portal.npg.NpgPortalLocalRunApp</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>war</id>
             <build>
                 <plugins>
