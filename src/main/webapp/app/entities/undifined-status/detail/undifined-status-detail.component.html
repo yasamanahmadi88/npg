@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (undifinedStatus) {
+    <div>
+      <h2 data-cy="undifinedStatusDetailsHeading">
+        <span jhiTranslate="npgPortalApp.undifinedStatus.detail.title">Undifined Status</span>
+      </h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.porStatus">Por Status</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.porStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.porTechStatus">Por Tech Status</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.porTechStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.porErrCode">Por Err Code</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.porErrCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.porRspCode">Por Rsp Code</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.porRspCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.porRequestId">Por Request Id</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.porRequestId }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.undifinedStatus.insertDate">Insert Date</span></dt>
+        <dd>
+          <span>{{ undifinedStatus.insertDate | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button type="button" [routerLink]="['/undifined-status', undifinedStatus.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+    }
+  </div>
+</div>

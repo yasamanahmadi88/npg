@@ -1,0 +1,64 @@
+{
+  "npgPortalApp": {
+    "portabilityLog": {
+      "home": {
+        "title": "Portability Logs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Portability Log",
+        "createOrEditLabel": "Create or edit a Portability Log",
+        "notFound": "No Portability Logs found"
+      },
+      "created": "A new Portability Log is created with identifier {{ param }}",
+      "updated": "A Portability Log is updated with identifier {{ param }}",
+      "deleted": "A Portability Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Portability Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Portability Log"
+      },
+      "id": "ID",
+      "porId": "Por Id",
+      "porRequestId": "Por Request Id",
+      "porNumber": "Por Number",
+      "porLegalTerm": "Por Legal Term",
+      "porOpr": "Por Opr",
+      "porAccType": "Por Acc Type",
+      "porIdNumber": "Por Id Number",
+      "porContactNumber": "Por Contact Number",
+      "porStatus": "Por Status",
+      "porPortedDate": "Por Ported Date",
+      "porRouting": "Por Routing",
+      "porType": "Por Type",
+      "porOpOrg": "Por Op Org",
+      "porRspCode": "Por Rsp Code",
+      "porRspNote": "Por Rsp Note",
+      "porCancelNote": "Por Cancel Note",
+      "porMnpid": "Por Mnpid",
+      "portationDate": "Portation Date",
+      "portaCode": "Porta Code",
+      "mvno": "Mvno",
+      "context": "Context",
+      "porErrCode": "Por Err Code",
+      "porErrMessage": "Por Err Message",
+      "porOpd": "Por Opd",
+      "porNumType": "Por Num Type",
+      "porNote": "Por Note",
+      "porDeadline": "Por Deadline",
+      "porResponseTimestamp": "Por Response Timestamp",
+      "porEligible": "Por Eligible",
+      "porBillingOk": "Por Billing Ok",
+      "intermediaryActionState": "Intermediary Action State",
+      "porCrDate": "Por Cr Date",
+      "porUpdDate": "Por Upd Date",
+      "porTechStatus": "Por Tech Status",
+      "porTechDeadline": "Por Tech Deadline",
+      "refPorId": "Ref Por Id",
+      "needManualRetry": "Need Manual Retry",
+      "retryCount": "Retry Count",
+      "action": "Action",
+      "request": "Request",
+      "insertTimestamp": "Insert Timestamp"
+    }
+  }
+}

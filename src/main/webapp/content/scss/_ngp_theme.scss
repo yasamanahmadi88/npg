@@ -1,0 +1,76 @@
+@use '@angular/material' as mat;
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+$npg-theme-color: (
+  /**
+  ---DO NOT CLEAR---
+
+  S.Taheri color shortcut and relation to npg color code
+
+  LEFT NUMBER EMPHSISE GROUP TYPE:
+  1 => MAIN COLOR
+  2 => SUB COLOR
+
+  C11 = main-color-1
+  C12 = main-color-2
+  C21 = sub-color-1
+  C22 = sub-color-2
+  C23 = sub-color-3
+  C24 = sub-color-4
+  C25 = sub-color-5
+  C26 = sub-color-6
+  C27 = sub-color-7
+  C28 = sub-color-8
+  **/
+    C11: #f7b64b,
+  C12: #54c5d0,
+  C21: #e85959,
+  C22: #598ee8,
+  C23: #555555,
+  C24: #888686,
+  C25: #b8b8b8,
+  C26: #dbdbdb,
+  C27: #e9e8e8,
+  C28: #e8ab59,
+  CSUCCESS: #3cd397,
+  contrast: (
+    1: $dark-primary-text,
+    2: $dark-primary-text,
+    3: $dark-primary-text,
+    4: $light-primary-text,
+    5: $light-primary-text,
+    6: $light-primary-text,
+    7: $light-primary-text,
+    8: $light-primary-text,
+    9: $light-primary-text,
+  )
+);
+
+$npg-theme-primary: mat.m2-define-palette($npg-theme-color, C12, C11, C21, C12);
+$npg-theme-accent: mat.m2-define-palette($npg-theme-color, C28, C27, C26, C28);
+$npg-theme-warn: mat.m2-define-palette($npg-theme-color, C11, C12, C21, C11);
+
+$npg-theme-primary-dark: mat.m2-define-palette($npg-theme-color, C25, C24, C26, C25);
+$npg-theme-accent-dark: mat.m2-define-palette($npg-theme-color, C28, C27, C26, C28);
+$npg-theme-warn-dark: mat.m2-define-palette($npg-theme-color, C26, C25, C27, C26);
+
+$npg-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $npg-theme-primary,
+      accent: $npg-theme-accent,
+      warn: $npg-theme-warn,
+    ),
+  )
+);
+
+$npg-theme-dark: mat.m2-define-dark-theme(
+  (
+    color: (
+      primary: $npg-theme-primary-dark,
+      accent: $npg-theme-accent-dark,
+      warn: $npg-theme-warn-dark,
+    ),
+  )
+);

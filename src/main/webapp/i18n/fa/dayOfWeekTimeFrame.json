@@ -1,0 +1,36 @@
+{
+  "npgPortalApp": {
+    "dayOfWeekTimeFrame": {
+      "home": {
+        "title": "دوره زمانی روز های هفته",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد دوره زمانی روز های هفته جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش دوره زمانی روز های هفته",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد {{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "آیا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "دوره زمانی روز های هفته"
+      },
+      "id": "شناسه",
+      "day": "روز",
+      "begin": "ساعت شروع",
+      "end": "ساعت پایان",
+      "search": "جستجو",
+      "days": {
+        "saturday": "شنبه",
+        "sunday": "یک شنبه",
+        "monday": "دو شنبه",
+        "tuesday": "سه شنبه",
+        "wednesday": "چهار شنبه",
+        "thursday": "پنج شنبه",
+        "friday": "جمعه"
+      }
+    }
+  }
+}

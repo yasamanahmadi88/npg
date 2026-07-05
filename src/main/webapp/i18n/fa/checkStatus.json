@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "checkStatus": {
+      "home": {
+        "title": "بررسی وضعیت ها",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد وضعیت جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش وضعیت",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد{{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "بررسی وضعیت ها"
+      },
+      "id": "ID",
+      "porStatus": "Por Status",
+      "porTechStatus": "Por Tech Status",
+      "porErrCode": "Por Err Code",
+      "porRspCode": "Por Rsp Code",
+      "statusMessageFa": "Status Message Fa",
+      "statusMessageEn": "Status Message En"
+    }
+  }
+}

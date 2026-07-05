@@ -1,0 +1,88 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <div class="fadeIn first d-flex justify-content-center col-12">
+      <div class="npg-logo"></div>
+    </div>
+
+    <form class="form mt-3" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+      <input
+        type="text"
+        class="fadeIn first"
+        name="username"
+        id="username"
+        placeholder="{{ 'global.form.username.placeholder' | translate }}"
+        formControlName="username"
+        #username
+        data-cy="username"
+      />
+
+      <div class="form-group fadeIn second">
+        <input
+          type="password"
+          name="password"
+          id="password"
+          autocomplete="on"
+          placeholder="{{ 'login.form.password.placeholder' | translate }}"
+          formControlName="password"
+          data-cy="password"
+        />
+      </div>
+
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="form-group fadeIn first captchaInput">
+          <input
+            #userCaptchaInput
+            type="text"
+            id="userCaptchaInput"
+            name="userCaptchaInput"
+            formControlName="userCaptchaInput"
+            class="fadeIn second"
+            autocomplete="off"
+            [maxLength]="6"
+            maxlength="6"
+          />
+        </div>
+
+        <div class="form-group fadeIn first d-flex">
+          <div class="input-group formsData captcha-preview">
+            @if (captchaImageUrl && !loading) {
+              <img class="captcha-image" [src]="captchaImageUrl" alt="Captcha" />
+            }
+            <button type="button" class="captcha-refresh" (click)="reloadCaptcha()" [disabled]="loading" title="Refresh Captcha">↻</button>
+          </div>
+        </div>
+      </div>
+
+      @if (authenticationError) {
+        <div class="alert alert-danger">
+          <span class="text-danger" [innerHTML]="'login.messages.error.authentication' | translate"></span>
+        </div>
+      }
+      @if (concurrentSessionError) {
+        <div class="alert alert-danger">
+          <span jhiTranslate="error.user.has.concurrent.session" class="text-danger"></span>
+        </div>
+      }
+      @if (wrongCaptcha) {
+        <div class="alert alert-danger">
+          <span jhiTranslate="login.error.captcha" class="text-danger"></span>
+        </div>
+      }
+      @if (tooManyFailedReq) {
+        <div class="alert alert-danger">
+          <span jhiTranslate="login.error.tooManyFailedReq" class="text-danger"></span>
+        </div>
+      }
+      @if (captchaLoadError) {
+        <div class="alert alert-danger">
+          <span class="text-danger">Captcha could not be loaded.</span>
+        </div>
+      }
+
+      <input [disabled]="loading || loginForm.invalid" type="submit" class="fadeIn first" value="{{ 'global.menu.account.login' | translate }}" />
+      @if (loading) {
+        <fa-icon icon="sync" animation="spin"></fa-icon>
+      }
+    </form>
+  </div>
+</div>

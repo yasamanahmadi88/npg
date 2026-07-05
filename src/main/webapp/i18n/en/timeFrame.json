@@ -1,0 +1,27 @@
+{
+  "npgPortalApp": {
+    "timeFrame": {
+      "home": {
+        "title": "Time Frames",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Time Frame",
+        "createOrEditLabel": "Create or edit a Time Frame",
+        "notFound": "No Time Frames found"
+      },
+      "created": "A new Time Frame is created with identifier {{ param }}",
+      "updated": "A Time Frame is updated with identifier {{ param }}",
+      "deleted": "A Time Frame is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Time Frame {{ id }}?"
+      },
+      "detail": {
+        "title": "Time Frame"
+      },
+      "id": "ID",
+      "begin": "Begin",
+      "end": "End",
+      "offDayId": "Off Day Id",
+      "search": "Search"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    @if (resourceAuthority) {
+    <div>
+      <h2 data-cy="resourceAuthorityDetailsHeading">
+        <span jhiTranslate="npgPortalApp.resourceAuthority.detail.title">Resource Authority</span>
+      </h2>
+      <hr />
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ resourceAuthority.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.resourceAuthority.verb">Verb</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'npgPortalApp.Verb.' + resourceAuthority.verb }}">{{ resourceAuthority.verb }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.resourceAuthority.authorityId">Authority Id</span></dt>
+        <dd>
+          <span>{{ resourceAuthority.authority?.displayName }}</span>
+        </dd>
+        <dt><span jhiTranslate="npgPortalApp.resourceAuthority.resource">Resource</span></dt>
+        <dd>
+          @if (resourceAuthority.resource) {
+          <div>
+            <a [routerLink]="['/resource', resourceAuthority.resource?.id, 'view']">{{ resourceAuthority.resource?.displayName }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+      <button type="button" [routerLink]="['/resource-authority', resourceAuthority.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+    }
+  </div>
+</div>

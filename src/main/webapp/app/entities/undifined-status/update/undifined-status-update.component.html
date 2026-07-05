@@ -1,0 +1,176 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-undifined-status-heading"
+        data-cy="UndifinedStatusCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.undifinedStatus.home.createOrEditLabel"
+      >
+        Create or edit a Undifined Status
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.porStatus" for="field_porStatus">Por Status</label>
+          <input type="text" class="form-control" name="porStatus" id="field_porStatus" data-cy="porStatus" formControlName="porStatus" />
+          @if (editForm.get('porStatus')!.invalid && (editForm.get('porStatus')!.dirty || editForm.get('porStatus')!.touched)) {
+          <div>
+            @if (editForm.get('porStatus')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.porTechStatus" for="field_porTechStatus"
+            >Por Tech Status</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="porTechStatus"
+            id="field_porTechStatus"
+            data-cy="porTechStatus"
+            formControlName="porTechStatus"
+          />
+          @if ( editForm.get('porTechStatus')!.invalid && (editForm.get('porTechStatus')!.dirty || editForm.get('porTechStatus')!.touched) )
+          {
+          <div>
+            @if (editForm.get('porTechStatus')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.porErrCode" for="field_porErrCode"
+            >Por Err Code</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="porErrCode"
+            id="field_porErrCode"
+            data-cy="porErrCode"
+            formControlName="porErrCode"
+          />
+          @if (editForm.get('porErrCode')!.invalid && (editForm.get('porErrCode')!.dirty || editForm.get('porErrCode')!.touched)) {
+          <div>
+            @if (editForm.get('porErrCode')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.porRspCode" for="field_porRspCode"
+            >Por Rsp Code</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="porRspCode"
+            id="field_porRspCode"
+            data-cy="porRspCode"
+            formControlName="porRspCode"
+          />
+          @if (editForm.get('porRspCode')!.invalid && (editForm.get('porRspCode')!.dirty || editForm.get('porRspCode')!.touched)) {
+          <div>
+            @if (editForm.get('porRspCode')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.porRequestId" for="field_porRequestId"
+            >Por Request Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="porRequestId"
+            id="field_porRequestId"
+            data-cy="porRequestId"
+            formControlName="porRequestId"
+          />
+          @if (editForm.get('porRequestId')!.invalid && (editForm.get('porRequestId')!.dirty || editForm.get('porRequestId')!.touched)) {
+          <div>
+            @if (editForm.get('porRequestId')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.undifinedStatus.insertDate" for="field_insertDate"
+            >Insert Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_insertDate"
+              data-cy="insertDate"
+              type="datetime-local"
+              class="form-control"
+              name="insertDate"
+              formControlName="insertDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('insertDate')!.invalid && (editForm.get('insertDate')!.dirty || editForm.get('insertDate')!.touched)) {
+          <div>
+            @if (editForm.get('insertDate')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('insertDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

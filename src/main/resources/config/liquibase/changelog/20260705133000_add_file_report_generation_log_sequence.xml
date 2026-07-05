@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260705133000-seq-SEQ_FILE_REPORT_GENERATION_LOG_ID" author="cursor">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_FILE_REPORT_GENERATION_LOG_ID"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="SEQ_FILE_REPORT_GENERATION_LOG_ID" startValue="1"/>
+    </changeSet>
+</databaseChangeLog>

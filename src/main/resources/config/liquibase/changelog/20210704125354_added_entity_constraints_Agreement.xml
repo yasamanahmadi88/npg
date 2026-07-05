@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Agreement.
+    -->
+    <changeSet id="20210704125354-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="service_id"
+                                 baseTableName="agreement"
+                                 constraintName="fk_agreement__service_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service"/>
+
+        <addForeignKeyConstraint baseColumnNames="action_id"
+                                 baseTableName="agreement"
+                                 constraintName="fk_agreement__action_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="action"/>
+
+        <addForeignKeyConstraint baseColumnNames="consumer_party_id"
+                                 baseTableName="agreement"
+                                 constraintName="fk_agreement__consumer_p_a4_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"/>
+
+        <addForeignKeyConstraint baseColumnNames="producer_party_id"
+                                 baseTableName="agreement"
+                                 constraintName="fk_agreement__producer_p_5f_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"/>
+    </changeSet>
+</databaseChangeLog>

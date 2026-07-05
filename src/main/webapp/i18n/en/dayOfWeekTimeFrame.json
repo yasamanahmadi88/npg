@@ -1,0 +1,36 @@
+{
+  "npgPortalApp": {
+    "dayOfWeekTimeFrame": {
+      "home": {
+        "title": "Day Of Week Time Frames",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Day Of Week Time Frame",
+        "createOrEditLabel": "Create or edit a Day Of Week Time Frame",
+        "notFound": "No Day Of Week Time Frames found"
+      },
+      "created": "A new Day Of Week Time Frame is created with identifier {{ param }}",
+      "updated": "A Day Of Week Time Frame is updated with identifier {{ param }}",
+      "deleted": "A Day Of Week Time Frame is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Day Of Week Time Frame {{ id }}?"
+      },
+      "detail": {
+        "title": "Day Of Week Time Frame"
+      },
+      "id": "ID",
+      "day": "Day",
+      "begin": "Begin",
+      "end": "End",
+      "search": "Search",
+      "days": {
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday"
+      }
+    }
+  }
+}

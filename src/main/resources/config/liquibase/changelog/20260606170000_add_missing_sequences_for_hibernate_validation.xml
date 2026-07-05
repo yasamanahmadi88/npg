@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260606170000-seq-RES_AUTH_SEQ" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="RES_AUTH_SEQ"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="RES_AUTH_SEQ" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-RESRC_SEQ" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="RESRC_SEQ"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="RESRC_SEQ" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_CHK_STATS_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_CHK_STATS_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_CHK_STATS_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_CRM_TO_CRDB_RESPONSE_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_CRM_TO_CRDB_RESPONSE_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_CRM_TO_CRDB_RESPONSE_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_DAY_OF_WEEK_TF_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_DAY_OF_WEEK_TF_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_DAY_OF_WEEK_TF_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_EVENT_LOG_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_EVENT_LOG_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_EVENT_LOG_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_NPG_PORT_LOG_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_NPG_PORT_LOG_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_NPG_PORT_LOG_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_OFF_DAY_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_OFF_DAY_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_OFF_DAY_ID" startValue="1"/>
+    </changeSet>
+    <changeSet id="20260606170000-seq-SEQ_TIME_FRAME_ID" author="manual">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="SEQ_TIME_FRAME_ID"/>
+            </not>
+        </preConditions>
+
+        <createSequence sequenceName="SEQ_TIME_FRAME_ID" startValue="1"/>
+    </changeSet>
+
+</databaseChangeLog>

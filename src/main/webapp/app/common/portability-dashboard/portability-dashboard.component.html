@@ -1,0 +1,130 @@
+<div class="dashboard">
+  <form name="editForm" role="form" novalidate [formGroup]="searchForm" class="w-100">
+    <h2 class="card-header bg-info text-white">
+      {{ 'global.actions.welcomeTo' | translate }}
+      {{ 'global.actions.portabilityDashboard' | translate }}
+    </h2>
+    <div class="w-100 d-flex justify-content-around p-2">
+      <div class="col-5">
+        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.search.startDate" for="field_startDate">start Date</label>
+        <dp-date-picker
+          class="form-control-lg"
+          formControlName="startDate"
+          id="field_startDate"
+          [config]="dpConfig"
+          mode="day"
+          theme="dp-material"
+        ></dp-date-picker>
+      </div>
+
+      <div class="col-5">
+        <label class="form-control-label" jhiTranslate="npgPortalApp.portability.search.endDate" for="field_endDate">end Date</label>
+        <dp-date-picker
+          class="form-control-lg"
+          id="field_endDate"
+          formControlName="endDate"
+          [config]="dpConfig"
+          mode="day"
+          theme="dp-material"
+        ></dp-date-picker>
+      </div>
+
+      <div class="col-2">
+        <button id="jh-search-entity" data-cy="entitysearchButton" (click)="search()" class="btn btn-primary jh-search-entity">
+          <fa-icon icon="search"></fa-icon>
+          <span jhiTranslate="entity.action.search">Search</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-12 d-flex" *ngIf="invalidDate">
+      <small class="text-danger" jhiTranslate="npgPortalApp.portability.invalidDatesForSearch"></small>
+    </div>
+    <div class="col-12 d-flex" *ngIf="startEndRequire">
+      <small class="text-danger" jhiTranslate="npgPortalApp.portability.startEndRequire"></small>
+    </div>
+  </form>
+
+  <!--  <div class="col-12 d-flex justify-content-center mt-4 mb-4">-->
+  <!--    <div class="col-2 leftInsight">-->
+  <!--      <div class="details">-->
+  <!--        <div class="col-12 mt-3">RNO</div>-->
+  <!--        <span class="col-12">700</span>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="col-2 centerInsight">-->
+  <!--      <div class="details">-->
+  <!--        <div class="col-12 mt-3">DNO</div>-->
+  <!--        <span class="col-12">400</span>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="col-2 rightInsight">-->
+  <!--      <div class="details">-->
+  <!--        <div class="col-12 mt-3">Port In</div>-->
+  <!--        <span class="col-12">1500</span>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="col-2 lastInsight">-->
+  <!--      <div class="details">-->
+  <!--        <div class="col-12 mt-3">Port Out</div>-->
+  <!--        <span class="col-12">600</span>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="col-2 lastInsight">-->
+  <!--      <div class="details">-->
+  <!--        <div class="col-12 mt-3">Authorized</div>-->
+  <!--        <span class="col-12">45000</span>-->
+  <!--      </div>-->
+  <!--    </div>-->
+
+  <!--  </div>-->
+
+  <div class="col-12 d-flex justify-content-center charts mt-5">
+    <div class="col-6 leftChart">
+      <div>
+        <h4 jhiTranslate="npgPortalApp.portability.porRequestDay"></h4>
+      </div>
+      <div>
+        <ngx-charts-bar-vertical-2d
+          [view]="[750, 400]"
+          [theme]="'dark'"
+          [legend]="true"
+          [legendTitle]="''"
+          [xAxis]="true"
+          [scheme]="'forest'"
+          [results]="barChartData"
+          (select)="onSelect($event)"
+        >
+          <ng-template #tooltipTemplate let-model="model">
+            <h1>
+              {{ model.name }}
+            </h1>
+            <h2>{{ model.value }}</h2>
+          </ng-template>
+        </ngx-charts-bar-vertical-2d>
+      </div>
+    </div>
+
+    <div class="borderStyle"></div>
+    <div class="col-6 rightChart">
+      <div>
+        <h4 jhiTranslate="npgPortalApp.portability.porType"></h4>
+      </div>
+      <div>
+        <ngx-charts-pie-chart
+          [view]="[550, 400]"
+          [scheme]="colorScheme"
+          [results]="pieChartData"
+          [legend]="false"
+          (select)="onSelect($event)"
+        >
+          <ng-template #tooltipTemplate let-model="model">
+            <h1>
+              {{ model.name }}
+            </h1>
+            <h2>{{ model.value }}</h2>
+          </ng-template>
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+  </div>
+</div>

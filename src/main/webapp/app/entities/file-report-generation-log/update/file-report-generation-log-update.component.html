@@ -1,0 +1,164 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-file-report-generation-log-heading"
+        data-cy="FileReportGenerationLogCreateUpdateHeading"
+        jhiTranslate="npgPortalApp.fileReportGenerationLog.home.createOrEditLabel"
+      >
+        Create or edit a File Report Generation Log
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.reportName" for="field_reportName"
+            >Report Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="reportName"
+            id="field_reportName"
+            data-cy="reportName"
+            formControlName="reportName"
+          />
+          @if (editForm.get('reportName')!.invalid && (editForm.get('reportName')!.dirty || editForm.get('reportName')!.touched)) {
+          <div>
+            @if (editForm.get('reportName')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('reportName')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 255 }">
+              This field cannot be longer than 255 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.reportDate" for="field_reportDate"
+            >Report Date</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="reportDate"
+            id="field_reportDate"
+            data-cy="reportDate"
+            formControlName="reportDate"
+          />
+          @if (editForm.get('reportDate')!.invalid && (editForm.get('reportDate')!.dirty || editForm.get('reportDate')!.touched)) {
+          <div>
+            @if (editForm.get('reportDate')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('reportDate')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.fileName" for="field_fileName"
+            >File Name</label
+          >
+          <input type="text" class="form-control" name="fileName" id="field_fileName" data-cy="fileName" formControlName="fileName" />
+          @if (editForm.get('fileName')!.invalid && (editForm.get('fileName')!.dirty || editForm.get('fileName')!.touched)) {
+          <div>
+            @if (editForm.get('fileName')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('fileName')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 255 }">
+              This field cannot be longer than 255 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.rowNumber" for="field_rowNumber"
+            >Row Number</label
+          >
+          <input type="number" class="form-control" name="rowNumber" id="field_rowNumber" data-cy="rowNumber" formControlName="rowNumber" />
+          @if (editForm.get('rowNumber')!.invalid && (editForm.get('rowNumber')!.dirty || editForm.get('rowNumber')!.touched)) {
+          <div>
+            @if (editForm.get('rowNumber')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('rowNumber')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.porNumber" for="field_porNumber"
+            >Por Number</label
+          >
+          <input type="text" class="form-control" name="porNumber" id="field_porNumber" data-cy="porNumber" formControlName="porNumber" />
+          @if (editForm.get('porNumber')!.invalid && (editForm.get('porNumber')!.dirty || editForm.get('porNumber')!.touched)) {
+          <div>
+            @if (editForm.get('porNumber')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('porNumber')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 16 }">
+              This field cannot be longer than 16 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.fileReportGenerationLog.content" for="field_content">Content</label>
+          <input type="text" class="form-control" name="content" id="field_content" data-cy="content" formControlName="content" />
+          @if (editForm.get('content')!.invalid && (editForm.get('content')!.dirty || editForm.get('content')!.touched)) {
+          <div>
+            @if (editForm.get('content')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('content')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 4000 }">
+              This field cannot be longer than 4000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <!--        <button-->
+        <!--          type="submit"-->
+        <!--          id="save-entity"-->
+        <!--          data-cy="entityCreateSaveButton"-->
+        <!--          [disabled]="editForm.invalid || isSaving"-->
+        <!--          class="btn btn-primary"-->
+        <!--        >-->
+        <!--          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>-->
+        <!--        </button>-->
+      </div>
+    </form>
+  </div>
+</div>

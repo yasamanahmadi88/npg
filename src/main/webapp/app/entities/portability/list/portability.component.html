@@ -1,0 +1,477 @@
+@if (isLoading) {
+<jhi-overlay-loading></jhi-overlay-loading>
+}
+
+<mat-card appearance="outlined" *jhiHasPermission="['portability', 'view']">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="PortabilityHeading">
+          <span jhiTranslate="npgPortalApp.portability.home.title">Portabilities</span>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <!--   portability search -->
+
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel [expanded]="!portabilities">
+        <mat-expansion-panel-header (click)="checkExpanded()">
+          <mat-panel-title jhiTranslate="npgPortalApp.portability.portalSearch"></mat-panel-title>
+        </mat-expansion-panel-header>
+        <form style="min-height: 450px" [formGroup]="editForm" (ngSubmit)="search()">
+          <table class="table table-striped" aria-describedby="showHealthLabel">
+            <tbody>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porRequestId"></label>
+                </td>
+                <td>
+                  <input class="form-control" type="text" formControlName="porRequestId" />
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porNumber"></label>
+                </td>
+                <td>
+                  <input type="text" class="form-control" formControlName="porNumber" />
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porCrDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porCrDate"
+                    [config]="dpConfig"
+                    mode="day"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porPortedDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porPortedDate"
+                    [config]="dpConfig"
+                    mode="day"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porDeadline"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porDeadline"
+                    [config]="dpConfig"
+                    mode="day"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porUpdDate"></label>
+                </td>
+                <td>
+                  <dp-date-picker
+                    class="form-control d-flex justify-content-start"
+                    formControlName="porUpdDate"
+                    [config]="dpConfig"
+                    mode="day"
+                    theme="dp-material"
+                  ></dp-date-picker>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porIdNumber"></label>
+                </td>
+                <td>
+                  <input class="form-control" formControlName="porIdNumber" type="number" />
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porMnpid"></label>
+                </td>
+                <td>
+                  <input class="form-control" formControlName="porMnpid" type="text" />
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porReceiver"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porReceiver">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="MCI">MCI</mat-option>
+                    <mat-option value="ITSC">ITSC</mat-option>
+                    <mat-option value="RCSC">RCSC</mat-option>
+                    <mat-option value="SHM">SHM</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porAccType"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porAccType">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="prepaid">Prepaid</mat-option>
+                    <mat-option value="postpaid">Postpaid</mat-option>
+                  </mat-select>
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porType"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porType" (selectionChange)="porTypeChange()">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="IN">IN</mat-option>
+                    <mat-option value="OUT">OUT</mat-option>
+                    <mat-option value="OLO">OLO</mat-option>
+                    <mat-option value="TERMINATE_IN">TERMINATE IN</mat-option>
+                    <mat-option value="TERMINATE_OUT">TERMINATE OUT</mat-option>
+                    <mat-option value="TERMINATE_OLO">TERMINATE OLO</mat-option>
+                    <mat-option value="EMERGENCY_RESTORE_OUT">EMERGENCY RESTORE OUT</mat-option>
+                    <mat-option value="EMERGENCY_RESTORE_IN">EMERGENCY RESTORE IN</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porStatus"></label>
+                </td>
+
+                <td>
+                  @if (editForm.get('porType')?.value == null) {
+                  <mat-select class="form-control" [placeholder]="'npgPortalApp.portability.porTypeFirst' | translate"> </mat-select>
+                  } @if (editForm.get('porType')?.value === 'IN') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create IN">create</mat-option>
+                    <mat-option value="cancel IN">cancel</mat-option>
+                    <mat-option value="failed IN">failed</mat-option>
+                    <mat-option value="execfailed IN">execfailed</mat-option>
+                    <mat-option value="waitingInitResp IN">waitingInitResp</mat-option>
+                    <mat-option value="waitingDonor IN">waitingDonor</mat-option>
+                    <mat-option value="execute IN">execute</mat-option>
+                    <mat-option value="waitingPorted IN">waitingPorted</mat-option>
+                    <mat-option value="goActive IN">goActive</mat-option>
+                    <mat-option value="waitingPortingComplete IN">waitingPortingComplete</mat-option>
+                    <mat-option value="cancelled IN">cancelled</mat-option>
+                    <mat-option value="activeFailed IN">activeFailed</mat-option>
+                    <mat-option value="routingFailed IN">routingFailed</mat-option>
+                    <mat-option value="ported IN">ported</mat-option>
+                    <mat-option value="closed IN">closed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'OUT') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create OUT">create</mat-option>
+                    <mat-option value="failed OUT">failed</mat-option>
+                    <mat-option value="waitingGoResponse OUT">waitingGoResponse</mat-option>
+                    <mat-option value="submitFailed OUT">submitFailed</mat-option>
+                    <mat-option value="waitingBilling OUT">waitingBilling</mat-option>
+                    <mat-option value="billingOk OUT">billingOk</mat-option>
+                    <mat-option value="waitingExec OUT">waitingExec</mat-option>
+                    <mat-option value="execute OUT">execute</mat-option>
+                    <mat-option value="waitingPorted OUT">waitingPorted</mat-option>
+                    <mat-option value="ported OUT">ported</mat-option>
+                    <mat-option value="cancel OUT">cancel</mat-option>
+                    <mat-option value="closed OUT">closed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'EMERGENCY_RESTORE_IN') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create EMERGENCY_RESTORE IN">create</mat-option>
+                    <mat-option value="waiting exec EMERGENCY_RESTORE IN">waiting exec</mat-option>
+                    <mat-option value="execute EMERGENCY_RESTORE IN">execute</mat-option>
+                    <mat-option value="restored EMERGENCY_RESTORE IN">restored</mat-option>
+                    <mat-option value="failed EMERGENCY_RESTORE IN">failed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'EMERGENCY_RESTORE_OUT') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create EMERGENCY_RESTORE OUT">create</mat-option>
+                    <mat-option value="waiting ported EMERGENCY_RESTORE OUT">waiting ported</mat-option>
+                    <mat-option value="execute EMERGENCY_RESTORE OUT">execute</mat-option>
+                    <mat-option value="execFailed EMERGENCY_RESTORE OUT">execFailed</mat-option>
+                    <mat-option value="restored EMERGENCY_RESTORE OUT">restored</mat-option>
+                    <mat-option value="failed EMERGENCY_RESTORE OUT">failed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'TERMINATE_IN') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create TERMINATE IN">create</mat-option>
+                    <mat-option value="execute TERMINATE IN">execute</mat-option>
+                    <mat-option value="terminated TERMINATE IN">terminated</mat-option>
+                    <mat-option value="failed TERMINATE IN">failed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'TERMINATE_OUT') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create TERMINATE OUT">create</mat-option>
+                    <mat-option value="terminated TERMINATE OUT">terminated</mat-option>
+                    <mat-option value="failed TERMINATE OUT">failed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'TERMINATE_OLO') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create TERMINATE OLO">create</mat-option>
+                    <mat-option value="terminated TERMINATE OLO">terminated</mat-option>
+                    <mat-option value="failed TERMINATE OLO">failed</mat-option>
+                  </mat-select>
+                  } @if (editForm.get('porType')?.value === 'OLO') {
+                  <mat-select class="form-control" formControlName="porStatus">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option value="create OLO">create</mat-option>
+                    <mat-option value="failed OLO">failed</mat-option>
+                    <mat-option value="ported OLO">ported</mat-option>
+                  </mat-select>
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-1" jhiTranslate="npgPortalApp.portability.porRspCode"></label>
+                </td>
+                <td colspan="3">
+                  <mat-select style="text-align: left" class="form-control" formControlName="porRspCode">
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option style="text-align: left" value="0"
+                      >Code: 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Approved</mat-option
+                    >
+                    <mat-option style="text-align: left" value="2"
+                      >Code: 2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - Peer-to-peer rule failed
+                      (postpaid to prepaid or vice versa)</mat-option
+                    >
+                    <mat-option style="text-align: left" value="5"
+                      >Code: 5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - Subscriber less than 3 months
+                      active on network</mat-option
+                    >
+                    <mat-option style="text-align: left" value="6"
+                      >Code: 6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - Subscriber has outstanding
+                      balance (postpaid)</mat-option
+                    >
+                    <mat-option style="text-align: left" value="12"
+                      >Code: 12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - The legal entity/Natural person of
+                      subscriber is not correct</mat-option
+                    >
+                    <mat-option style="text-align: left" value="14"
+                      >Code: 14 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - The subscriber can't port out due to
+                      long-term contract with donor operator</mat-option
+                    >
+                    <mat-option style="text-align: left" value="15"
+                      >Code: 15 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - The number is a part of company numbers
+                      and can't port out personally</mat-option
+                    >
+                    <mat-option style="text-align: left" value="41"
+                      >Code: 41 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - Subscriber could not port because has
+                      directed verdict</mat-option
+                    >
+                    <mat-option style="text-align: left" value="42"
+                      >Code: 42 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Rejected - Subscriber could not port, because of CRA
+                      regulations</mat-option
+                    >
+                  </mat-select>
+                </td>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porRouting"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="porRouting">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="D21">D21</mat-option>
+                    <mat-option value="D22">D22</mat-option>
+                    <mat-option value="D23">D23</mat-option>
+                    <mat-option value="D24">D24</mat-option>
+                    <mat-option value="D31">D31</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.from"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="donor">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="MCI">MCI</mat-option>
+                    <mat-option value="ITSC">ITSC</mat-option>
+                    <mat-option value="RCSC">RCSC</mat-option>
+                    <mat-option value="SHM">SHM</mat-option>
+                    <mat-option value="FNPM">FNPM</mat-option>
+                  </mat-select>
+                </td>
+
+                <td>
+                  <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.to"></label>
+                </td>
+                <td>
+                  <mat-select class="form-control" formControlName="recipient">
+                    <mat-option value=""></mat-option>
+                    <mat-option value="MCI">MCI</mat-option>
+                    <mat-option value="ITSC">ITSC</mat-option>
+                    <mat-option value="RCSC">RCSC</mat-option>
+                    <mat-option value="SHM">SHM</mat-option>
+                    <mat-option value="FNPM">FNPM</mat-option>
+                  </mat-select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-danger mr-1" type="button" (click)="clear()">
+              <fa-icon [icon]="'trash-alt'"></fa-icon>
+              <span jhiTranslate="global.actions.clear" class="d-none d-md-inline">Clear</span>
+            </button>
+            <button class="btn btn-primary mr-1" type="submit">
+              <fa-icon [icon]="'search'"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="global.actions.search">Search</span>
+            </button>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!--   /portability search -->
+
+    <div>
+      <jhi-alert-error></jhi-alert-error>
+      <jhi-alert></jhi-alert>
+
+      @if (portabilities && portabilities.length === 0) {
+      <div class="alert alert-warning" id="no-result">
+        <span jhiTranslate="npgPortalApp.portability.home.notFound">No portabilities found</span>
+      </div>
+      }
+
+      <div class="example-container mat-elevation-z8" [hidden]="!portabilities || (portabilities && portabilities.length === 0)">
+        <mat-table
+          matSort
+          matTableExporter
+          [dataSource]="dataSource"
+          #exporter="matTableExporter"
+          [hiddenColumns]="[6]"
+          #empTbSort="matSort"
+        >
+          <ng-container matColumnDef="id">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.id"> id. </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porType">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porType">porType</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.porType }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porCrDate">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porCrDate">porCrDate</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.porCrDate | formatMediumDatetime }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="porNumber">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porNumber">porNumber</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.porNumber }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porAccType">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porAccType"> porAccType</span></mat-header-cell
+            >
+            <mat-cell *matCellDef="let element"> {{ element.porAccType }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porIdNumber">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porIdNumber"> porIdNumber</span></mat-header-cell
+            >
+            <mat-cell *matCellDef="let element"> {{ element.porIdNumber }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porRequestId">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.porRequestId"> porRequestId</span></mat-header-cell
+            >
+            <mat-cell *matCellDef="let element"> {{ element.porRequestId }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="porOpd">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.from"> donor</span></mat-header-cell
+            >
+            <mat-cell *matCellDef="let element"> {{ element.porOpd }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="porOpr">
+            <mat-header-cell mat-sort-header *matHeaderCellDef
+              ><span jhiTranslate="npgPortalApp.portability.to"> recipient</span></mat-header-cell
+            >
+            <mat-cell *matCellDef="let element"> {{ element.porOpr }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell mat-sort-header *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <fa-icon [routerLink]="['/portability', element.porRequestId, 'view']" icon="eye" class="mr-3 ml-3 cursor-pointer"></fa-icon>
+
+              <fa-icon
+                *jhiHasPermission="['portability', 'edit']"
+                [routerLink]="['/portability', element.porRequestId, 'edit']"
+                icon="pencil-alt"
+                class="mr-3 ml-3 cursor-pointer"
+              ></fa-icon>
+
+              <fa-icon
+                icon="times"
+                *jhiHasPermission="['portability', 'delete']"
+                (click)="delete(element)"
+                class="mr-3 ml-3 cursor-pointer"
+              ></fa-icon>
+
+              <fa-icon
+                *jhiHasPermission="['portabilityLog', 'view']"
+                (click)="showLogStatus(element)"
+                icon="list"
+                class="mr-3 ml-3 cursor-pointer"
+              ></fa-icon>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator
+          [length]="totalItems"
+          (page)="loadPage($event, true)"
+          [pageSizeOptions]="[20, 50, 75, 100]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+
+      <!-- <i style='font-size:24px;color:green' class='fas'
+                                  (click)="exporter.exportTable('xlsx', {fileName:'npg', sheet: 'portability'})">
+                                  &#xf1c3;
+                                </i>-->
+      <button
+        class="btn btn-outline-success"
+        [hidden]="!portabilities || (portabilities && portabilities.length === 0)"
+        (click)="exporter.exportTable('xlsx', { fileName: 'npg', sheet: 'portability' })"
+      >
+        <i class="fas fa-file-excel" style="font-size: 24px"></i>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

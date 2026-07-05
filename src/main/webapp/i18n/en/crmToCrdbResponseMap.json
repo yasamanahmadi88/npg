@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "crmToCrdbResponseMap": {
+      "home": {
+        "title": "Crm To Crdb Response Maps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Crm To Crdb Response Map",
+        "createOrEditLabel": "Create or edit a Crm To Crdb Response Map",
+        "notFound": "No Crm To Crdb Response Maps found"
+      },
+      "created": "A new Crm To Crdb Response Map is created with identifier {{ param }}",
+      "updated": "A Crm To Crdb Response Map is updated with identifier {{ param }}",
+      "deleted": "A Crm To Crdb Response Map is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Crm To Crdb Response Map {{ id }}?"
+      },
+      "detail": {
+        "title": "Crm To Crdb Response Map"
+      },
+      "id": "ID",
+      "code": "Code",
+      "description": "Description",
+      "crmInterface": "Crm Interface",
+      "rspCode": "Rsp Code",
+      "rspNote": "Rsp Note",
+      "search": "Search"
+    }
+  }
+}

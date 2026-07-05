@@ -1,0 +1,152 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="CrmToCrdbResponseMapHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.home.title">Crm To Crdb Response Maps</span>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+
+            <button
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              *jhiHasPermission="['crmToCrdbResponseMap', 'create']"
+              class="btn btn-primary jh-create-entity create-crm-to-crdb-response-map"
+              [routerLink]="['/crm-to-crdb-response-map/new']"
+            >
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+  <mat-card-content>
+    <div>
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'npgPortalApp.crmToCrdbResponseMap.search' | translate }}"
+          />
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon [icon]="'search'"></fa-icon>
+          </button>
+          @if (currentSearch) {
+          <button class="input-group-append btn btn-danger" (click)="clearSearch()">
+            <fa-icon [icon]="'trash-alt'"></fa-icon>
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+
+    @if (crmToCrdbResponseMaps?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.home.notFound">No crmToCrdbResponseMaps found</span>
+    </div>
+    } @if (crmToCrdbResponseMaps && crmToCrdbResponseMaps.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="code">
+              <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.code">Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.description">Description</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="crmInterface">
+              <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.crmInterface">Crm Interface</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="rspCode">
+              <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.rspCode">Rsp Code</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="rspNote">
+              <span jhiTranslate="npgPortalApp.crmToCrdbResponseMap.rspNote">Rsp Note</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (crmToCrdbResponseMap of crmToCrdbResponseMaps; track trackId($index, crmToCrdbResponseMap)) {
+          <tr data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/crm-to-crdb-response-map', crmToCrdbResponseMap.id, 'view']">{{ crmToCrdbResponseMap.id }}</a>
+            </td>
+            <td>{{ crmToCrdbResponseMap.code }}</td>
+            <td>{{ crmToCrdbResponseMap.description }}</td>
+            <td>{{ crmToCrdbResponseMap.crmInterface }}</td>
+            <td>{{ crmToCrdbResponseMap.rspCode }}</td>
+            <td>{{ crmToCrdbResponseMap.rspNote }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/crm-to-crdb-response-map', crmToCrdbResponseMap.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+                <button
+                  type="submit"
+                  [routerLink]="['/crm-to-crdb-response-map', crmToCrdbResponseMap.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button type="submit" (click)="delete(crmToCrdbResponseMap)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (crmToCrdbResponseMaps && crmToCrdbResponseMaps.length > 0) {
+    <div>
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

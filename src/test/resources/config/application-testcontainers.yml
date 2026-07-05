@@ -1,0 +1,55 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration is used for unit/integration tests with testcontainers database containers.
+#
+# To activate this configuration launch integration tests with the 'testcontainers' profile
+#
+# More information on database containers: https://www.testcontainers.org/modules/databases/
+#
+# You have to specify an Oracle image name in a classpath file named testcontainers.properties.
+# Follow the instructions at https://www.testcontainers.org/modules/databases/oraclexe/
+# ===================================================================
+
+#spring:
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+#    url: jdbc:tc:oracle:thin:@///ORCL?TC_TMPFS=/testtmpfs:rw
+#    username: system
+#    password: oracle
+#    hikari:
+#      poolName: Hikari
+#      auto-commit: false
+#  jpa:
+#    database-platform: org.hibernate.dialect.Oracle12cDialect
+
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:oracle:thin:@///ORCL?TC_TMPFS=/testtmpfs:rw
+    username: system
+    password: oracle
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+
+  mail:
+    host: localhost
+    port: 25
+
+jhipster:
+  security:
+    authentication:
+      jwt:
+        base64-secret: 9aczYrcyYu5Kx97GDTCszQom6i7Quny4Tni/ayGcVKlw2Sl9K1F9zHxKSNj3jl25Pv3TzlL1E3g9T/6lxffvaQ==
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000

@@ -1,0 +1,101 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-resource-heading" data-cy="ResourceCreateUpdateHeading" jhiTranslate="npgPortalApp.resource.home.createOrEditLabel">
+        Create or edit a Resource
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resource.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) {
+          <div>
+            @if (editForm.get('name')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('name')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+              This field cannot be longer than 200 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resource.displayName" for="field_displayName">Display Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="displayName"
+            id="field_displayName"
+            data-cy="displayName"
+            formControlName="displayName"
+          />
+          @if (editForm.get('displayName')!.invalid && (editForm.get('displayName')!.dirty || editForm.get('displayName')!.touched)) {
+          <div>
+            @if (editForm.get('displayName')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('displayName')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 300 }">
+              This field cannot be longer than 300 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resource.apiUri" for="field_apiUri">Api Uri</label>
+          <input type="text" class="form-control" name="apiUri" id="field_apiUri" data-cy="apiUri" formControlName="apiUri" />
+          @if (editForm.get('apiUri')!.invalid && (editForm.get('apiUri')!.dirty || editForm.get('apiUri')!.touched)) {
+          <div>
+            @if (editForm.get('apiUri')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            } @if (editForm.get('apiUri')?.errors?.maxlength) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 1000 }">
+              This field cannot be longer than 1000 characters.
+            </small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="npgPortalApp.resource.resourceType" for="field_resourceType">Resource Type</label>
+          <select class="form-control" name="resourceType" formControlName="resourceType" id="field_resourceType" data-cy="resourceType">
+            <option [ngValue]="null">{{ 'npgPortalApp.ResourceType.null' | translate }}</option>
+            <option value="DOMAIN">{{ 'npgPortalApp.ResourceType.DOMAIN' | translate }}</option>
+            <option value="COMPONENT">{{ 'npgPortalApp.ResourceType.COMPONENT' | translate }}</option>
+            <option value="PAGE_URL">{{ 'npgPortalApp.ResourceType.PAGE_URL' | translate }}</option>
+          </select>
+          @if (editForm.get('resourceType')!.invalid && (editForm.get('resourceType')!.dirty || editForm.get('resourceType')!.touched)) {
+          <div>
+            @if (editForm.get('resourceType')?.errors?.required) {
+            <small class="form-text text-danger" jhiTranslate="entity.validation.required"> This field is required. </small>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

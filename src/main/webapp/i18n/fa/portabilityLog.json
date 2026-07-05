@@ -1,0 +1,64 @@
+{
+  "npgPortalApp": {
+    "portabilityLog": {
+      "home": {
+        "title": "لاگ ترابرد",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد لاگ ترابرد جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش لاگ ترابرد",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }}به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "لاگ ترابرد"
+      },
+      "id": "ID",
+      "porId": "Por Id",
+      "porRequestId": "Por Request Id",
+      "porNumber": "Por Number",
+      "porLegalTerm": "Por Legal Term",
+      "porOpr": "Por Opr",
+      "porAccType": "Por Acc Type",
+      "porIdNumber": "Por Id Number",
+      "porContactNumber": "Por Contact Number",
+      "porStatus": "Por Status",
+      "porPortedDate": "Por Ported Date",
+      "porRouting": "Por Routing",
+      "porType": "Por Type",
+      "porOpOrg": "Por Op Org",
+      "porRspCode": "Por Rsp Code",
+      "porRspNote": "Por Rsp Note",
+      "porCancelNote": "Por Cancel Note",
+      "porMnpid": "Por Mnpid",
+      "portationDate": "Portation Date",
+      "portaCode": "Porta Code",
+      "mvno": "Mvno",
+      "context": "Context",
+      "porErrCode": "Por Err Code",
+      "porErrMessage": "Por Err Message",
+      "porOpd": "Por Opd",
+      "porNumType": "Por Num Type",
+      "porNote": "Por Note",
+      "porDeadline": "Por Deadline",
+      "porResponseTimestamp": "Por Response Timestamp",
+      "porEligible": "Por Eligible",
+      "porBillingOk": "Por Billing Ok",
+      "intermediaryActionState": "Intermediary Action State",
+      "porCrDate": "Por Cr Date",
+      "porUpdDate": "Por Upd Date",
+      "porTechStatus": "Por Tech Status",
+      "porTechDeadline": "Por Tech Deadline",
+      "refPorId": "Ref Por Id",
+      "needManualRetry": "Need Manual Retry",
+      "retryCount": "Retry Count",
+      "action": "Action",
+      "request": "Request",
+      "insertTimestamp": "Insert Timestamp"
+    }
+  }
+}

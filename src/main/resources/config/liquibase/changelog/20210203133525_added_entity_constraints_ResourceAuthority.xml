@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity ResourceAuthority.
+    -->
+    <changeSet id="20210203133625-3" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="resource_id"
+                                 baseTableName="jhi_resource_authority"
+                                 constraintName="fk_resauth_res_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_resource"/>
+
+        <addForeignKeyConstraint baseColumnNames="authority_id"
+                                 baseTableName="jhi_resource_authority"
+                                 constraintName="fk_resauth_auth_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_authority"/>
+    </changeSet>
+</databaseChangeLog>

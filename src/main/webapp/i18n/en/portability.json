@@ -1,0 +1,73 @@
+{
+  "npgPortalApp": {
+    "portability": {
+      "home": {
+        "title": "Portabilities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Portability",
+        "createOrEditLabel": "Create or edit a Portability",
+        "notFound": "No Portabilities found"
+      },
+      "created": "A new Portability is created with identifier {{ param }}",
+      "updated": "A Portability is updated with identifier {{ param }}",
+      "deleted": "A Portability is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Portability {{ id }}?"
+      },
+      "detail": {
+        "title": "Portability"
+      },
+      "id": "ID",
+      "porRequestId": "Request Id",
+      "porRequestDay": "Portability Request Day",
+      "porNumber": "Number",
+      "porLegalTerm": "Legal Term",
+      "porOpr": "Opr",
+      "porAccType": "Acc Type",
+      "porIdNumber": "Id Number",
+      "porContactNumber": "Contact Number",
+      "porStatus": "Status",
+      "porPortedDate": "Ported Date",
+      "porRouting": "Routing",
+      "porType": "Portability Type",
+      "porOpOrg": "Op Org",
+      "porRspCode": "Rsp Code",
+      "porRspNote": "Rsp Note",
+      "porCancelNote": "Cancel Note",
+      "porMnpid": "Mnpid",
+      "portationDate": "Portation Date",
+      "portaCode": "Porta Code",
+      "mvno": "Mvno",
+      "context": "Context",
+      "porErrCode": "Err Code",
+      "porErrMessage": "Err Message",
+      "porErr": "Has Error",
+      "porOpd": "Opd",
+      "porNumType": "Num Type",
+      "porNote": "Note",
+      "porDeadline": "Deadline",
+      "porResponseTimestamp": "Response Timestamp",
+      "porEligible": "Eligible",
+      "porBillingOk": "Billing Ok",
+      "intermediaryActionState": "Intermediary Action State",
+      "porCrDate": "Cr Date",
+      "porUpdDate": "Upd Date",
+      "porTechStatus": "Tech Status",
+      "porTechDeadline": "Tech Deadline",
+      "needManualRetry": "Need Manual Retry",
+      "refPorId": "Ref Id",
+      "dashboard": "dashboard",
+      "search": "Search in Id,PorRequestId,PorNumber,PorOpr,PorAccType,PorIdNumber,PorContactNumber,PorStatus,PorRouting,PorType,PorOpOrg,PorRspCode,PorRspNote,PorCancelNote,PorMnpid,PortaCode,Mvno,Context,PorTechStatus,PorErrCode,PorErrMessage,PorOpd,PorNote,IntermediaryActionState,PorNumType",
+      "porReceiver": "Receiver Operator",
+      "portalSearch": "Portal Search",
+      "retryCount": "Retry Count",
+      "search.startDate": "start date",
+      "search.endDate": "end date",
+      "invalidDatesForSearch": "You are allowed to choose Maximum 90 Days Intervals",
+      "startEndRequire": "Start Date And End Date Is Required",
+      "porTypeFirst": "Select Portability type first",
+      "from": "donor",
+      "to": "recipient"
+    }
+  }
+}

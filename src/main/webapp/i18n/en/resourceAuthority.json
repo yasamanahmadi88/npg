@@ -1,0 +1,27 @@
+{
+  "npgPortalApp": {
+    "resourceAuthority": {
+      "home": {
+        "title": "Resource Authority",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Resource Authority",
+        "createOrEditLabel": "Create or edit a Resource Authority",
+        "notFound": "No Resource Authorities found"
+      },
+      "created": "A new Resource Authority is created with identifier {{ param }}",
+      "updated": "A Resource Authority is updated with identifier {{ param }}",
+      "deleted": "A Resource Authority is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Resource Authority {{ id }}?"
+      },
+      "detail": {
+        "title": "Resource Authority"
+      },
+      "id": "ID",
+      "verb": "Verb",
+      "authorityId": "Authority Id",
+      "resource": "Resource",
+      "search": "Search in Id,Resource_Name,Resource_DisplayName"
+    }
+  }
+}

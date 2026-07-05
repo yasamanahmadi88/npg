@@ -1,0 +1,149 @@
+﻿<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>
+      <div>
+        <h2 id="page-heading" data-cy="DayOfWeekTimeFrameHeading" class="d-flex justify-content-between p-3 align-items-center">
+          <span jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.home.title">Day Of Week Time Frames</span>
+          <!--jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.home.refreshListLabel">Refresh List</span>
+      jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.home.createLabel"> Create a new Day Of Week Time Frame </span>-->
+          <div>
+            <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+              <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+            </button>
+
+            <button
+              id="jh-create-entity"
+              data-cy="entityCreateButton"
+              *jhiHasPermission="['dayOfWeekTimeFrame', 'create']"
+              class="btn btn-primary jh-create-entity create-day-of-week-time-frame"
+              [routerLink]="['/day-of-week-time-frame/new']"
+            >
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+          </div>
+        </h2>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+
+    <div>
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="{{ 'npgPortalApp.dayOfWeekTimeFrame.search' | translate }}"
+          />
+          <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+            <fa-icon [icon]="'search'"></fa-icon>
+          </button>
+          @if (currentSearch) {
+          <button class="input-group-append btn btn-danger" (click)="clearSearch()">
+            <fa-icon [icon]="'trash-alt'"></fa-icon>
+          </button>
+          }
+        </div>
+      </form>
+    </div>
+
+    @if (dayOfWeekTimeFrames?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.home.notFound">No dayOfWeekTimeFrames found</span>
+    </div>
+    } @if (dayOfWeekTimeFrames && dayOfWeekTimeFrames.length > 0) {
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="day">
+              <span jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.day">Day</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="begin">
+              <span jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.begin">Begin</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="end">
+              <span jhiTranslate="npgPortalApp.dayOfWeekTimeFrame.end">End</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (dayOfWeekTimeFrame of dayOfWeekTimeFrames; track trackId($index, dayOfWeekTimeFrame)) {
+          <tr data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/day-of-week-time-frame', dayOfWeekTimeFrame.id, 'view']">{{ dayOfWeekTimeFrame.id }}</a>
+            </td>
+            <td>{{ detectLang(dayOfWeekTimeFrame.day) }}</td>
+            <td>{{ dayOfWeekTimeFrame.begin | num2time }}</td>
+            <td>{{ dayOfWeekTimeFrame.end | num2time }}</td>
+            <td class="text-right">
+              <div class="btn-group">
+                <button
+                  type="submit"
+                  [routerLink]="['/day-of-week-time-frame', dayOfWeekTimeFrame.id, 'view']"
+                  class="btn btn-info btn-sm"
+                  data-cy="entityDetailsButton"
+                >
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
+                <button
+                  *jhiHasPermission="['dayOfWeekTimeFrame', 'edit']"
+                  type="submit"
+                  [routerLink]="['/day-of-week-time-frame', dayOfWeekTimeFrame.id, 'edit']"
+                  class="btn btn-primary btn-sm"
+                  data-cy="entityEditButton"
+                >
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button
+                  *jhiHasPermission="['dayOfWeekTimeFrame', 'delete']"
+                  type="submit"
+                  (click)="delete(dayOfWeekTimeFrame)"
+                  class="btn btn-danger btn-sm"
+                  data-cy="entityDeleteButton"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    } @if (dayOfWeekTimeFrames && dayOfWeekTimeFrames.length > 0) {
+    <div>
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+    }
+  </mat-card-content>
+</mat-card>

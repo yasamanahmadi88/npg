@@ -1,0 +1,29 @@
+{
+  "npgPortalApp": {
+    "resource": {
+      "home": {
+        "title": "منابع",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد منبع جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش منابع",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید {{ param }} ایجاد شد",
+      "updated": "مورد {{ param }} به روز شدند",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{ id }} مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "منابع"
+      },
+      "id": "ID",
+      "name": "Name",
+      "displayName": "Display Name",
+      "apiUri": "Api Uri",
+      "resourceType": "Resource Type",
+      "resourceAuthorities": "Resource Authorities",
+      "search": "Search "
+    }
+  }
+}

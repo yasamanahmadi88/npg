@@ -1,0 +1,30 @@
+{
+  "npgPortalApp": {
+    "fileReportGenerationLog": {
+      "home": {
+        "title": "File Report Generation Logs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new File Report Generation Log",
+        "createOrEditLabel": "Create or edit a File Report Generation Log",
+        "notFound": "No File Report Generation Logs found"
+      },
+      "created": "A new File Report Generation Log is created with identifier {{ param }}",
+      "updated": "A File Report Generation Log is updated with identifier {{ param }}",
+      "deleted": "A File Report Generation Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete File Report Generation Log {{ id }}?"
+      },
+      "detail": {
+        "title": "File Report Generation Log"
+      },
+      "id": "ID",
+      "reportName": "Report Name",
+      "reportDate": "Report Date",
+      "fileName": "File Name",
+      "rowNumber": "Row Number",
+      "porNumber": "Por Number",
+      "content": "Content",
+      "fileReportGenerationLogSearch": "File  Search"
+    }
+  }
+}

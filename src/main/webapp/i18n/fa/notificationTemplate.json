@@ -1,0 +1,27 @@
+{
+  "npgPortalApp": {
+    "notificationTemplate": {
+      "home": {
+        "title": "قالب نوتیفیکیشن",
+        "refreshListLabel": "به روز رسانی لیست",
+        "createLabel": "ایجاد قالب نوتیفیکشن جدید",
+        "createOrEditLabel": "ایجاد یا ویرایش قالب نوتیفیکیشن",
+        "notFound": "موردی یافت نشد"
+      },
+      "created": "مورد جدید{{ param }} ساخته شد",
+      "updated": "مورد {{ param }} به روز شد",
+      "deleted": "مورد {{ param }} حذف گردید",
+      "delete": {
+        "question": "ایا از حذف مورد {{id}}مطمئن هستید؟"
+      },
+      "detail": {
+        "title": "قالب نوتیفیکیشن"
+      },
+      "id": "شناسه",
+      "templateCode": "کد قالب",
+      "language": "زبان",
+      "content": "محتوا",
+      "type": "نوع"
+    }
+  }
+}
