@@ -29,3 +29,14 @@ Critical remaining: **0**.
 ## Secret scan
 
 Executed against `origin/main...HEAD`. Production password `pass#1400` and hardcoded JWT secret appear only as **removals**. `.env.example` placeholders only. `.env` gitignored.
+
+## Blocker-pass security updates
+
+| Control | Status | Notes |
+| ------- | ------ | ----- |
+| Prod CORS allow-list | HARDENED / Ops PENDING | `application-prod.yml` overrides shared yml; no localhost in prod default; Ops must verify exact origins (`docs/production-cors-checklist.md`) |
+| Prod DB username/password | PASS fail-fast | `${SPRING_DATASOURCE_USERNAME}` / `${SPRING_DATASOURCE_PASSWORD}` — no defaults |
+| Prod JWT secret | PASS fail-fast | `${JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET}` — no default |
+| Prod JDBC URL host default | DOCUMENTED | Non-secret host `172.19.49.81` default retained intentionally; override via `SPRING_DATASOURCE_URL` |
+| Historical credential rotation | BLOCKED | `docs/credential-rotation-plan.md` — required before Production |
+| `.env` ignored / `.env.example` placeholders | PASS | Confirmed |

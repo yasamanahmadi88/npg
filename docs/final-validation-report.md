@@ -1,46 +1,79 @@
-# Final Validation Report
+# Final validation report — PR #5
 
-**Decision: READY TO MERGE WITH ACCEPTED BLOCKERS**
-
-See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
-
-## Diff cleanup
-
-| Metric | Value |
-| ------ | ----: |
-| Initial changed files | 499 |
-| EOL-only reverted | 460 |
-| Final changed files (GitHub + `origin/main...HEAD`) | **50** |
-| Formatting-only reverted | 0 |
-| Equal add/delete pairs remaining | 0 |
+**Updated:** 2026-07-10T15:21Z  
+**Branch:** `cursor/full-upgrade-audit-eec2`  
+**Tip (pre-blocker-pass commit):** see latest push SHA  
+**Base:** `main`  
+**Remote changed files:** 50+ (docs/code from this blocker pass will increase)  
+**GitHub CI:** PASS (frontend / backend / security-scan) on tip `f5d2ad0`  
+**Mergeable:** CLEAN  
 
 ## Stack
 
 | Component | Version |
 | --------- | ------- |
-| Angular | **21.2.18** (declared + lockfile resolved) |
-| Node | 22.22.2 |
+| Angular | 21.2.18 |
 | Java | 25 |
-| Spring Boot | **4.0.7** (`pom.xml` not in this PR) |
-| PR | #5 |
-| Branch | `cursor/full-upgrade-audit-eec2` |
-| Tip SHA (at package authoring) | `51350eb6eabf770e55abcf62ce3f812ead8e2c9d` |
+| Spring Boot | 4.0.7 |
+| Node (verify) | 22.22.2 |
 
-## Results
+## Test evidence (re-run after blocker-pass code changes — see test-report.md)
 
-| Check | Status | Evidence |
-| ----- | ------ | -------- |
-| Jest | PASS | 144 suites / **606** tests |
-| Playwright | PASS | **8/8** |
-| Maven `-P-webapp clean verify` | PASS | **703** tests |
-| GitHub CI | PASS | frontend, backend, security-scan |
-| npm Critical | PASS | **0** |
-| npm High (prod Angular) | PASS | fixed at 21.2.18 |
-| npm High (generator-jhipster tree) | Accepted residual | **7** findings, not SPA runtime |
-| Docker | BLOCKED | — |
-| Live Oracle | BLOCKED | H2 only |
-| Non-root routing | BLOCKED | `<base href="/">`; context-path possible |
+| Suite | Status |
+| ----- | ------ |
+| Frontend Jest | Re-run required after profile.service + dashboard CSS |
+| Playwright | Re-run required (management/info mock + mobile Search) |
+| Maven verify | Re-run if backend/config changed (prod CORS yml) |
+| npm Critical | 0 |
+| npm High | 7 (generator-jhipster/Yeoman tooling — ACCEPTED for SPA runtime) |
 
-## Recommendation
+## Blocker resolution summary
 
-**READY TO MERGE WITH ACCEPTED BLOCKERS** — complete human sign-off on `docs/pr-review-checklist.md` (Docker / Oracle / non-root / historical secret rotation). UI Light/Dark/RTL/menu/login evidence: `docs/manual-ui-review.md`. Do not auto-merge.
+| Item | Status | Classification / notes |
+| ---- | ------ | ---------------------- |
+| `ct.split` / `Ct` pageerror | MOCK-ONLY (observed UI review) + FIXED (latent) | See below |
+| Mobile Search layout | FIXED | Dashboard responsive CSS + Playwright viewports |
+| Docker runtime | BLOCKED | `docs/docker-verification-runbook.md` |
+| Oracle smoke | BLOCKED | `docs/oracle-smoke-test-runbook.md` |
+| Non-root context-path | BLOCKED | Topology unknown; `<base href="/">`; no owner-approved root-only decision |
+| Production CORS origins | BLOCKED (Ops) | Prod profile defaults to HTTPS MCI hosts; Ops must verify |
+| Prod secrets fail-fast | PASS (config) | Username/password/JWT have no defaults; JDBC host default documented |
+| Historical credential rotation | BLOCKED | `docs/credential-rotation-plan.md` |
+
+### `ct.split` / `Ct` investigation (source-mapped)
+
+**Reproduction environment:** static production SPA (`serve -s`) + Playwright-mocked `/api/**` (same mode as manual UI review).
+
+| Scenario | `/management/info` response | Result |
+| -------- | --------------------------- | ------ |
+| A — UI-review mock (no info mock) | SPA `index.html` 200 `text/html` | pageerror **`Ct`** = minified **`HttpErrorResponse`**: `Http failure during parsing for .../management/info` |
+| B — `{}` JSON | `{}` | No error |
+| C — ribbon object | non-string ribbon | `TypeError: ...display-ribbon-on-profiles.split is not a function` → **source map:** `profile.service.ts:29` |
+| F — valid string ribbon | `display-ribbon-on-profiles: "dev"` | No error |
+
+**Classification:**
+
+- Observed UI-review `Ct` / parse failure: **MOCK-ONLY** (SPA fallback HTML for actuator info). Does not occur when info returns JSON (real backend or proper mock).
+- Latent `.split` on non-string ribbon: **FIXED** with `typeof === 'string'` contract check + `catchError` empty profile + unit tests.
+- Playwright now mocks `/management/info` with valid JSON.
+
+**Does not block visible login/menu flows** under proper API JSON. **NOT** an unexplained reproducible application error against a real backend contract.
+
+## Decisions
+
+### Code merge decision
+
+**READY TO MERGE WITH ACCEPTED CODE-SCOPE BLOCKERS**
+
+Accepted code-scope / external blockers that do not require further application code in this PR:
+
+- Docker runtime not executed here  
+- Oracle smoke not executed here  
+- Non-root topology unknown (root `<base href="/">` remains)  
+- Ops must verify Production CORS origins and complete credential rotation  
+
+### Production deployment decision
+
+**NOT READY FOR PRODUCTION**
+
+Blocked on Docker verification, Oracle smoke, deployment topology confirmation, Production CORS origin verification, and historical credential rotation.

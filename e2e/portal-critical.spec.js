@@ -1,6 +1,14 @@
 const { test, expect } = require('@playwright/test');
 
 async function mockPublicApis(page) {
+  // Actuator info must be JSON — SPA fallback HTML causes HttpErrorResponse (minified as "Ct").
+  await page.route('**/management/info', async route => {
+    return route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ activeProfiles: ['prod'], 'display-ribbon-on-profiles': 'dev' }),
+    });
+  });
   await page.route('**/api/**', async route => {
     const url = route.request().url();
     const method = route.request().method();
@@ -176,4 +184,23 @@ test.describe('NPG portal critical browser flows', () => {
     await toggler.first().click();
     await expect(page.locator('[data-cy="themeToggle"]')).toBeVisible();
   });
+
+  test('mobile dashboard Search button stays within viewport', async ({ page }) => {
+    await seedAuthenticatedSession(page);
+    const widths = [320, 375, 390, 430];
+    for (const width of widths) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/dashboard', { waitUntil: 'domcontentloaded' });
+      await page.waitForSelector('.dashboard, #jh-search-entity, jhi-main', { timeout: 30000 });
+      const searchBtn = page.locator('#jh-search-entity, [data-cy="entitySearchButton"]').first();
+      await expect(searchBtn).toBeVisible({ timeout: 30000 });
+      const box = await searchBtn.boundingBox();
+      expect(box).toBeTruthy();
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(width + 1);
+      const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      expect(scrollWidth).toBeLessThanOrEqual(width + 1);
+    }
+  });
+
 });

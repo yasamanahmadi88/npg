@@ -111,3 +111,22 @@ ngx-charts-bar-vertical-2d {
 ::ng-deep .ngx-charts .grid-panel.odd rect {
   fill: #d0e1f7b0 !important;
 }
+
+/* mobile search row: keep Search button visible without overflow */
+@media (max-width: 767.98px) {
+  .dashboard form > .d-flex.justify-content-around {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+
+  .dashboard form > .d-flex.justify-content-around > [class*='col-'] {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .dashboard form .jh-search-entity {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+}
