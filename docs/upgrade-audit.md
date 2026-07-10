@@ -2,13 +2,13 @@
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
 **Date:** 2026-07-10  
-**Stack (validated):** Angular 21.2.14 · Node 22.22.2 · TypeScript 5.9.3 · Java 25.0.3 · Spring Boot 4.0.7 · Hibernate 7.2.12 · JHipster Framework 9.1.0
+**Stack (validated):** Angular **21.2.18** · Node 22.22.2 · TypeScript 5.9.3 · Java 25.0.3 · Spring Boot **4.0.7** · Hibernate 7.2.12 · JHipster Framework 9.1.0
 
 ## Version matrix
 
 | Component | Requested | Declared | Resolved/Runtime | Docker/CI | Notes |
 | --------- | --------- | -------- | ---------------- | --------- | ----- |
-| Angular | 21 | 21.2.14 | 21.2.14 | CI Node 22.22.2 | PASS |
+| Angular | 21 | **21.2.18** | 21.2.18 | CI Node 22.22.2 | Patched for npm High advisories |
 | Node | Angular 21 support | `>=22.12 <23` | 22.22.2 | 22.22.2 | PASS |
 | TypeScript | Angular 21 | ~5.9.3 | 5.9.3 | — | PASS |
 | Java | 25 | 25 | Temurin 25.0.3 | Temurin 25 | Local agent initially had only JDK 21; JDK 25 installed for builds |
@@ -33,8 +33,9 @@
 | R11 | Duplicate Bootstrap Cosmo+Lumen imports | SCSS conflict | Cosmo only | PASS |
 | R12 | npm install failed | Private Artifactory unreachable | Public registry + lock URL rewrite | PASS (env-specific) |
 | R13 | Actuator `/management/health` via MockMvc | Boot 4 resource fallback in some IT contexts | Documented; auth tests cover API protection | BLOCKED (runtime health needs live app) |
-| R14 | Docker Compose runtime | Docker unavailable in agent | Static compose validation only | BLOCKED (Docker) |
-| R14b | Browser E2E | Initially blocked | Playwright + `serve -s` + API mocks | PASS (5 tests); live API still BLOCKED |
+| R14 | Docker Compose runtime | Docker unavailable in agent | Static compose files only | BLOCKED (Docker) |
+| R14b | Browser E2E | Initially blocked | Playwright + `serve -s` + API mocks | PASS (**8** tests); live API still BLOCKED |
+| R16 | GitHub Actions `./mvnw` | CRLF shebang on Linux | LF-stripped wrapper in CI | PASS |
 | R15 | Oracle DB live verification | No local Oracle | H2 ITs used | BLOCKED for Oracle-specific SQL |
 
 ## Architecture summary

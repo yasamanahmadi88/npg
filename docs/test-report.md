@@ -1,39 +1,41 @@
-# Test Report (cleaned branch)
+# Test Report (release candidate)
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**Evidence date:** 2026-07-10 (post EOL cleanup; re-verified same day)
+**HEAD:** `9f4f0a373d1f67fbbdbf210e61a38ef7534cab80`  
+**Worktree:** `/tmp/npg-final-verification` (clean checkout, no reused `node_modules`/`target`)
 
 ## Frontend
 
-| Check | Command | Exit | Result |
-| ----- | ------- | ---: | ------ |
-| Clean install | `npm ci --no-fund --no-audit` | 0 | added 1786 packages |
-| Lint | `npx eslint "src/main/webapp/**/*.ts"` | 0 | 0 errors, 6 warnings (unused eslint-disable) |
-| Unit tests (cleanup run) | `npx jest --config jest.conf.js --watch=false --coverage=false` | 0 | **143 suites, 605 tests, 0 failed, 0 skipped** |
-| Unit tests (re-verify) | same | 0 | **144 suites, 606 tests, 0 failed, 0 skipped** |
-| Auth/theme/menu focused | `npx jest … menu-routing|main.auth-lifecycle|theme.service|navbar.theme` | 0 | 4 suites / 13 tests |
-| Production build | `npx ng build --configuration production` | 0 | `Build at: 2026-07-10T13:33:53.807Z`, artifact `target/classes/static/index.html` |
-| E2E (Playwright) re-verify | `npx playwright test --config=playwright.config.js` | 0 | **5 passed** (login load, theme persist, 404, nested SPA URL, mobile navbar) |
+| Command | Exit | Duration | Result |
+| ------- | ---: | -------: | ------ |
+| `npm ci --no-fund --no-audit` | 0 | ~26s | 1786 packages (pre-Angular bump); re-run after bump OK |
+| `npm ls --depth=0` | 0 | ~1s | OK |
+| `npm run lint` | 0 | ~5s | 0 errors, 6 warnings |
+| `npx jest --config jest.conf.js --watch=false --coverage=false --runInBand` | 0 | ~66s | **144 suites, 606 tests, 0 failed, 0 skipped** |
+| `npx ng build --configuration production` | 0 | ~40s | PASS (typecheck via build) |
+| `npx playwright test --config=playwright.config.js` | 0 | ~7s | **8 passed** |
 
-E2E serves production static assets with `serve -s` and mocks `/api/**` (Oracle not required).
+### Why 606 (not 605)
+
+New PR specs add 13 tests (theme 8 + auth-lifecycle 1 + menu-routing 2 + navbar.theme 2). Clean HEAD consistently reports **606**. An intermediate “605” figure was from an earlier partial suite set before all new specs were present.
 
 ## Backend
 
-| Check | Command | Exit | Result |
-| ----- | ------- | ---: | ------ |
-| Clean verify | `mvnw -ntp -P-webapp clean verify` (LF-normalized wrapper copy; main `mvnw` is CRLF) | 0 | **Tests run: 700, Failures: 0, Errors: 0, Skipped: 0**, BUILD SUCCESS |
-| Security-focused re-verify | `mvnw -ntp -P-webapp -Dtest=WebConfigurerTest,SecurityWebConfigurationIT test` | 0 | **Tests run: 12, Failures: 0, Errors: 0, Skipped: 0** |
+| Command | Exit | Duration | Result |
+| ------- | ---: | -------: | ------ |
+| `sed 's/\r$//' mvnw > /tmp/mvnw.lf && chmod +x /tmp/mvnw.lf && /tmp/mvnw.lf -ntp -P-webapp clean verify --batch-mode` | 0 | ~40s | **Tests run: 703, Failures: 0, Errors: 0, Skipped: 0** |
+
+### 703 vs prior 700
+
+`SecurityWebConfigurationIT` grew from 4 → **7** tests (+3). Those **7 are included in 703**, not an additional separate total.
+
+Security-related subsets inside 703: `JWTFilterTest` (5), `TokenProviderTest` (7), `WebConfigurerTest` (8), `SecurityWebConfigurationIT` (7).
 
 ## Scans
 
 | Check | Result |
 | ----- | ------ |
-| Secret scan on PR files | No `pass#1400` / private keys / AKIA hits in retained files |
-| `application-prod.yml` | JWT + DB password require env vars |
-| npm audit | Dev-tooling High/Critical remain (`vite`, `ws`/BrowserSync, `yeoman-environment`); not production runtime bundle |
-| Docker runtime | **BLOCKED** — `docker` not installed |
-| Oracle live / Testcontainers Oracle | **BLOCKED** — no Oracle; H2 used for ITs |
-
-## Type check
-
-No separate `tsc` script; production `ng build` performs Angular compilation/type checking (**PASS** via build).
+| Secret scan on `origin/main...HEAD` | PASS — prod password/JWT literals removed; no new secrets |
+| npm audit | Critical **0** after Angular 21.2.18 + concurrently 9.2.3; **7 High** remain in generator-jhipster/Yeoman tooling (not SPA runtime) |
+| Docker | BLOCKED |
+| Oracle | BLOCKED |

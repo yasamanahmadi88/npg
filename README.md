@@ -6,7 +6,7 @@ Number Portability Gateway Management Portal — JHipster-origin enterprise SPA 
 
 | Layer | Version |
 | ----- | ------- |
-| Angular | 21.2.x |
+| Angular | 21.2.18 |
 | Node.js | 22.22.x (engines: `>=22.12.0 <23`) |
 | TypeScript | 5.9.x |
 | Java | 25 |
