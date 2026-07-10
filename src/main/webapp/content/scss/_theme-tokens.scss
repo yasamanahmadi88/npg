@@ -1,0 +1,185 @@
+/* Portal semantic theme tokens — light (default) and dark via html[data-theme] */
+
+:root,
+html[data-theme='light'],
+html.theme-light {
+  --npg-bg-page: #f5f7f8;
+  --npg-bg-surface: #ffffff;
+  --npg-bg-elevated: #ffffff;
+  --npg-bg-navbar: #ffffff;
+  --npg-bg-sidebar: #f8f9fa;
+  --npg-text-primary: #2c2c2c;
+  --npg-text-secondary: #555555;
+  --npg-text-disabled: #888686;
+  --npg-border: #dbdbdb;
+  --npg-divider: #e9e8e8;
+  --npg-primary: #54c5d0;
+  --npg-primary-hover: #3fb0bb;
+  --npg-secondary: #f7b64b;
+  --npg-success: #3cd397;
+  --npg-warning: #e8ab59;
+  --npg-error: #e85959;
+  --npg-input-bg: #ffffff;
+  --npg-input-text: #2c2c2c;
+  --npg-focus-ring: rgba(84, 197, 208, 0.45);
+  --npg-hover: rgba(84, 197, 208, 0.12);
+  --npg-selected: rgba(84, 197, 208, 0.2);
+  --npg-table-header: #f0f3f4;
+  --npg-table-row: #ffffff;
+  --npg-table-row-alt: #fafbfc;
+  --npg-dialog-bg: #ffffff;
+  --npg-overlay: rgba(0, 0, 0, 0.45);
+  --npg-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --npg-card-bg: #ffffff;
+  --npg-link: #3a8a92;
+  color-scheme: light;
+}
+
+html[data-theme='dark'],
+html.theme-dark {
+  --npg-bg-page: #1a1d21;
+  --npg-bg-surface: #242830;
+  --npg-bg-elevated: #2c313a;
+  --npg-bg-navbar: #1f2329;
+  --npg-bg-sidebar: #1f2329;
+  --npg-text-primary: #e8eaed;
+  --npg-text-secondary: #b8b8b8;
+  --npg-text-disabled: #888686;
+  --npg-border: #3a404a;
+  --npg-divider: #323842;
+  --npg-primary: #54c5d0;
+  --npg-primary-hover: #6fd4dd;
+  --npg-secondary: #f7b64b;
+  --npg-success: #3cd397;
+  --npg-warning: #e8ab59;
+  --npg-error: #e85959;
+  --npg-input-bg: #2c313a;
+  --npg-input-text: #e8eaed;
+  --npg-focus-ring: rgba(84, 197, 208, 0.55);
+  --npg-hover: rgba(84, 197, 208, 0.18);
+  --npg-selected: rgba(84, 197, 208, 0.28);
+  --npg-table-header: #2a2f38;
+  --npg-table-row: #242830;
+  --npg-table-row-alt: #1f2329;
+  --npg-dialog-bg: #2c313a;
+  --npg-overlay: rgba(0, 0, 0, 0.65);
+  --npg-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --npg-card-bg: #242830;
+  --npg-link: #7ad4dc;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--npg-bg-page);
+  color: var(--npg-text-primary);
+}
+
+.navbar {
+  background-color: var(--npg-bg-navbar) !important;
+  border-bottom: 1px solid var(--npg-border);
+  box-shadow: var(--npg-shadow);
+}
+
+.navbar .nav-link,
+.navbar .navbar-title,
+.navbar .dropdown-toggle {
+  color: var(--npg-text-primary) !important;
+}
+
+.jh-card,
+.card {
+  background-color: var(--npg-card-bg);
+  color: var(--npg-text-primary);
+  border-color: var(--npg-border);
+}
+
+.dropdown-menu {
+  background-color: var(--npg-bg-elevated);
+  border-color: var(--npg-border);
+  box-shadow: var(--npg-shadow);
+}
+
+.dropdown-item {
+  color: var(--npg-text-primary);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--npg-hover);
+  color: var(--npg-text-primary);
+}
+
+.table {
+  color: var(--npg-text-primary);
+}
+
+.table thead th {
+  background-color: var(--npg-table-header);
+  border-color: var(--npg-border);
+}
+
+.table td,
+.table th {
+  border-color: var(--npg-border);
+}
+
+.form-control,
+.form-select,
+input.form-control,
+select.form-control,
+textarea.form-control {
+  background-color: var(--npg-input-bg);
+  color: var(--npg-input-text);
+  border-color: var(--npg-border);
+}
+
+.form-control:focus {
+  border-color: var(--npg-primary);
+  box-shadow: 0 0 0 0.2rem var(--npg-focus-ring);
+}
+
+.modal-content,
+.mat-mdc-dialog-container {
+  background-color: var(--npg-dialog-bg);
+  color: var(--npg-text-primary);
+}
+
+a {
+  color: var(--npg-link);
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border: 1px solid var(--npg-border);
+  background: var(--npg-bg-surface);
+  color: var(--npg-text-primary);
+  border-radius: 0.375rem;
+  padding: 0.35rem 0.65rem;
+  margin-inline-start: 0.5rem;
+  cursor: pointer;
+  min-height: 2rem;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+  background: var(--npg-hover);
+  outline: 2px solid var(--npg-focus-ring);
+  outline-offset: 2px;
+}
+
+.theme-toggle-btn .theme-toggle-label {
+  font-size: 0.8rem;
+}
+
+html[data-theme='dark'] .colorDark {
+  color: var(--npg-text-primary) !important;
+}
+
+html[data-theme='dark'] .searchBox input {
+  background: var(--npg-input-bg);
+  color: var(--npg-input-text);
+  border-color: var(--npg-border);
+}

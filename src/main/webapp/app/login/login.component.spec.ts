@@ -111,7 +111,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         // THEN
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['./dashboard']);
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
       });
     });
 
