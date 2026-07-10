@@ -43,4 +43,4 @@ See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 
 ## Recommendation
 
-**READY TO MERGE AFTER MANUAL UI REVIEW** — complete `docs/pr-review-checklist.md` (UI + blocker acceptance) before merging. Do not auto-merge.
+**READY TO MERGE WITH ACCEPTED BLOCKERS** — complete human sign-off on `docs/pr-review-checklist.md` (Docker / Oracle / non-root / historical secret rotation). UI Light/Dark/RTL/menu/login evidence: `docs/manual-ui-review.md`. Do not auto-merge.

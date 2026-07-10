@@ -1,6 +1,6 @@
 # Retained file inventory (PR #5 vs `origin/main`)
 
-Exact remote/local comparison: **49 files** (A25 / M23 / D1).
+Exact remote/local comparison: **50 files** (A26 / M23 / D1).
 
 | File | Category | Reason retained | Semantic change | Test/evidence |
 | ---- | -------- | --------------- | --------------- | ------------- |
@@ -15,6 +15,7 @@ Exact remote/local comparison: **49 files** (A25 / M23 / D1).
 | `docs/menu-route-inventory.md` | Documentation | Menu→route table | Docs | menu-routing.spec |
 | `docs/pr-review-checklist.md` | Documentation | Manual merge checklist | Docs | — |
 | `docs/human-review-package.md` | Documentation | Reviewer package | Docs | — |
+| `docs/manual-ui-review.md` | Documentation | Manual UI evidence | Docs | screenshots in /tmp artifacts |
 | `docs/remaining-risks.md` | Documentation | Residual risks | Docs | — |
 | `docs/root-cause-analysis.md` | Documentation | RCA | Docs | — |
 | `docs/security-review.md` | Documentation | Security review | Docs | — |

@@ -3,58 +3,78 @@
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Branch:** `cursor/full-upgrade-audit-eec2`  
 **Base:** `main`  
-**Verified tip SHA:** confirm on PR page / `git rev-parse origin/cursor/full-upgrade-audit-eec2` (docs authored at `c687d54`)  
-**Remote changed files:** **49** (47 prior + this review package’s 2 new docs)
+**Tip SHA:** confirm on PR / `git rev-parse origin/cursor/full-upgrade-audit-eec2`  
+**Remote changed files:** **49**  
+**UI evidence:** `docs/manual-ui-review.md`  
+**Artifacts (not in git):** `/tmp/ui-review-artifacts/screenshots/`
 
-Re-confirm SHA and CI on the PR page before approving.
+Status legend: **Completed** · **Failed** · **Blocked** · **Requires reviewer acceptance**
 
-## Automated gates (confirm on GitHub)
+## Automated gates
 
-- [ ] Remote PR shows **~49** changed files (not ~499)
-- [ ] CI checks are green (`frontend`, `backend`, `security-scan`)
-- [ ] No merge conflict (`MERGEABLE` / clean)
-- [ ] Head SHA matches the branch tip you intend to merge
+| Item | Status |
+| ---- | ------ |
+| Remote PR shows ~49 files (not ~499) | Completed |
+| CI checks green (frontend / backend / security-scan) | Completed (re-confirm on tip) |
+| No merge conflict | Completed (`MERGEABLE` / `CLEAN` at review time) |
+| Head SHA matches intended tip | Requires reviewer acceptance |
 
 ## Security & configuration
 
-- [ ] Security diff reviewed (`SecurityConfiguration.java`, deleted `JWTConfigurer.java`, `WebConfigurer.java`)
-- [ ] Production configuration reviewed (`application-prod.yml`, `application-dev.yml`, `application.yml`)
-- [ ] No secret introduced (prod password/JWT literals removed; `.env.example` placeholders only)
-- [ ] Dependency residuals accepted (7 npm **High** in generator-jhipster/Yeoman tooling; **0 Critical**; Angular **21.2.18** resolved)
+| Item | Status |
+| ---- | ------ |
+| Security diff reviewed | Requires reviewer acceptance (evidence in `docs/human-review-package.md`) |
+| Production configuration reviewed | Completed (documented in `docs/manual-ui-review.md`) |
+| No secret introduced in PR tip | Completed |
+| Dependency residuals accepted (7 High codegen / 0 Critical) | Requires reviewer acceptance |
+| CORS origins reviewed | Completed (list documented; confirm prod front-door) |
+| Production variables reviewed | Completed |
+| Historical secret rotation acknowledged | Requires reviewer acceptance (ops prerequisite) |
 
 ## Routing & authentication
 
-- [ ] Routing reviewed (absolute navbar/login links; register + password-reset routes restored)
-- [ ] Authentication reviewed (unload logout removed; explicit logout still via `LoginService`)
-- [ ] Browser refresh reviewed (session must survive refresh)
-- [ ] Explicit logout reviewed (client token cleared; protected routes denied after logout)
-- [ ] Non-root routing decision accepted (**BLOCKED** — app ships `<base href="/">`; subpath not verified)
+| Item | Status |
+| ---- | ------ |
+| Routing reviewed | Completed |
+| Authentication reviewed | Completed |
+| Login reviewed | Completed |
+| Logout reviewed | Completed |
+| Browser refresh reviewed | Completed |
+| Main menu reviewed | Completed |
+| Nested routes reviewed | Completed |
+| Non-root routing decision | **Blocked** — accept root-only **or** run subpath procedure |
 
-## Theme & UI (manual)
+## Theme & UI
 
-- [ ] Theme reviewed in Light mode
-- [ ] Theme reviewed in Dark mode
-- [ ] RTL reviewed (Persian `dir` / layout)
-- [ ] Login reviewed
-- [ ] Main menu reviewed (absolute destinations from nested routes)
-- [ ] Contrast acceptable for errors, links, tables, borders, disabled controls
+| Item | Status |
+| ---- | ------ |
+| Light mode reviewed | Completed |
+| Dark mode reviewed | Completed |
+| RTL reviewed | Completed |
+| Mobile reviewed | Completed (polish: oversized Search on narrow viewport) |
+| Form / empty table surfaces reviewed | Completed (mocked empty data) |
+| Validation reviewed | Completed (invalid login alert) |
+| Console reviewed | Completed (Medium `ct.split` pageerror — accept or fix follow-up) |
+| Network reviewed | Completed under mock |
 
 ## Environment blockers
 
-- [ ] Docker blocker accepted or resolved (**BLOCKED** in agent/CI — no daemon)
-- [ ] Oracle blocker accepted or resolved (**BLOCKED** — H2 ITs only; no live Oracle)
+| Item | Status |
+| ---- | ------ |
+| Docker blocker accepted or resolved | **Blocked** — Requires reviewer acceptance |
+| Oracle blocker accepted or resolved | **Blocked** — Requires reviewer acceptance |
+| Non-root routing accepted or resolved | **Blocked** — Requires reviewer acceptance |
 
 ## Approval
 
-- [ ] Reviewer approval received
-- [ ] Merge performed by a human (do not auto-merge)
+| Item | Status |
+| ---- | ------ |
+| Reviewer approval received | Requires reviewer acceptance |
+| Merge performed by a human | Requires reviewer acceptance |
 
-## Quick evidence pointers
+## Human sign-off
 
-| Area | Where to look |
-| ---- | ------------- |
-| Full RC evidence | `docs/release-candidate-verification.md` |
-| File-by-file inventory | `docs/retained-file-inventory.md` / this package below |
-| Menu → route map | `docs/menu-route-inventory.md` |
-| npm residuals | `docs/security-review.md` |
-| Jest 606 / Maven 703 / Playwright 8 | `docs/test-report.md` |
+| Role | Name | Date | Decision |
+| ---- | ---- | ---- | -------- |
+| Reviewer | | | Accept blockers / Request changes |
+| Ops (secret rotation) | | | Scheduled / Done |

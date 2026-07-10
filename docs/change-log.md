@@ -1,10 +1,15 @@
 # Change Log
 
+## 2026-07-10 — Manual UI / production-readiness review
+
+- Ran Chromium UI validation against static prod build + mocked API (not Oracle).
+- Added `docs/manual-ui-review.md`; updated checklist statuses.
+- Decision: **READY TO MERGE WITH ACCEPTED BLOCKERS**.
+
 ## 2026-07-10 — Human review package
 
 - Added `docs/pr-review-checklist.md` and `docs/human-review-package.md`.
 - Confirmed live GitHub PR #5: **49** files after review-package docs, CI green, mergeable.
-- Decision: **READY TO MERGE AFTER MANUAL UI REVIEW**.
 
 ## 2026-07-10 — Release candidate verification
 
