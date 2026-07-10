@@ -1,6 +1,6 @@
 # Final Validation Report
 
-**Decision: READY TO MERGE AFTER MANUAL UI REVIEW**
+**Decision: READY TO MERGE WITH ACCEPTED BLOCKERS**
 
 See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 
@@ -10,7 +10,7 @@ See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 | ------ | ----: |
 | Initial changed files | 499 |
 | EOL-only reverted | 460 |
-| Final changed files (GitHub + `origin/main...HEAD`) | **49** |
+| Final changed files (GitHub + `origin/main...HEAD`) | **50** |
 | Formatting-only reverted | 0 |
 | Equal add/delete pairs remaining | 0 |
 
