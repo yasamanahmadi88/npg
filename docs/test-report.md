@@ -1,41 +1,40 @@
-# Test Report (release candidate)
+# Test Report (blocker-resolution pass)
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD:** `d66d9ba543e96477f9afe0d6741ab1accc78e2ef`  
-**Worktree:** `/tmp/npg-final-verification` (clean checkout, no reused `node_modules`/`target`)
+**HEAD at test time:** post-`bcbdfd1` working tree (includes mobile Search CSS follow-up)  
+**Date:** 2026-07-10
 
-## Frontend
+## Frontend (re-run after code changes)
 
-| Command | Exit | Duration | Result |
-| ------- | ---: | -------: | ------ |
-| `npm ci --no-fund --no-audit` | 0 | ~26s | 1786 packages (pre-Angular bump); re-run after bump OK |
-| `npm ls --depth=0` | 0 | ~1s | OK |
-| `npm run lint` | 0 | ~5s | 0 errors, 6 warnings |
-| `npx jest --config jest.conf.js --watch=false --coverage=false --runInBand` | 0 | ~66s | **144 suites, 606 tests, 0 failed, 0 skipped** |
-| `npx ng build --configuration production` | 0 | ~40s | PASS (typecheck via build) |
-| `npx playwright test --config=playwright.config.js` | 0 | ~7s | **8 passed** |
+| Command | Exit | Result |
+| ------- | ---: | ------ |
+| `npm run lint` | 0 | 0 errors, 6 warnings (pre-existing unused eslint-disable) |
+| `npx jest --config jest.conf.js --watch=false --coverage=false --runInBand` | 0 | **145 suites / 609 tests** (was 144/606; +1 suite / +3 from `profile.service.spec.ts`) |
+| Focused: `profile.service.spec.ts` + ribbon + navbar.theme | 0 | 6 passed |
+| `npm run webapp:prod` | 0 | PASS (typecheck via production build) |
+| `npx playwright test --config=playwright.config.js` | 0 | **9/9 passed** (was 8; + mobile Search viewport) |
 
-### Why 606 (not 605)
+## Backend (re-run after `application-prod.yml` change)
 
-New PR specs add 13 tests (theme 8 + auth-lifecycle 1 + menu-routing 2 + navbar.theme 2). Clean HEAD consistently reports **606**. An intermediate “605” figure was from an earlier partial suite set before all new specs were present.
+| Command | Exit | Result |
+| ------- | ---: | ------ |
+| `sed 's/\r$//' mvnw > /tmp/mvnw.lf && chmod +x /tmp/mvnw.lf && /tmp/mvnw.lf -ntp -P-webapp clean verify --batch-mode` | 0 | **Tests run: 703, Failures: 0, Errors: 0, Skipped: 0** |
 
-## Backend
-
-| Command | Exit | Duration | Result |
-| ------- | ---: | -------: | ------ |
-| `sed 's/\r$//' mvnw > /tmp/mvnw.lf && chmod +x /tmp/mvnw.lf && /tmp/mvnw.lf -ntp -P-webapp clean verify --batch-mode` | 0 | ~40s | **Tests run: 703, Failures: 0, Errors: 0, Skipped: 0** |
-
-### 703 vs prior 700
-
-`SecurityWebConfigurationIT` grew from 4 → **7** tests (+3). Those **7 are included in 703**, not an additional separate total.
-
-Security-related subsets inside 703: `JWTFilterTest` (5), `TokenProviderTest` (7), `WebConfigurerTest` (8), `SecurityWebConfigurationIT` (7).
-
-## Scans
+## Scans / environment
 
 | Check | Result |
 | ----- | ------ |
-| Secret scan on `origin/main...HEAD` | PASS — prod password/JWT literals removed; no new secrets |
-| npm audit | Critical **0** after Angular 21.2.18 + concurrently 9.2.3; **7 High** remain in generator-jhipster/Yeoman tooling (not SPA runtime) |
-| Docker | BLOCKED |
-| Oracle | BLOCKED |
+| npm Critical | 0 |
+| npm High | 7 (generator-jhipster/Yeoman tooling — ACCEPTED) |
+| Docker | BLOCKED (`docker` not installed) — runbook added |
+| Oracle | BLOCKED — runbook added |
+| Source maps | Used **locally only** for `Ct` investigation; not enabled permanently in `angular.json` |
+
+## `Ct` / `ct.split` verification commands
+
+```bash
+# Local source-map build (do not commit sourceMap:true for public prod)
+# Reproduce: serve -s static + mock /api only → Ct = HttpErrorResponse parse failure on /management/info HTML
+# With JSON /management/info → no Ct
+# With non-string ribbon → profile.service.ts split (now guarded)
+```

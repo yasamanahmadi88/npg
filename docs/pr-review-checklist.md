@@ -18,9 +18,9 @@
 
 | Item | Status |
 | ---- | ------ |
-| Jest | Re-verify after blocker pass |
-| Playwright | Re-verify (info mock + mobile Search) |
-| Maven verify | Re-verify after prod yml change |
+| Jest | PASS 145/609 |
+| Playwright | PASS 9/9 |
+| Maven verify | PASS 703 |
 | Console / `Ct` | MOCK-ONLY explained; latent FIXED |
 | Mobile Search | FIXED |
 | Light/Dark | PASS (manual) |

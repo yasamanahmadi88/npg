@@ -21,9 +21,9 @@
 
 | Suite | Status |
 | ----- | ------ |
-| Frontend Jest | Re-run required after profile.service + dashboard CSS |
-| Playwright | Re-run required (management/info mock + mobile Search) |
-| Maven verify | Re-run if backend/config changed (prod CORS yml) |
+| Frontend Jest | **145 suites / 609 tests** PASS |
+| Playwright | **9/9** PASS |
+| Maven verify | **703** PASS |
 | npm Critical | 0 |
 | npm High | 7 (generator-jhipster/Yeoman tooling — ACCEPTED for SPA runtime) |
 
