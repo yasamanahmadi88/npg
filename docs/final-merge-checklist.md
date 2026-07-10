@@ -1,18 +1,19 @@
 # Final merge checklist — PR #5
 
-**Reviewed SHA:** `edf2d24ca9cb63af2c520e4b9d7e24378485a793`  
-**Expected changed-file count:** **63**  
+**Application tip (behavior frozen):** `d7f2bde5d4eaf05b4221874c9bce9508b1d87649`  
+**Handoff package:** documentation-only commits after the application tip (confirm live PR head SHA on GitHub)  
+**Expected changed-file count:** confirm live GitHub `changedFiles` (handoff target ~63 including this package)  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 
 Human reviewer: check each box only with live evidence. Do not mark operational or approval items complete without proof.
 
 ## Remote / CI
 
-* [ ] PR remote SHA matches the reviewed SHA (`edf2d24ca9cb63af2c520e4b9d7e24378485a793`)
-* [ ] GitHub changed-file count matches the handoff (**63**)
-* [ ] CI frontend is green
-* [ ] CI backend is green
-* [ ] CI security scan is green
+* [ ] PR remote SHA matches the reviewed tip (GitHub head == local `git rev-parse origin/cursor/full-upgrade-audit-eec2`)
+* [ ] GitHub changed-file count matches the handoff (`docs/merge-handoff.md`)
+* [ ] CI frontend is green on that tip
+* [ ] CI backend is green on that tip
+* [ ] CI security scan is green on that tip
 * [ ] No merge conflict
 
 ## Security / configuration

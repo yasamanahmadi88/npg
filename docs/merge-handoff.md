@@ -3,11 +3,10 @@
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Base:** `main`  
 **Head:** `cursor/full-upgrade-audit-eec2`  
-**Reviewed SHA:**   
-**Prior application tip (pre-handoff docs):**  (58 files)  
-**Application tip frozen:** yes — this commit adds documentation only`edf2d24ca9cb63af2c520e4b9d7e24378485a793`  
-**Remote changed files:** **63** (A36 / M26 / D1)  
-**Mergeable:** MERGEABLE / CLEAN  
+**Application tip (behavior frozen):** `d7f2bde5d4eaf05b4221874c9bce9508b1d87649`  
+**Handoff docs tip:** confirm live GitHub PR head (documentation-only after application tip)  
+**Remote changed files at last local count:** **63+** (confirm GitHub `changedFiles`) — A36 / M26 / D1 before final docs polish  
+**Mergeable:** MERGEABLE / CLEAN (re-confirm on GitHub before merge)  
 **Required reviews:** none configured (human approval still required)  
 **Conflicts:** none  
 
@@ -51,16 +50,16 @@ Complete the Angular 21 / Java 25 / Spring Boot 4 upgrade audit cleanup: restore
 
 | Item | Value |
 | ---- | ----- |
-| Final SHA | `edf2d24ca9cb63af2c520e4b9d7e24378485a793` |
-| Final changed-file count | **63** |
-| Added | 31 |
+| Final SHA | confirm live PR head; application tip `d7f2bde5d4eaf05b4221874c9bce9508b1d87649` |
+| Final changed-file count | confirm GitHub `changedFiles` (docs package added after 58-file application tip) |
+| Added | 36 |
 | Modified | 26 |
 | Deleted | 1 (`JWTConfigurer.java`) |
 | PR base / head | `main` ← `cursor/full-upgrade-audit-eec2` |
 | Mergeable status | MERGEABLE / CLEAN |
 | EOL normalization | **Not included** (CRLF-only noise previously reverted; no renormalization) |
 
-### Scope classification (all 58 files)
+### Scope classification (all 63 files)
 
 | Category | Examples |
 | -------- | -------- |
@@ -69,7 +68,7 @@ Complete the Angular 21 / Java 25 / Spring Boot 4 upgrade audit cleanup: restore
 | Production / config | `application*.yml`, `.env.example`, `.gitignore` |
 | Theme / mobile layout | ThemeService, theme-init, tokens, dashboard/navbar SCSS |
 | Tests / CI | Jest specs, Playwright, SecurityWebConfigurationIT, `.github/workflows/ci.yml` |
-| Docs | `docs/**` |
+| Docs | `docs/**` (including this handoff package) |
 | Dependency security patch | `package.json` / `package-lock.json` (Angular 21.2.18, concurrently) |
 | Tooling support | `.npmrc`, `eslint.config.js`, `README.md` |
 
@@ -82,6 +81,20 @@ Complete the Angular 21 / Java 25 / Spring Boot 4 upgrade audit cleanup: restore
 * Docker and Oracle **not** executed in repository verification — Production gates remain open
 * Production CORS exact origin confirmation pending Ops (`docs/production-cors-checklist.md`)
 * Historical DB/JWT credential rotation required before Production (`docs/credential-rotation-plan.md`)
+
+## Remaining owners
+
+| Action | Owner | Required before merge | Required before Production | Evidence |
+| ------ | ----- | --------------------- | -------------------------- | -------- |
+| Human code review | Reviewer | Yes | Yes | Approval |
+| Docker validation | Ops | No, if accepted | Yes | Runbook results |
+| Oracle smoke test | DBA/Ops | No, if accepted | Yes | Smoke-test report |
+| Deployment-path decision | Architecture/Deploy | No, if accepted | Yes | Written decision |
+| Production CORS origin | Ops/Security | No, if accepted | Yes | CORS checklist |
+| Credential rotation | Security/Ops/DBA | No, if policy allows | Yes | Rotation confirmation |
+| npm tooling residual acceptance | Reviewer/Security | Yes | Yes | Risk acceptance |
+
+Named individuals are intentionally not assigned in-repo; teams fill owners in their tracker.
 
 ## Decisions (unchanged)
 
@@ -100,17 +113,3 @@ Complete the Angular 21 / Java 25 / Spring Boot 4 upgrade audit cleanup: restore
 * `docs/oracle-smoke-test-runbook.md`
 * `docs/production-cors-checklist.md`
 * `docs/credential-rotation-plan.md`
-
-## Remaining owners
-
-| Action | Owner | Required before merge | Required before Production | Evidence |
-| ------ | ----- | --------------------- | -------------------------- | -------- |
-| Human code review | Reviewer | Yes | Yes | Approval |
-| Docker validation | Ops | No, if accepted | Yes | Runbook results |
-| Oracle smoke test | DBA/Ops | No, if accepted | Yes | Smoke-test report |
-| Deployment-path decision | Architecture/Deploy | No, if accepted | Yes | Written decision |
-| Production CORS origin | Ops/Security | No, if accepted | Yes | CORS checklist |
-| Credential rotation | Security/Ops/DBA | No, if policy allows | Yes | Rotation confirmation |
-| npm tooling residual acceptance | Reviewer/Security | Yes | Yes | Risk acceptance |
-
-Named individuals are intentionally not assigned in-repo; teams fill owners in their tracker.
