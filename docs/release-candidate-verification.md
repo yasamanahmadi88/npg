@@ -3,7 +3,7 @@
 **Decision: READY WITH DOCUMENTED BLOCKERS**
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD SHA:** `9f4f0a373d1f67fbbdbf210e61a38ef7534cab80`  
+**HEAD SHA:** `78c2f0d5679f775b8deb7fd430fc3ee4710a53b1`  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Base:** `main` (`7eba0e5`)  
 **Verified at:** 2026-07-10 from clean git worktree `/tmp/npg-final-verification`
@@ -12,13 +12,13 @@
 
 | Source | Changed files | Notes |
 | ------ | ------------: | ----- |
-| `git diff origin/main...HEAD` | **45** | A=21, M=23, D=1 |
-| GitHub PR API `changedFiles` | **45** | base=`main`, head=`cursor/full-upgrade-audit-eec2` |
+| `git diff origin/main...HEAD` | **47** | A=23, M=23, D=1 |
+| GitHub PR API `changedFiles` | **47** (after RC docs) | base=`main`, head=`cursor/full-upgrade-audit-eec2` |
 | Equal add/delete pairs (>5 lines) | **0** | No EOL whole-file noise remaining |
-| `git rev-list --left-right --count origin/main...HEAD` | `0 12` | main not ahead; branch has 12 commits |
+| `git rev-list --left-right --count origin/main...HEAD` | `0 14+` | main not ahead |
 | Merge-base | `7eba0e5` | Correct |
 
-GitHub previously showed ~499 files before cleanup commits were pushed; remote now matches **45**.
+GitHub previously showed ~499 files before cleanup; remote now matches **47** (45 functional + RC inventory/docs).
 
 ## 2. Phantom working tree
 

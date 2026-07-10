@@ -15,7 +15,7 @@
 | Secrets in prod YAML | PASS | Env-required; literals removed |
 | OPTIONS | PASS | `permitAll` + IT |
 
-## npm audit (HEAD `9f4f0a3`)
+## npm audit (post Angular 21.2.18; HEAD includes RC docs)
 
 | Finding | Severity | Package | Dependency path | Production/dev | Reachable in SPA | Fix available | Status |
 | ------- | -------- | ------- | --------------- | -------------- | ---------------- | ------------- | ------ |

@@ -9,7 +9,7 @@ See `docs/release-candidate-verification.md` for full clean-worktree evidence.
 | ------ | ----: |
 | Initial changed files | 499 |
 | EOL-only reverted | 460 |
-| Final changed files (GitHub + `origin/main...HEAD`) | **45** (+2 docs in RC commit → confirm after push) |
+| Final changed files (GitHub + `origin/main...HEAD`) | **47** |
 | Formatting-only reverted | 0 |
 | Equal add/delete pairs remaining | 0 |
 

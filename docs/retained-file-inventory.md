@@ -1,6 +1,6 @@
 # Retained file inventory (PR #5 vs `origin/main`)
 
-Exact remote/local comparison: **45 files** (A21 / M23 / D1).
+Exact remote/local comparison: **47 files** (A23 / M23 / D1).
 
 | File | Category | Reason retained | Semantic change | Test/evidence |
 | ---- | -------- | --------------- | --------------- | ------------- |

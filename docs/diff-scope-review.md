@@ -21,7 +21,7 @@ Root cause: branch commits converted CRLF blobs (as on `main`) to LF → every l
 | Metric | Value |
 | ------ | ----: |
 | EOL-only reverted | 460 |
-| Final files vs `origin/main` | **45** before RC doc adds; see GitHub after push |
+| Final files vs `origin/main` | **47** |
 | Equal add/delete pairs (>5) | **0** |
 | `pom.xml` / `angular.json` in PR? | **No** (EOL-only; reverted) |
 
