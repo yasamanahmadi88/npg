@@ -8,7 +8,7 @@ NOT READY FOR PRODUCTION
 
 The application must remain **NOT READY FOR PRODUCTION** until every mandatory gate below is completed with recorded evidence. Code merge may proceed earlier with accepted code-scope blockers; Production must not.
 
-**Reviewed code SHA:** `d7f2bde5d4eaf05b4221874c9bce9508b1d87649`  
+**Reviewed code SHA:** `edf2d24ca9cb63af2c520e4b9d7e24378485a793`  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 
 ---

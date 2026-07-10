@@ -1,15 +1,15 @@
 # Final merge checklist — PR #5
 
-**Reviewed SHA:** `d7f2bde5d4eaf05b4221874c9bce9508b1d87649`  
-**Expected changed-file count:** **58**  
+**Reviewed SHA:** `edf2d24ca9cb63af2c520e4b9d7e24378485a793`  
+**Expected changed-file count:** **63**  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 
 Human reviewer: check each box only with live evidence. Do not mark operational or approval items complete without proof.
 
 ## Remote / CI
 
-* [ ] PR remote SHA matches the reviewed SHA (`d7f2bde5d4eaf05b4221874c9bce9508b1d87649`)
-* [ ] GitHub changed-file count matches the handoff (**58**)
+* [ ] PR remote SHA matches the reviewed SHA (`edf2d24ca9cb63af2c520e4b9d7e24378485a793`)
+* [ ] GitHub changed-file count matches the handoff (**63**)
 * [ ] CI frontend is green
 * [ ] CI backend is green
 * [ ] CI security scan is green

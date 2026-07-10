@@ -3,8 +3,10 @@
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Base:** `main`  
 **Head:** `cursor/full-upgrade-audit-eec2`  
-**Reviewed SHA:** `d7f2bde5d4eaf05b4221874c9bce9508b1d87649`  
-**Remote changed files:** **58** (A31 / M26 / D1)  
+**Reviewed SHA:**   
+**Prior application tip (pre-handoff docs):**  (58 files)  
+**Application tip frozen:** yes — this commit adds documentation only`edf2d24ca9cb63af2c520e4b9d7e24378485a793`  
+**Remote changed files:** **63** (A36 / M26 / D1)  
 **Mergeable:** MERGEABLE / CLEAN  
 **Required reviews:** none configured (human approval still required)  
 **Conflicts:** none  
@@ -49,8 +51,8 @@ Complete the Angular 21 / Java 25 / Spring Boot 4 upgrade audit cleanup: restore
 
 | Item | Value |
 | ---- | ----- |
-| Final SHA | `d7f2bde5d4eaf05b4221874c9bce9508b1d87649` |
-| Final changed-file count | **58** |
+| Final SHA | `edf2d24ca9cb63af2c520e4b9d7e24378485a793` |
+| Final changed-file count | **63** |
 | Added | 31 |
 | Modified | 26 |
 | Deleted | 1 (`JWTConfigurer.java`) |
