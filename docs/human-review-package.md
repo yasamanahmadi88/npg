@@ -9,7 +9,7 @@
 | Base | `main` |
 | Head | `cursor/full-upgrade-audit-eec2` |
 | Head SHA | confirm on PR (`c687d54`+) |
-| Changed files | **49** (GitHub + `origin/main...HEAD`) |
+| Changed files | **50** (GitHub + `origin/main...HEAD`) |
 | Mergeable | `MERGEABLE` / `CLEAN` |
 | CI | frontend **SUCCESS**, backend **SUCCESS**, security-scan **SUCCESS** |
 | Review decision | (none yet) |
@@ -213,4 +213,4 @@ Absolute `routerLink="/x"` targets application root URLs (correct with `base hre
 
 **READY TO MERGE AFTER MANUAL UI REVIEW**
 
-Automated gates are green, the remote PR is **49** files (not 499), security/CORS/JWT/auth changes have focused tests, and Critical npm findings are cleared. Merge only after a human completes `docs/pr-review-checklist.md` (UI + acceptance of Docker/Oracle/non-root blockers).
+Automated gates are green, the remote PR is **50** files (not 499), security/CORS/JWT/auth changes have focused tests, and Critical npm findings are cleared. Merge only after a human completes `docs/pr-review-checklist.md` (UI + acceptance of Docker/Oracle/non-root blockers).

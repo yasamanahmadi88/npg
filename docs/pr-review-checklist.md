@@ -4,7 +4,7 @@
 **Branch:** `cursor/full-upgrade-audit-eec2`  
 **Base:** `main`  
 **Tip SHA:** confirm on PR / `git rev-parse origin/cursor/full-upgrade-audit-eec2`  
-**Remote changed files:** **49**  
+**Remote changed files:** **50**  
 **UI evidence:** `docs/manual-ui-review.md`  
 **Artifacts (not in git):** `/tmp/ui-review-artifacts/screenshots/`
 
@@ -14,7 +14,7 @@ Status legend: **Completed** · **Failed** · **Blocked** · **Requires reviewer
 
 | Item | Status |
 | ---- | ------ |
-| Remote PR shows ~49 files (not ~499) | Completed |
+| Remote PR shows ~50 files (not ~509) | Completed |
 | CI checks green (frontend / backend / security-scan) | Completed (re-confirm on tip) |
 | No merge conflict | Completed (`MERGEABLE` / `CLEAN` at review time) |
 | Head SHA matches intended tip | Requires reviewer acceptance |

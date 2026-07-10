@@ -4,7 +4,7 @@
 **Compared to:** `origin/main`  
 **Confirmed by GitHub PR #5 `changedFiles`:** matches `git diff origin/main...HEAD`
 
-## Cause of the original ~499-file PR
+## Cause of the original ~509-file PR
 
 | Finding | Evidence |
 | ------- | -------- |
@@ -21,7 +21,7 @@ Root cause: branch commits converted CRLF blobs (as on `main`) to LF → every l
 | Metric | Value |
 | ------ | ----: |
 | EOL-only reverted | 460 |
-| Final files vs `origin/main` | **49** |
+| Final files vs `origin/main` | **50** |
 | Equal add/delete pairs (>5) | **0** |
 | `pom.xml` / `angular.json` in PR? | **No** (EOL-only; reverted) |
 
