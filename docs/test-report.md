@@ -1,7 +1,7 @@
 # Test Report (release candidate)
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD:** `21c0cdef735a11683c268a844a671ffe16582994`  
+**HEAD:** `d66d9ba543e96477f9afe0d6741ab1accc78e2ef`  
 **Worktree:** `/tmp/npg-final-verification` (clean checkout, no reused `node_modules`/`target`)
 
 ## Frontend

@@ -3,7 +3,7 @@
 **Decision: READY WITH DOCUMENTED BLOCKERS**
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD SHA:** `21c0cdef735a11683c268a844a671ffe16582994`  
+**HEAD SHA:** `d66d9ba543e96477f9afe0d6741ab1accc78e2ef`  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Base:** `main` (`7eba0e5`)  
 **Verified at:** 2026-07-10 from clean git worktree `/tmp/npg-final-verification`
@@ -160,9 +160,9 @@ Command: `npx playwright test --config=playwright.config.js` → **8 passed** (e
 
 | Job | Latest known | Notes |
 | --- | ------------ | ----- |
-| frontend | running / historically SUCCESS | Node 22.22.2, npm ci, lint, jest, ng build |
-| backend | **PASS** after mvnw CRLF fix | LF-normalized wrapper |
-| security-scan | **PASS** | npm audit (non-gating) + secret grep + dependency:tree |
+| frontend | **PASS** on tip | Node 22.22.2, npm ci, lint, jest, ng build |
+| backend | **PASS** on tip | LF-normalized mvnw wrapper |
+| security-scan | **PASS** on tip | npm audit (non-gating) + secret grep + dependency:tree |
 
 Workflow: minimal `contents: read`; no deploy/auto-merge; no production secrets.
 
