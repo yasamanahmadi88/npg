@@ -1,8 +1,14 @@
 # Change Log
 
+## 2026-07-10 — Human review package
+
+- Added `docs/pr-review-checklist.md` and `docs/human-review-package.md`.
+- Confirmed live GitHub PR #5: **47** files, CI green, mergeable.
+- Decision: **READY TO MERGE AFTER MANUAL UI REVIEW**.
+
 ## 2026-07-10 — Release candidate verification
 
-- Confirmed GitHub PR #5 remote diff = **45** semantic files (not 499).
+- Confirmed GitHub PR #5 remote diff = **47** semantic files (not 499).
 - Fixed CI backend failure: run Maven via LF-stripped `mvnw` (CRLF shebang).
 - Expanded Playwright to **8** critical browser tests.
 - Expanded `SecurityWebConfigurationIT` (+3).

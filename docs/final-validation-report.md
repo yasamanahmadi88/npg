@@ -1,7 +1,8 @@
 # Final Validation Report
 
-**Decision: READY WITH DOCUMENTED BLOCKERS**  
-See `docs/release-candidate-verification.md` for full clean-worktree evidence.
+**Decision: READY TO MERGE AFTER MANUAL UI REVIEW**
+
+See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 
 ## Diff cleanup
 
@@ -17,28 +18,29 @@ See `docs/release-candidate-verification.md` for full clean-worktree evidence.
 
 | Component | Version |
 | --------- | ------- |
-| Angular | **21.2.18** |
+| Angular | **21.2.18** (declared + lockfile resolved) |
 | Node | 22.22.2 |
-| Java | 25.0.3 |
-| Spring Boot | **4.0.7** (from `origin/main`; unchanged by this PR’s pom) |
+| Java | 25 |
+| Spring Boot | **4.0.7** (`pom.xml` not in this PR) |
 | PR | #5 |
 | Branch | `cursor/full-upgrade-audit-eec2` |
+| Tip SHA (at package authoring) | `619d3dc1bac581a570a4cc937116bd0242ac3398` |
 
-## Clean-worktree results (do not use “prior” runs)
+## Results
 
 | Check | Status | Evidence |
 | ----- | ------ | -------- |
-| Frontend `npm ci` | PASS | exit 0 |
-| Lint | PASS | 0 errors / 6 warnings |
-| Jest | PASS | **144 suites / 606 tests** |
-| Production build | PASS | `ng build --configuration production` |
-| Maven `clean verify -P-webapp` | PASS | **703 tests**, 0 failed/skipped |
+| Jest | PASS | 144 suites / **606** tests |
 | Playwright | PASS | **8/8** |
-| GitHub backend CI | PASS | after LF mvnw wrapper fix |
-| Docker | BLOCKED | not installed |
-| Oracle | BLOCKED | H2 only |
-| Non-root base href | BLOCKED | app uses `<base href="/">` |
+| Maven `-P-webapp clean verify` | PASS | **703** tests |
+| GitHub CI | PASS | frontend, backend, security-scan |
+| npm Critical | PASS | **0** |
+| npm High (prod Angular) | PASS | fixed at 21.2.18 |
+| npm High (generator-jhipster tree) | Accepted residual | **7** findings, not SPA runtime |
+| Docker | BLOCKED | — |
+| Live Oracle | BLOCKED | H2 only |
+| Non-root routing | BLOCKED | `<base href="/">`; context-path possible |
 
 ## Recommendation
 
-**READY WITH DOCUMENTED BLOCKERS** for human review. Do not merge until a human accepts Docker/Oracle/non-root/residual codegen npm High findings.
+**READY TO MERGE AFTER MANUAL UI REVIEW** — complete `docs/pr-review-checklist.md` (UI + blocker acceptance) before merging. Do not auto-merge.
