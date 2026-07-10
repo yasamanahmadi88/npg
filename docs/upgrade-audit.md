@@ -33,7 +33,8 @@
 | R11 | Duplicate Bootstrap Cosmo+Lumen imports | SCSS conflict | Cosmo only | PASS |
 | R12 | npm install failed | Private Artifactory unreachable | Public registry + lock URL rewrite | PASS (env-specific) |
 | R13 | Actuator `/management/health` via MockMvc | Boot 4 resource fallback in some IT contexts | Documented; auth tests cover API protection | BLOCKED (runtime health needs live app) |
-| R14 | Docker Compose / browser E2E | Docker and headed browser unavailable | Documented | BLOCKED |
+| R14 | Docker Compose runtime | Docker unavailable in agent | Static compose validation only | BLOCKED (Docker) |
+| R14b | Browser E2E | Initially blocked | Playwright + `serve -s` + API mocks | PASS (5 tests); live API still BLOCKED |
 | R15 | Oracle DB live verification | No local Oracle | H2 ITs used | BLOCKED for Oracle-specific SQL |
 
 ## Architecture summary

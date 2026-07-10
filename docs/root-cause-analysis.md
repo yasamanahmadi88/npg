@@ -15,9 +15,13 @@
 | R9 | Security | Deprecated JWT configurer adapter | `JWTConfigurer` + `http.apply` | Direct filter bean wiring |
 | R10 | UI theme | No runtime theme system | SCSS tokens unused; no toggle | ThemeService + tokens + navbar toggle |
 | R11 | SCSS | Cosmo + Lumen double import | `global.scss` | Cosmo only |
+| R12 | Git / PR scope | Mass CRLF→LF rewrite inflated PR to ~499 files | Equal add/delete on 464 paths; 460 byte-identical after `\r` strip | Reverted EOL-only; retained 44 semantic files |
 
-## Assumptions
+## Auth unload logout (R5 detail)
 
-- Production still uses Oracle; H2 ITs are necessary but not full dialect parity.
-- CSRF remains disabled because clients authenticate with Bearer tokens, not cookie-session form posts.
-- Corporate npm Artifactory remains the intended registry for on-prem builds; this environment uses npmjs.org.
+| Question | Answer |
+| -------- | ------ |
+| Why did unload logout exist? | Legacy attempt to clear client session when the tab closed |
+| Why remove it? | `beforeunload` also fires on refresh/navigation, destroying valid sessions |
+| Explicit logout? | Still via navbar → `LoginService.logout()` / token + cache clear |
+| Security regression? | No — refresh must keep JWT; expiry still enforced by `JWTFilter` + `TokenProvider`; server `SecurityCache` invalidates on logout |
