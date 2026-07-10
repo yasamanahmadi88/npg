@@ -8,7 +8,7 @@
 | PR | https://github.com/yasamanahmadi88/npg/pull/5 |
 | Base | `main` |
 | Head | `cursor/full-upgrade-audit-eec2` |
-| Head SHA | `51350eb6eabf770e55abcf62ce3f812ead8e2c9d` |
+| Head SHA | confirm on PR (`c687d54`+) |
 | Changed files | **49** (GitHub + `origin/main...HEAD`) |
 | Mergeable | `MERGEABLE` / `CLEAN` |
 | CI | frontend **SUCCESS**, backend **SUCCESS**, security-scan **SUCCESS** |

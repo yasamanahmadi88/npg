@@ -3,7 +3,7 @@
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Branch:** `cursor/full-upgrade-audit-eec2`  
 **Base:** `main`  
-**Verified tip SHA (at checklist authoring):** `51350eb6eabf770e55abcf62ce3f812ead8e2c9d`  
+**Verified tip SHA:** confirm on PR page / `git rev-parse origin/cursor/full-upgrade-audit-eec2` (docs authored at `c687d54`)  
 **Remote changed files:** **49** (47 prior + this review package’s 2 new docs)
 
 Re-confirm SHA and CI on the PR page before approving.
