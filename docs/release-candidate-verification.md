@@ -3,7 +3,7 @@
 **Decision: READY WITH DOCUMENTED BLOCKERS**
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD SHA:** `78c2f0d5679f775b8deb7fd430fc3ee4710a53b1`  
+**HEAD SHA:** `21c0cdef735a11683c268a844a671ffe16582994`  
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Base:** `main` (`7eba0e5`)  
 **Verified at:** 2026-07-10 from clean git worktree `/tmp/npg-final-verification`
