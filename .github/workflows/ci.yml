@@ -36,8 +36,14 @@ jobs:
           distribution: temurin
           java-version: '25'
           cache: maven
+      # origin/main stores mvnw with CRLF; Linux cannot exec a CRLF shebang ("required file not found").
+      # Do not renormalize the whole repo in this PR — strip CR only for the CI wrapper invocation.
       - name: Backend verify
-        run: ./mvnw -ntp -P-webapp verify --batch-mode
+        run: |
+          set -euo pipefail
+          sed 's/\r$//' mvnw > /tmp/mvnw.lf
+          chmod +x /tmp/mvnw.lf
+          /tmp/mvnw.lf -ntp -P-webapp clean verify --batch-mode
 
   security-scan:
     runs-on: ubuntu-latest
@@ -57,7 +63,11 @@ jobs:
           java-version: '25'
           cache: maven
       - name: Maven dependency list
-        run: ./mvnw -ntp -P-webapp dependency:tree -Dverbose=false --batch-mode | tee dependency-tree.txt
+        run: |
+          set -euo pipefail
+          sed 's/\r$//' mvnw > /tmp/mvnw.lf
+          chmod +x /tmp/mvnw.lf
+          /tmp/mvnw.lf -ntp -P-webapp dependency:tree -Dverbose=false --batch-mode | tee dependency-tree.txt
       - name: Secret pattern scan (heuristic)
         run: |
           set -euo pipefail

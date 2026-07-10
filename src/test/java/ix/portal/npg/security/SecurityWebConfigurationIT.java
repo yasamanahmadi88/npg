@@ -62,4 +62,35 @@ class SecurityWebConfigurationIT {
             )
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
     }
+
+    @Test
+    void optionsRequestsArePermittedWithoutAuthentication() throws Exception {
+        mockMvc
+            .perform(
+                options("/api/account")
+                    .header(HttpHeaders.ORIGIN, "http://localhost:4200")
+                    .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+            )
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    void invalidBearerTokenDoesNotAuthenticate() throws Exception {
+        mockMvc
+            .perform(get("/api/account").header(HttpHeaders.AUTHORIZATION, "Bearer not-a-valid-jwt"))
+            .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void staticContentPathIsNotUnauthorized() throws Exception {
+        // Static permitAll matchers must not return 401 even when the asset is missing (404).
+        mockMvc
+            .perform(get("/content/css/loading.css"))
+            .andExpect(result -> {
+                int status = result.getResponse().getStatus();
+                if (status == 401 || status == 403) {
+                    throw new AssertionError("Static content must not require authentication, got " + status);
+                }
+            });
+    }
 }

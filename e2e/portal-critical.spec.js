@@ -25,19 +25,52 @@ async function mockPublicApis(page) {
           lastName: 'User',
           login: 'admin',
           langKey: 'en',
-          resourceAuthorities: [],
+          resourceAuthorities: [
+            { resourceName: 'portability', verb: 'view' },
+            { resourceName: 'setting', verb: 'view' },
+            { resourceName: 'dayOfWeekTimeFrame', verb: 'view' },
+          ],
         }),
       });
     }
-    if (url.includes('/api/captcha-endpoint')) {
+    if (url.includes('/api/captcha-endpoint') || url.includes('/api/cp-eyrtyertye')) {
       return route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({ captchaId: 'cap-1', captchaImageUrl: '/api/captcha.png' }),
       });
     }
+    // Entity list endpoints commonly hit after menu navigation
+    if (method === 'GET') {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        headers: { 'X-Total-Count': '0' },
+        body: '[]',
+      });
+    }
     return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
   });
+}
+
+async function seedAuthenticatedSession(page) {
+  // ngx-webstorage prefix/separator from app.module.ts: jhi-
+  await page.addInitScript(() => {
+    localStorage.setItem('jhi-authenticationToken', JSON.stringify('test-token'));
+  });
+}
+
+function trackPageDiagnostics(page) {
+  const pageErrors = [];
+  const failedRequests = [];
+  page.on('pageerror', err => pageErrors.push(String(err)));
+  page.on('requestfailed', req => {
+    const url = req.url();
+    // Ignore aborted navigations / cancelled requests common during SPA routing.
+    if (req.failure() && req.failure().errorText === 'net::ERR_ABORTED') return;
+    failedRequests.push({ url, error: req.failure() && req.failure().errorText });
+  });
+  return { pageErrors, failedRequests };
 }
 
 test.describe('NPG portal critical browser flows', () => {
@@ -46,12 +79,11 @@ test.describe('NPG portal critical browser flows', () => {
   });
 
   test('application and login page load', async ({ page }) => {
-    const errors = [];
-    page.on('pageerror', err => errors.push(String(err)));
+    const { pageErrors } = trackPageDiagnostics(page);
     await page.goto('/login');
     await expect(page.locator('jhi-login, form, #username, input').first()).toBeVisible({ timeout: 30000 });
-    // Record non-fatal page errors for diagnostics without failing on minified vendor noise.
-    test.info().annotations.push({ type: 'pageerrors', description: JSON.stringify(errors.slice(0, 5)) });
+    await expect(page.locator('jhi-main')).toBeVisible();
+    test.info().annotations.push({ type: 'pageerrors', description: JSON.stringify(pageErrors.slice(0, 5)) });
   });
 
   test('navbar theme toggle switches and persists', async ({ page }) => {
@@ -70,6 +102,11 @@ test.describe('NPG portal critical browser flows', () => {
     await page.reload();
     await page.waitForSelector('[data-cy="themeToggle"]', { timeout: 30000 });
     await expect(page.locator('html')).toHaveAttribute('data-theme', after);
+
+    // Switch back to the other theme
+    await toggle.click();
+    const flipped = await page.locator('html').getAttribute('data-theme');
+    expect(flipped).not.toBe(after);
   });
 
   test('unknown route shows not-found path', async ({ page }) => {
@@ -79,9 +116,55 @@ test.describe('NPG portal critical browser flows', () => {
   });
 
   test('direct nested URL loads with SPA fallback', async ({ page }) => {
+    await seedAuthenticatedSession(page);
+    const { pageErrors, failedRequests } = trackPageDiagnostics(page);
     const response = await page.goto('/portability', { waitUntil: 'domcontentloaded' });
     expect(response && response.status()).toBeLessThan(400);
     await expect(page.locator('jhi-main, .navbar').first()).toBeVisible({ timeout: 30000 });
+    await expect(page).toHaveURL(/\/portability/);
+    // Target entity host should render (list or empty state inside jhi-main)
+    await expect(page.locator('jhi-main')).toBeVisible();
+    expect(failedRequests.filter(r => r.url.includes('/api/')).length).toBe(0);
+    test.info().annotations.push({ type: 'pageerrors', description: JSON.stringify(pageErrors.slice(0, 5)) });
+  });
+
+  test('browser refresh keeps nested route', async ({ page }) => {
+    await seedAuthenticatedSession(page);
+    await page.goto('/portability');
+    await expect(page).toHaveURL(/\/portability/);
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveURL(/\/portability/);
+    await expect(page.locator('jhi-main, .navbar').first()).toBeVisible({ timeout: 30000 });
+  });
+
+  test('browser back and forward restore routes', async ({ page }) => {
+    await seedAuthenticatedSession(page);
+    await page.goto('/dashboard');
+    await page.goto('/portability');
+    await expect(page).toHaveURL(/\/portability/);
+    await page.goBack();
+    await expect(page).toHaveURL(/\/dashboard|\/$/);
+    await page.goForward();
+    await expect(page).toHaveURL(/\/portability/);
+    await expect(page.locator('jhi-main').first()).toBeVisible({ timeout: 30000 });
+  });
+
+  test('menu click navigates to absolute entity route', async ({ page }) => {
+    await seedAuthenticatedSession(page);
+    const { pageErrors, failedRequests } = trackPageDiagnostics(page);
+    await page.goto('/');
+    await page.waitForSelector('[data-cy="navbar"], .navbar', { timeout: 30000 });
+
+    // Open Entities dropdown then click Portability (absolute /portability)
+    const entityToggle = page.locator('#entity-menu, [data-cy="entity"]').first();
+    await entityToggle.click();
+    const portabilityItem = page.locator('a[routerlink="/portability"], a[href="/portability"]').first();
+    await expect(portabilityItem).toBeVisible({ timeout: 10000 });
+    await portabilityItem.click();
+    await expect(page).toHaveURL(/\/portability$/);
+    await expect(page.locator('jhi-main')).toBeVisible({ timeout: 30000 });
+    expect(failedRequests.filter(r => /\/api\//.test(r.url) && !r.error?.includes('ERR_ABORTED')).length).toBe(0);
+    test.info().annotations.push({ type: 'pageerrors', description: JSON.stringify(pageErrors.slice(0, 5)) });
   });
 
   test('mobile viewport keeps navbar toggler usable', async ({ page }) => {
