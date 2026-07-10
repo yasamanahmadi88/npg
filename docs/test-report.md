@@ -1,7 +1,7 @@
 # Test Report (blocker-resolution pass)
 
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**HEAD at test time:** post-`bcbdfd1` working tree (includes mobile Search CSS follow-up)  
+**HEAD at test time:** `c9e2176739e79d6613e70afbd1bd91a940be263f`  
 **Date:** 2026-07-10
 
 ## Frontend (re-run after code changes)

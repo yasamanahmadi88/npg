@@ -2,10 +2,10 @@
 
 **Updated:** 2026-07-10T15:21Z  
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**Tip (pre-blocker-pass commit):** see latest push SHA  
+**Tip:** `c9e2176739e79d6613e70afbd1bd91a940be263f`  
 **Base:** `main`  
-**Remote changed files:** 50+ (docs/code from this blocker pass will increase)  
-**GitHub CI:** PASS (frontend / backend / security-scan) on tip `f5d2ad0`  
+**Remote changed files:** 58  
+**GitHub CI:** PASS (frontend / backend / security-scan) on prior tip `f5d2ad0`; re-check CI on `c9e2176`  
 **Mergeable:** CLEAN  
 
 ## Stack

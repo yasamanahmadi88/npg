@@ -2,7 +2,7 @@
 
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Branch:** `cursor/full-upgrade-audit-eec2`  
-**Prior tip verified:** `f5d2ad0` (CI green, 50 files)  
+**Current tip:** `c9e2176739e79d6613e70afbd1bd91a940be263f` (~58 files vs main)  
 **Blocker-pass adds:** profile service fix, dashboard CSS, prod CORS, runbooks, Playwright coverage  
 
 ## Commands (re-run after code changes)
