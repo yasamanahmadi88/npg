@@ -12,7 +12,7 @@
 | Initial PR file count | **499** |
 | Equal add/delete line pairs | **464** |
 | True EOL-only (CRLF↔LF) | **460** (byte-identical after stripping `\r`) |
-| Semantic retained after cleanup | **44** (`git diff --name-only origin/main...HEAD`) |
+| Semantic retained after cleanup | **45** (`git diff --name-only origin/main...HEAD`) |
 | `core.autocrlf` | `false` (local `.git/config`) |
 | `core.eol` | `lf` (local `.git/config`) |
 | `.gitattributes` | `* text=auto` (**unchanged** vs main; not modified in this PR) |
@@ -37,7 +37,7 @@
 | Security | 7 | Keep | JWT filter, CORS, secrets, ExceptionTranslator, deleted JWTConfigurer |
 | Theme | 5 | Keep | ThemeService, tokens, init script, navbar toggle |
 | Tests | 8 | Keep | Unit + Playwright E2E + security ITs |
-| Documentation | 9 | Keep | Audit reports (+ menu inventory) |
+| Documentation | 10 | Keep | Audit reports (+ menu inventory) |
 | Dependency/lock/npmrc | 3 | Keep | npmjs registry for CI; `e2e` script; lock URL rewrite |
 | CI / env / eslint / gitignore | 4 | Keep | `.github/workflows/ci.yml`, `.env.example`, `eslint.config.js`, `.gitignore` |
 
@@ -48,7 +48,7 @@
 | Initial changed files | 499 |
 | EOL-only reverted | 460 |
 | Formatting-only reverted (separate from EOL) | 0 |
-| Final changed files vs `origin/main` | **44** |
+| Final changed files vs `origin/main` | **45** |
 | Final shortstat | 3995 insertions / 2616 deletions (dominated by `package-lock.json` registry rewrite) |
 | Equal add/delete pairs (>5 lines) remaining | **0** |
 

@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-The original PR listed **499 files**, almost all CRLF↔LF whole-file rewrites against `origin/main` (which already has Angular 21 / Java 25 / Spring Boot 4.0.7). Cleanup reverted **460** EOL-only files and retained **44** semantic files. Builds and tests were re-executed on the cleaned tree. Playwright browser E2E (**5** scenarios) passed against the production static build with API mocks.
+The original PR listed **499 files**, almost all CRLF↔LF whole-file rewrites against `origin/main` (which already has Angular 21 / Java 25 / Spring Boot 4.0.7). Cleanup reverted **460** EOL-only files and retained **45** semantic files. Builds and tests were re-executed on the cleaned tree. Playwright browser E2E (**5** scenarios) passed against the production static build with API mocks.
 
 ## Diff cleanup
 
@@ -11,8 +11,8 @@ The original PR listed **499 files**, almost all CRLF↔LF whole-file rewrites a
 | Initial changed files | 499 |
 | EOL-only reverted | 460 |
 | Formatting-only reverted | 0 (none separate from EOL) |
-| Final changed files | **44** |
-| Real functional/security/theme/test/docs/tooling retained | **44** |
+| Final changed files | **45** |
+| Real functional/security/theme/test/docs/tooling retained | **45** |
 
 See `docs/diff-scope-review.md` and `docs/menu-route-inventory.md`.
 
