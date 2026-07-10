@@ -23,7 +23,7 @@ See `docs/root-cause-analysis.md`.
 | Check | Status | Command | Evidence |
 | ----- | ------ | ------- | -------- |
 | Frontend clean install | PASS | `npm ci` | 1769 packages |
-| Frontend lint | PASS/FAIL | `npm run lint` | Re-validated after eslint config update |
+| Frontend lint | PASS | `npx eslint src/main/webapp/**/*.ts` | 0 errors (6 unused-disable warnings) |
 | Frontend unit tests | PASS | `npx jest … --watch=false` | 605 passed |
 | Frontend production build | PASS | `ng build --configuration production` | static artifacts present |
 | Backend clean build/verify | PASS | `./mvnw -ntp -P-webapp verify` | 700 tests |
