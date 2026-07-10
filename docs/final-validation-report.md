@@ -77,3 +77,11 @@ Accepted code-scope / external blockers that do not require further application 
 **NOT READY FOR PRODUCTION**
 
 Blocked on Docker verification, Oracle smoke, deployment topology confirmation, Production CORS origin verification, and historical credential rotation.
+
+## Merge handoff package
+
+* `docs/merge-handoff.md`
+* `docs/final-merge-checklist.md`
+* `docs/production-readiness-gate.md`
+* `docs/post-merge-smoke-test.md`
+* `docs/merge-rollback-plan.md`
