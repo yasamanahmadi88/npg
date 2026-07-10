@@ -3,14 +3,14 @@
 **PR:** https://github.com/yasamanahmadi88/npg/pull/5  
 **Branch:** `cursor/full-upgrade-audit-eec2`  
 **Base:** `main`  
-**Verified tip SHA (at checklist authoring):** `619d3dc1bac581a570a4cc937116bd0242ac3398`  
-**Remote changed files:** **47** (GitHub `changedFiles` + `git diff origin/main...HEAD`)
+**Verified tip SHA (at checklist authoring):** `51350eb6eabf770e55abcf62ce3f812ead8e2c9d`  
+**Remote changed files:** **49** (47 prior + this review package’s 2 new docs)
 
 Re-confirm SHA and CI on the PR page before approving.
 
 ## Automated gates (confirm on GitHub)
 
-- [ ] Remote PR shows **~47** changed files (not ~499)
+- [ ] Remote PR shows **~49** changed files (not ~499)
 - [ ] CI checks are green (`frontend`, `backend`, `security-scan`)
 - [ ] No merge conflict (`MERGEABLE` / clean)
 - [ ] Head SHA matches the branch tip you intend to merge

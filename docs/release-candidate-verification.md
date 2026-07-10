@@ -12,13 +12,13 @@
 
 | Source | Changed files | Notes |
 | ------ | ------------: | ----- |
-| `git diff origin/main...HEAD` | **47** | A=23, M=23, D=1 |
-| GitHub PR API `changedFiles` | **47** (after RC docs) | base=`main`, head=`cursor/full-upgrade-audit-eec2` |
+| `git diff origin/main...HEAD` | **49** | A=23, M=23, D=1 |
+| GitHub PR API `changedFiles` | **49** (after RC docs) | base=`main`, head=`cursor/full-upgrade-audit-eec2` |
 | Equal add/delete pairs (>5 lines) | **0** | No EOL whole-file noise remaining |
 | `git rev-list --left-right --count origin/main...HEAD` | `0 14+` | main not ahead |
 | Merge-base | `7eba0e5` | Correct |
 
-GitHub previously showed ~499 files before cleanup; remote now matches **47** (45 functional + RC inventory/docs).
+GitHub previously showed ~499 files before cleanup; remote now matches **49** (45 functional + RC inventory/docs).
 
 ## 2. Phantom working tree
 

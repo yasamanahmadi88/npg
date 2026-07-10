@@ -10,7 +10,7 @@ See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 | ------ | ----: |
 | Initial changed files | 499 |
 | EOL-only reverted | 460 |
-| Final changed files (GitHub + `origin/main...HEAD`) | **47** |
+| Final changed files (GitHub + `origin/main...HEAD`) | **49** |
 | Formatting-only reverted | 0 |
 | Equal add/delete pairs remaining | 0 |
 
@@ -24,7 +24,7 @@ See `docs/human-review-package.md` and `docs/pr-review-checklist.md`.
 | Spring Boot | **4.0.7** (`pom.xml` not in this PR) |
 | PR | #5 |
 | Branch | `cursor/full-upgrade-audit-eec2` |
-| Tip SHA (at package authoring) | `619d3dc1bac581a570a4cc937116bd0242ac3398` |
+| Tip SHA (at package authoring) | `51350eb6eabf770e55abcf62ce3f812ead8e2c9d` |
 
 ## Results
 

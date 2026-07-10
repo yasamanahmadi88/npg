@@ -8,8 +8,8 @@
 | PR | https://github.com/yasamanahmadi88/npg/pull/5 |
 | Base | `main` |
 | Head | `cursor/full-upgrade-audit-eec2` |
-| Head SHA | `619d3dc1bac581a570a4cc937116bd0242ac3398` |
-| Changed files | **47** (GitHub + `origin/main...HEAD`) |
+| Head SHA | `51350eb6eabf770e55abcf62ce3f812ead8e2c9d` |
+| Changed files | **49** (GitHub + `origin/main...HEAD`) |
 | Mergeable | `MERGEABLE` / `CLEAN` |
 | CI | frontend **SUCCESS**, backend **SUCCESS**, security-scan **SUCCESS** |
 | Review decision | (none yet) |
@@ -28,7 +28,7 @@ Working tree may show ~477 phantom `M` files; all byte-identical to HEAD (CRLF +
 
 ---
 
-## 1. Exact 47-file review inventory
+## 1. Exact 49-file review inventory
 
 | File | Change type | Category | Why required | Main risk | Test/evidence |
 | ---- | ----------- | -------- | ------------ | --------- | ------------- |
@@ -213,4 +213,4 @@ Absolute `routerLink="/x"` targets application root URLs (correct with `base hre
 
 **READY TO MERGE AFTER MANUAL UI REVIEW**
 
-Automated gates are green, the remote PR is **47** files (not 499), security/CORS/JWT/auth changes have focused tests, and Critical npm findings are cleared. Merge only after a human completes `docs/pr-review-checklist.md` (UI + acceptance of Docker/Oracle/non-root blockers).
+Automated gates are green, the remote PR is **49** files (not 499), security/CORS/JWT/auth changes have focused tests, and Critical npm findings are cleared. Merge only after a human completes `docs/pr-review-checklist.md` (UI + acceptance of Docker/Oracle/non-root blockers).

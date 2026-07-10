@@ -15,7 +15,7 @@
 | R9 | Security | Deprecated JWT configurer adapter | `JWTConfigurer` + `http.apply` | Direct filter bean wiring |
 | R10 | UI theme | No runtime theme system | SCSS tokens unused; no toggle | ThemeService + tokens + navbar toggle |
 | R11 | SCSS | Cosmo + Lumen double import | `global.scss` | Cosmo only |
-| R12 | Git / PR scope | Mass CRLF→LF rewrite inflated PR to ~499 files | Equal add/delete on 464 paths; 460 byte-identical after `\r` strip | Reverted EOL-only; retained 47 semantic files (incl. RC review docs) |
+| R12 | Git / PR scope | Mass CRLF→LF rewrite inflated PR to ~499 files | Equal add/delete on 464 paths; 460 byte-identical after `\r` strip | Reverted EOL-only; retained 49 files (incl. human-review package docs) |
 
 ## Auth unload logout (R5 detail)
 

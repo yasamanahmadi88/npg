@@ -3,7 +3,7 @@
 ## 2026-07-10 — Human review package
 
 - Added `docs/pr-review-checklist.md` and `docs/human-review-package.md`.
-- Confirmed live GitHub PR #5: **47** files, CI green, mergeable.
+- Confirmed live GitHub PR #5: **49** files after review-package docs, CI green, mergeable.
 - Decision: **READY TO MERGE AFTER MANUAL UI REVIEW**.
 
 ## 2026-07-10 — Release candidate verification
