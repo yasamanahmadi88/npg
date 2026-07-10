@@ -166,8 +166,8 @@ jhipster:
 
   # By default CORS is disabled. Uncomment/configure to enable.
   cors:
-    allowed-origins: 'http://localhost:9000,http://172.20.200.17,http://172.20.200.16,https://tnpg.mci.ir,https://npg.mci.ir,https://172.20.200.17,https://172.20.200.16,http://tnpg.mci.ir,http://npg.mci.ir'
-    allowed-methods: '*'
+    allowed-origins: 'http://localhost:9000,http://localhost:4200,http://172.20.200.17,http://172.20.200.16,https://tnpg.mci.ir,https://npg.mci.ir,https://172.20.200.17,https://172.20.200.16,http://tnpg.mci.ir,http://npg.mci.ir'
+    allowed-methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params'
     allow-credentials: true
