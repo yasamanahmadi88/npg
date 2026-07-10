@@ -19,6 +19,7 @@
     "pretest": "npm run lint",
     "test": "npm run jest",
     "test:watch": "jest --config jest.conf.js --watch",
+    "e2e": "playwright test --config=playwright.config.js",
     "watch": "concurrently npm:start npm:backend:start",
     "webapp:build": "npm run clean-www && npm run webapp:build:dev",
     "webapp:build:dev": "ng build --configuration development",

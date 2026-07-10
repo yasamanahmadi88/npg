@@ -1,28 +1,15 @@
 # Change Log
 
-## 2026-07-10 — Full upgrade audit repair branch
+## 2026-07-10 — PR cleanup pass
 
-### Frontend
-- Absolute navbar `routerLink` paths for all menu items
-- Login / search absolute navigation fixes
-- Restored account `register` and `reset/request` routes
-- Removed logout-on-unload behavior
-- Added `ThemeService`, theme tokens SCSS, FOUC-safe `theme-init.js`, navbar theme toggle
-- Removed duplicate Bootswatch Lumen import
-- Routing/theme regression tests
-- npm registry fallback to npmjs.org for environments without Artifactory
-- ESLint ignore/config adjustments for vendor JS and migration noise
+- Reverted **460** CRLF-only whole-file rewrites vs `origin/main`.
+- Preserved ~**41** semantic files (routing, security, theme, tests, docs, npm registry/CI).
+- Re-applied edits on main blobs to avoid mixed-EOL full-file diffs.
+- Added Playwright E2E (5 critical flows) with static SPA serve + API mocks.
+- Added `main.auth-lifecycle.spec.ts` proving unload logout was removed.
+- Added `docs/diff-scope-review.md` and refreshed validation evidence.
+- Did **not** force-push or create a new PR.
 
-### Backend
-- Direct JWT filter registration (removed `JWTConfigurer` / `SecurityConfigurerAdapter`)
-- CORS single-source allow-list; reject `*` with credentials
-- Prod secrets via environment variables; `.env.example` added
-- ExceptionTranslator annotation migration
-- Security integration tests for auth + CORS
-- WebConfigurer unit test updates
+## 2026-07-10 — Initial repair commits (semantic subset retained)
 
-### Tooling / docs
-- GitHub Actions CI workflow
-- Documentation set under `docs/`
-- README prerequisites and theme/security notes updated
-- `.gitignore` includes `.env`
+Routing, security, theme, and documentation fixes retained; mass EOL noise removed in cleanup commits.
