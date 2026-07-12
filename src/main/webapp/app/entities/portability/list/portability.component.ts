@@ -164,8 +164,9 @@ export class PortabilityComponent implements OnInit {
 
   search(): void {
     this.isLoading = true;
-    this.dataSource = undefined;
-    this.portabilities = undefined;
+    this.portabilities = [];
+    this.portability = [];
+    this.dataSource = new MatTableDataSource<IPortability>([]);
     this.query = {};
 
     if (this.editForm.get(['porRequestId'])?.value) {

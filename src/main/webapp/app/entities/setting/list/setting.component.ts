@@ -17,7 +17,7 @@ import { SettingDeleteDialogComponent } from '../delete/setting-delete-dialog.co
   standalone: false,
 })
 export class SettingComponent implements OnInit {
-  settings?: ISetting[];
+  settings: ISetting[] = [];
   isLoading = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -25,6 +25,7 @@ export class SettingComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  loadError = false;
 
   constructor(
     protected settingService: SettingService,
@@ -35,6 +36,7 @@ export class SettingComponent implements OnInit {
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
+    this.loadError = false;
     const pageToLoad: number = page ?? this.page ?? 1;
 
     this.settingService
@@ -86,7 +88,7 @@ export class SettingComponent implements OnInit {
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
       const pageNumber = page !== null ? +page : 1;
-      const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
+      const sort = (params.get(SORT) ?? data['defaultSort'] ?? 'id,asc').split(',');
       const predicate = sort[0];
       const ascending = sort[1] === ASC;
       if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
@@ -116,5 +118,6 @@ export class SettingComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
     this.settings = [];
+    this.loadError = true;
   }
 }

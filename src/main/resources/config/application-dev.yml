@@ -130,14 +130,14 @@ ix:
     cache:
       url: http://ix-dispatcher:8888/management/reload-cache
 
-#default values for bucket4j if there is no value for them in SETTING table
+# Dev rate limits must tolerate hot reload + multi-tab SPA navigation.
 bucket4j:
   get:
-    bucket-size: 15
-    token-per-minute: 6
+    bucket-size: 500
+    token-per-minute: 300
   post:
-    bucket-size: 1
-    token-per-minute: 6
+    bucket-size: 120
+    token-per-minute: 120
 
 portal:
   captcha:

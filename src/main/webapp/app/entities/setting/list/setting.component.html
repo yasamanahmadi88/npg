@@ -27,11 +27,19 @@
 
   <jhi-alert></jhi-alert>
   <mat-card-content>
-    @if (settings?.length === 0) {
+    @if (isLoading) {
+    <div class="alert alert-info" id="loading-result">
+      <span>Loading…</span>
+    </div>
+    } @if (!isLoading && loadError) {
+    <div class="alert alert-danger" id="load-error">
+      <span>Failed to load data. If the Network tab shows HTTP 429, log out, log in again, and retry.</span>
+    </div>
+    } @if (!isLoading && !loadError && settings.length === 0) {
     <div class="alert alert-warning" id="no-result">
       <span jhiTranslate="npgPortalApp.setting.home.notFound">No settings found</span>
     </div>
-    } @if (settings && settings.length > 0) {
+    } @if (!isLoading && settings.length > 0) {
     <div class="table-responsive" id="entities">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
@@ -102,7 +110,7 @@
         </tbody>
       </table>
     </div>
-    } @if (settings && settings.length > 0) {
+    } @if (!isLoading && settings.length > 0) {
     <div>
       <div class="row justify-content-center">
         <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>

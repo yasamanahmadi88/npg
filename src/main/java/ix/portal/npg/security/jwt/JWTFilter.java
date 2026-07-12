@@ -89,7 +89,7 @@ public class JWTFilter extends GenericFilterBean {
             securityCache.removeSession(jwt);
         }
 
-        if (sessionInfo != null) {
+        if (sessionInfo != null && !shouldSkipRateLimit(requestUri, httpServletRequest.getMethod())) {
             if (httpServletRequest.getMethod().equals("POST")) {
                 if (!sessionInfo.getBucketPost().tryConsume(1)) {
                     HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
@@ -110,6 +110,12 @@ public class JWTFilter extends GenericFilterBean {
         }
 
         if (flag) filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private boolean shouldSkipRateLimit(String requestUri, String method) {
+        // Account identity is fetched on almost every navigation; counting it against the
+        // GET bucket emptied entity lists under the historical 6 req/min limit.
+        return "GET".equalsIgnoreCase(method) && requestUri != null && requestUri.endsWith("/api/account");
     }
 
     private void writeUnauthorized(HttpServletResponse response, String message) throws IOException {

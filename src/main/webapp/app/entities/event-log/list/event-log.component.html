@@ -2,7 +2,7 @@
 <jhi-overlay-loading></jhi-overlay-loading>
 }
 
-<mat-card appearance="outlined" *jhiHasPermission="['eventLog', 'view']">
+<mat-card appearance="outlined">
   <mat-card-header class="mb-2">
     <mat-card-title>
       <span jhiTranslate="npgPortalApp.eventLog.home.title">eventLog</span>
@@ -17,8 +17,8 @@
         <mat-panel-title jhiTranslate="npgPortalApp.portability.portalSearch"></mat-panel-title>
       </mat-expansion-panel-header>
 
-      <form [formGroup]="searchForm" (ngSubmit)="search()" style="min-height: 450px">
-        <table class="table table-striped" aria-describedby="showHealthLabel">
+      <form [formGroup]="searchForm" (ngSubmit)="search()" class="entity-search-form">
+        <table class="table table-striped entity-search-table" aria-describedby="showHealthLabel">
           <tbody>
             <!-- Row 1: Single Input -->
             <tr>
@@ -37,7 +37,7 @@
                 <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.source">Sender</label>
               </td>
               <td>
-                <mat-select class="form-control" formControlName="sender">
+                <mat-select class="npg-mat-select" formControlName="sender">
                   <mat-option value=""></mat-option>
                   <mat-option value="npg">NPG</mat-option>
                   <mat-option value="CRDB">CRDB</mat-option>
@@ -49,7 +49,7 @@
                 <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.destination">Receiver</label>
               </td>
               <td>
-                <mat-select class="form-control" formControlName="receiver">
+                <mat-select class="npg-mat-select" formControlName="receiver">
                   <mat-option value=""></mat-option>
                   <mat-option value="npg">NPG</mat-option>
                   <mat-option value="CRM">CRM</mat-option>
@@ -86,7 +86,7 @@
               <!--              <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.eventSource">Event Source</label>-->
               <!--            </td>-->
               <!--            <td colspan="5">-->
-              <!--              <mat-select class="form-control" formControlName="eventSource">-->
+              <!--              <mat-select class="npg-mat-select" formControlName="eventSource">-->
               <!--                <mat-option value=""></mat-option>-->
               <!--                <mat-option value="SYSTEM">SYSTEM</mat-option>-->
               <!--                <mat-option value="USER">USER</mat-option>-->
@@ -97,7 +97,7 @@
                 <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.eventLog.httpStatus">HttpStatus </label>
               </td>
               <td>
-                <mat-select class="form-control" formControlName="httpStatus">
+                <mat-select class="npg-mat-select" formControlName="httpStatus">
                   <mat-option value=""></mat-option>
                   <mat-option value="200 OK">200 OK</mat-option>
                   <mat-option value="400 BAD_REQUEST">400 BAD_REQUEST</mat-option>

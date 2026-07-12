@@ -175,15 +175,18 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   private loadInitialData(): void {
     this.isLoading = true;
+    this.isDataLoaded = false;
     this.buildQuery();
 
     this.fileReportGenerationLogService.query(this.query).subscribe({
       next: (res: HttpResponse<IFileReportGenerationLog[]>) => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onSuccess(res.body, res.headers);
       },
       error: () => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onError();
       },
     });
@@ -261,5 +264,9 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   private onError(): void {
     this.ngbPaginationPage = 1;
+    this.fileReportGenerationLogs = [];
+    this.dataSource.data = [];
+    this.isDataLoaded = true;
+    this.isLoading = false;
   }
 }

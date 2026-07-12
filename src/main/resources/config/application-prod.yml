@@ -151,14 +151,14 @@ ix:
     cache:
       url: http://ix-dispatcher:8888/management/reload-cache
 
-#default values for bucket4j if there is no value for them in SETTING table
+# Production rate limits — still protective, but high enough for normal portal use.
 bucket4j:
   get:
-    bucket-size: 15
-    token-per-minute: 6
+    bucket-size: 200
+    token-per-minute: 120
   post:
-    bucket-size: 1
-    token-per-minute: 6
+    bucket-size: 60
+    token-per-minute: 60
 
 portal:
   captcha:

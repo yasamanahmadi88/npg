@@ -199,14 +199,16 @@ jhipster:
 
 # application:
 
-# Default values for bucket4j if there is no value for them in SETTING table
+# Rate-limit defaults. Keep GET capacity high enough for SPA list navigations
+# (/api/account + entity list + related calls). Low values (e.g. 6/min) cause
+# HTTP 429 and empty entity forms even when the DB has rows.
 bucket4j:
   get:
-    bucket-size: 15
-    token-per-minute: 6
+    bucket-size: 200
+    token-per-minute: 120
   post:
-    bucket-size: 1
-    token-per-minute: 6
+    bucket-size: 60
+    token-per-minute: 60
 
 # Default values for IX dispatcher/reload clients
 ix:

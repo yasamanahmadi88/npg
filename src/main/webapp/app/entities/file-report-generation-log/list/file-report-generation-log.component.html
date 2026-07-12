@@ -2,7 +2,7 @@
 <jhi-overlay-loading></jhi-overlay-loading>
 }
 
-<mat-card appearance="outlined" *jhiHasPermission="['fileReportGenerationLog', 'view']">
+<mat-card appearance="outlined">
   <mat-card-header class="mb-2">
     <mat-card-title id="page-heading" data-cy="FileReportGenerationLogHeading">
       <span jhiTranslate="npgPortalApp.fileReportGenerationLog.home.title">File Report Generation Logs</span>
@@ -26,7 +26,7 @@
                 <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.fileReportGenerationLog.reportName">Report Name</label>
               </td>
               <td>
-                <mat-select class="form-control" formControlName="reportName">
+                <mat-select class="npg-mat-select" formControlName="reportName">
                   <mat-option value=""></mat-option>
                   <mat-option value="PORTIN_PORTED">PORTIN_PORTED</mat-option>
                   <mat-option value="PORTIN_NOTPORTED">PORTIN_NOTPORTED</mat-option>
