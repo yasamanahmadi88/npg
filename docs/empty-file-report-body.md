@@ -1,19 +1,30 @@
 # Empty body from `/api/file-report-generation-logs`
 
-## What the endpoint does
+## Root cause (confirmed when debugger shows empty page)
 
 ```java
-Page<FileReportGenerationLogDTO> page =
-    fileReportGenerationLogQueryService.findByCriteria(criteria, pageable);
-return ResponseEntity.ok().headers(headers).body(page.getContent());
+fileReportGenerationLogRepository.findAll(specification, page)
+    .map(fileReportGenerationLogMapper::toDto);
 ```
 
-A **200 with `[]`** means JPA ran successfully and matched **zero rows**. This is not a JWT/UI binding bug.
+returning an empty `Page` means JPA matched **zero rows**. This is not a mapper/serialization bug.
 
-Entity mapping:
+The most common regression after the upgrade: Spring binds empty query params such as
+`reportName.equals=` into a non-null `StringFilter` with `equals=""`. JHipster
+`QueryService` then emits `WHERE report_name = ''`, which matches nothing even when
+`TBL_FILE_REPORT_GENERATION_LOG` has data.
 
-- Table: `TBL_FILE_REPORT_GENERATION_LOG` (was `tbl_file_report_generation_log`; Oracle folds both to the same unquoted name)
-- Dev JDBC (`application-dev.yml`): `jdbc:oracle:thin:@//172.18.50.50:1521/NPGPDB` user `npg`
+## Fix shipped on this branch
+
+`FileReportGenerationLogQueryService` now:
+
+1. **Sanitizes** blank string/range filters (`equals=""`, whitespace `contains`, empty ranges)
+2. When **no active filter** remains → uses `repository.findAll(page)` (unfiltered), same as pre-filter behavior
+3. Only applies **active** filters inside `createSpecification`
+
+Frontend already skips blank values in `createRequestOption` / `buildQuery()`.
+
+Entity table mapping: `tbl_file_report_generation_log` (Oracle folds to `TBL_FILE_REPORT_GENERATION_LOG`).
 
 ## How to diagnose in 30 seconds
 
@@ -26,11 +37,7 @@ After pulling the latest tip, call the API (or open the page) and inspect respon
 
 ### Case A — `X-Table-Count: 0`
 
-The schema/user the app uses has an empty mapped table. Your SQL client is almost certainly looking at:
-
-- another user/schema, or
-- another table name, or
-- another database (`NPGPDB` vs `NPGDB` vs UAT)
+The schema/user the app uses has an empty mapped table. Your SQL client is almost certainly looking at another user/schema/DB.
 
 Run as the **same DB user as the app**:
 
@@ -40,21 +47,24 @@ SELECT COUNT(*) FROM TBL_FILE_REPORT_GENERATION_LOG;
 SELECT * FROM TBL_FILE_REPORT_GENERATION_LOG FETCH FIRST 5 ROWS ONLY;
 ```
 
-Also confirm app log line:
-
-`FileReportGenerationLog mapped table is empty for the connected datasource...`
-
 ### Case B — `X-Table-Count > 0` but body `[]`
 
-Filters or page index excluded everything. Check:
+Filters or page index excluded everything. In the debugger, inspect `criteria` **before**
+`findAll(specification, page)`:
 
-- request query string (`reportName.equals`, `reportDate.*`, `porNumber.equals`)
-- `page` (must be 0-based; page 5 of a 1-page result is empty)
-- backend warn: `table has N row(s) but this request matched 0`
+- `reportName.equals` / `porNumber.equals` must not be `""`
+- `reportDate.*` must not be Invalid date / empty
+- `page` must be 0-based
 
-### Case C — backend log shows criteria with unexpected filters
+Backend warn: `table has N row(s) but this request matched 0`
 
-Empty `mat-option value=""` / invalid date values used to be able to leak into query params. Latest tip hardens `createRequestOption` + `buildQuery()` to ignore blanks/invalid dates.
+With the sanitize fix, blank filters should no longer zero out the list; you should see log:
+
+`FileReportGenerationLog: no active filters — using findAll(pageable)`
+
+### Case C — still empty after sanitize + `X-Table-Count > 0`
+
+Share the request URL query string and the logged `criteria=` object. A real non-blank filter may be excluding all rows.
 
 ## Not caused by this method returning null
 
