@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A FileReportGenerationLogEntity.
  */
 @Entity
-@Table(name = "tbl_file_report_generation_log")
+@Table(name = "TBL_FILE_REPORT_GENERATION_LOG")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FileReportGenerationLogEntity implements Serializable {
 

@@ -119,7 +119,7 @@ public class FileReportGenerationLogQueryService extends QueryService<FileReport
         }
     }
 
-    boolean hasActiveFilter(FileReportGenerationLogCriteria criteria) {
+    public boolean hasActiveFilter(FileReportGenerationLogCriteria criteria) {
         if (criteria == null) {
             return false;
         }

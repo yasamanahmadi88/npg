@@ -60,13 +60,14 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
   }
 
   clear(): void {
-    this.searchForm.reset();
+    this.searchForm.reset({
+      reportName: null,
+      reportDate: null,
+      porNumber: '',
+    });
     this.query = {};
     this.page = 0;
-    this.fileReportGenerationLogs = undefined;
-    this.dataSource.data = [];
-    this.totalItems = 0;
-    this.updatePaginator();
+    this.search();
   }
 
   loadPage(event: PageEvent): void {
@@ -167,8 +168,8 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   private initializeSearchForm(): UntypedFormGroup {
     return this.fb.group({
-      reportName: [''],
-      reportDate: [''],
+      reportName: [null],
+      reportDate: [null],
       porNumber: [''],
     });
   }

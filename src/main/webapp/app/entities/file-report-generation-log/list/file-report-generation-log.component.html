@@ -27,7 +27,7 @@
               </td>
               <td>
                 <mat-select class="npg-mat-select" formControlName="reportName">
-                  <mat-option value=""></mat-option>
+                  <mat-option [value]="null"></mat-option>
                   <mat-option value="PORTIN_PORTED">PORTIN_PORTED</mat-option>
                   <mat-option value="PORTIN_NOTPORTED">PORTIN_NOTPORTED</mat-option>
                   <mat-option value="PORTOUT_PORTED">PORTOUT_PORTED</mat-option>
@@ -162,8 +162,10 @@
     <div class="row justify-content-center w-100">
       <mat-paginator
         [length]="totalItems"
+        [pageIndex]="page"
+        [pageSize]="itemsPerPage"
         (page)="loadPage($event)"
-        [pageSizeOptions]="[20, 50, 75, 100]"
+        [pageSizeOptions]="[10, 20, 50, 75, 100]"
         showFirstLastButtons
       ></mat-paginator>
     </div>
