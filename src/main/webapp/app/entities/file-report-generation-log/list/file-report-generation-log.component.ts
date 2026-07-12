@@ -200,26 +200,24 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
     };
 
     const formValues = this.searchForm.value;
+    const reportName = typeof formValues.reportName === 'string' ? formValues.reportName.trim() : '';
+    const porNumber = typeof formValues.porNumber === 'string' ? formValues.porNumber.trim() : '';
 
-    if (formValues.reportName) {
-      this.query['reportName.equals'] = formValues.reportName;
+    if (reportName) {
+      this.query['reportName.equals'] = reportName;
     }
-
-    // if (formValues.reportDate) {
-    //   const reportDate = moment(formValues.reportDate);
-    //   this.query['reportDate.equals'] = reportDate.format(DATE_TIME_FORMAT);
-    // }
 
     if (formValues.reportDate) {
-      const startOfDay = moment(formValues.reportDate).startOf('day');
-      const endOfDay = moment(formValues.reportDate).endOf('day');
-
-      this.query['reportDate.greaterThanOrEqual'] = startOfDay.format('YYYY-MM-DDTHH:mm:ss');
-      this.query['reportDate.lessThanOrEqual'] = endOfDay.format('YYYY-MM-DDTHH:mm:ss');
+      const startOfDay = moment(formValues.reportDate);
+      const endOfDay = moment(formValues.reportDate);
+      if (startOfDay.isValid() && endOfDay.isValid()) {
+        this.query['reportDate.greaterThanOrEqual'] = startOfDay.startOf('day').format('YYYY-MM-DDTHH:mm:ss');
+        this.query['reportDate.lessThanOrEqual'] = endOfDay.endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+      }
     }
 
-    if (formValues.porNumber) {
-      this.query['porNumber.equals'] = formValues.porNumber;
+    if (porNumber) {
+      this.query['porNumber.equals'] = porNumber;
     }
   }
 

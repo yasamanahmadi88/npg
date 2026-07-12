@@ -166,9 +166,37 @@ public class FileReportGenerationLogResource {
         FileReportGenerationLogCriteria criteria,
         Pageable pageable
     ) {
-        log.debug("REST request to get FileReportGenerationLogs by criteria: {}", criteria);
+        log.info(
+            "REST request to get FileReportGenerationLogs by criteria: {}, pageable: {}",
+            criteria,
+            pageable
+        );
         Page<FileReportGenerationLogDTO> page = fileReportGenerationLogQueryService.findByCriteria(criteria, pageable);
+        long tableCount = fileReportGenerationLogRepository.count();
+        log.info(
+            "FileReportGenerationLog query result: matchingTotal={}, returnedPageSize={}, unfilteredTableCount={}, sort={}",
+            page.getTotalElements(),
+            page.getNumberOfElements(),
+            tableCount,
+            pageable.getSort()
+        );
+        if (page.isEmpty() && tableCount > 0) {
+            log.warn(
+                "FileReportGenerationLog table has {} row(s) but this request matched 0. " +
+                    "Check request filters/criteria and page index (pageable.page={}).",
+                tableCount,
+                pageable.getPageNumber()
+            );
+        }
+        if (page.isEmpty() && tableCount == 0) {
+            log.warn(
+                "FileReportGenerationLog mapped table is empty for the connected datasource user/schema. " +
+                    "Verify JDBC URL/user and that data exists in TBL_FILE_REPORT_GENERATION_LOG " +
+                    "(entity maps to tbl_file_report_generation_log)."
+            );
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        headers.add("X-Table-Count", String.valueOf(tableCount));
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

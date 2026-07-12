@@ -11,7 +11,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A FileReportGenerationLogEntity.
  */
 @Entity
-@Table(name = "tbl_file_report_generation_log")
+@Table(name = "TBL_FILE_REPORT_GENERATION_LOG")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FileReportGenerationLogEntity implements Serializable {
 
@@ -37,6 +37,7 @@ public class FileReportGenerationLogEntity implements Serializable {
     private String fileName;
 
     @NotNull
+    // ROW_NUMBER is an Oracle analytic keyword; keep explicit uppercase physical name like sibling TBL_* entities.
     @Column(name = "ROW_NUMBER", nullable = false)
     private Long rowNumber;
 
