@@ -41,13 +41,8 @@ export class ThemeService {
     if (saved === 'light' || saved === 'dark') {
       return saved;
     }
-    return this.getSystemTheme();
-  }
-
-  private getSystemTheme(): PortalTheme {
-    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
+    // Prefer light by default so Material + Bootstrap forms stay readable.
+    // Users can still toggle dark explicitly via the navbar control.
     return 'light';
   }
 
@@ -59,21 +54,7 @@ export class ThemeService {
   }
 
   private listenForSystemThemeChanges(): void {
-    if (typeof window === 'undefined' || !window.matchMedia) {
-      return;
-    }
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = (event: MediaQueryListEvent): void => {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved === 'light' || saved === 'dark') {
-        return;
-      }
-      this.setTheme(event.matches ? 'dark' : 'light', false);
-    };
-    if (typeof media.addEventListener === 'function') {
-      media.addEventListener('change', handler);
-    } else if (typeof media.addListener === 'function') {
-      media.addListener(handler);
-    }
+    // Intentionally no-op: portal theme follows explicit user choice / light default,
+    // not OS prefers-color-scheme (which left forms unreadable with partial dark tokens).
   }
 }

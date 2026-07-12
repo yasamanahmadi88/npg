@@ -35,7 +35,7 @@ describe('ThemeService', () => {
     expect(document.documentElement.classList.contains('theme-light')).toBe(true);
   });
 
-  it('detects system dark theme when no saved preference', () => {
+  it('defaults to light even when system prefers dark', () => {
     matchMediaMock.mockImplementation((query: string) => ({
       matches: query.includes('dark'),
       media: query,
@@ -46,8 +46,8 @@ describe('ThemeService', () => {
       dispatchEvent: jest.fn(),
     }));
     service = new ThemeService();
-    expect(service.currentTheme).toBe('dark');
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(service.currentTheme).toBe('light');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
   it('restores saved theme preference', () => {
@@ -80,23 +80,12 @@ describe('ThemeService', () => {
     expect(document.documentElement.classList.contains('theme-light')).toBe(false);
   });
 
-  it('explicit preference overrides system theme changes', () => {
-    let changeHandler: ((event: MediaQueryListEvent) => void) | undefined;
-    matchMediaMock.mockImplementation((query: string) => ({
-      matches: false,
-      media: query,
-      addEventListener: (_: string, handler: (event: MediaQueryListEvent) => void) => {
-        changeHandler = handler;
-      },
-      removeEventListener: jest.fn(),
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }));
+  it('explicit preference is not overridden by system theme hooks', () => {
     service = new ThemeService();
     service.setTheme('light');
-    changeHandler?.({ matches: true } as MediaQueryListEvent);
     expect(service.currentTheme).toBe('light');
+    service.setTheme('dark');
+    expect(service.currentTheme).toBe('dark');
   });
 
   it('exposes isDark based on current theme', () => {

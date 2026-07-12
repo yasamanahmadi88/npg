@@ -81,10 +81,12 @@ nav ul li {
 }
 
 .dropdown-item {
-  background: #000000 !important;
+  background: var(--npg-bg-elevated) !important;
+  color: var(--npg-text-primary) !important;
 }
 .dropdown-item:active {
   background: map-get($npg-theme-color, C12) !important;
+  color: #ffffff !important;
 }
 
 .dropdown-item a:active {
@@ -92,7 +94,8 @@ nav ul li {
 }
 
 .dropdown-item:hover {
-  color: white !important;
+  color: var(--npg-text-primary) !important;
+  background: var(--npg-hover) !important;
   border: 1px solid map-get($npg-theme-color, C12) !important;
 }
 

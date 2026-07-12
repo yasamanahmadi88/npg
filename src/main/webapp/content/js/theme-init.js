@@ -2,9 +2,9 @@
   try {
     var key = 'npg-portal-theme';
     var saved = localStorage.getItem(key);
-    var theme = saved === 'light' || saved === 'dark'
-      ? saved
-      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    // Default to light unless the user explicitly chose a theme.
+    // Auto dark (OS preference) broke Material/Bootstrap form contrast.
+    var theme = saved === 'light' || saved === 'dark' ? saved : 'light';
     var root = document.documentElement;
     root.setAttribute('data-theme', theme);
     root.classList.remove('theme-light', 'theme-dark');

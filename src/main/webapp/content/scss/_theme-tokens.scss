@@ -93,6 +93,38 @@ body {
   border-color: var(--npg-border);
 }
 
+.mat-mdc-card,
+mat-card {
+  background-color: var(--npg-card-bg) !important;
+  color: var(--npg-text-primary) !important;
+}
+
+.mat-mdc-card-title,
+.mat-mdc-card-header,
+.mat-mdc-card-content {
+  color: var(--npg-text-primary);
+}
+
+.mat-mdc-form-field,
+.mat-mdc-text-field-wrapper,
+.mat-mdc-form-field-flex {
+  color: var(--npg-input-text);
+}
+
+.mat-mdc-table,
+.mat-mdc-row,
+.mat-mdc-header-row,
+.mat-mdc-cell,
+.mat-mdc-header-cell {
+  background-color: transparent;
+  color: var(--npg-text-primary) !important;
+  border-color: var(--npg-border) !important;
+}
+
+.mat-mdc-header-row {
+  background-color: var(--npg-table-header) !important;
+}
+
 .dropdown-menu {
   background-color: var(--npg-bg-elevated);
   border-color: var(--npg-border);
@@ -101,6 +133,7 @@ body {
 
 .dropdown-item {
   color: var(--npg-text-primary);
+  background-color: transparent;
 }
 
 .dropdown-item:hover,

@@ -92,7 +92,7 @@ export class FileReportGenerationLogComponent implements OnInit, AfterViewInit, 
 
   ngOnInit(): void {
     this.expanded = true;
-    this.isLoading = false;
+    this.loadInitialData();
   }
   ngAfterViewInit(): void {
     const sort = this.empTbSort;

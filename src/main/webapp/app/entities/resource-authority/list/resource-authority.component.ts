@@ -148,5 +148,6 @@ export class ResourceAuthorityComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.resourceAuthorities = [];
   }
 }

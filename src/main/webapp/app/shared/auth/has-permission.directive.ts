@@ -70,10 +70,9 @@ export class HasPermissionDirective implements OnDestroy {
     const resourceName = String(this.params[0] ?? '').toUpperCase().trim();
     const verb = String(this.params[1] ?? '').toUpperCase().trim();
 
-    return resources.some(
-      resAuth =>
-        resourceName === resAuth.resource?.name?.trim()?.toUpperCase() &&
-        verb === String(resAuth.verb).toUpperCase()
-    );
+    return resources.some(resAuth => {
+      const authResourceName = (resAuth.resource?.name ?? resAuth.resourceName ?? '').trim().toUpperCase();
+      return resourceName === authResourceName && verb === String(resAuth.verb ?? '').toUpperCase();
+    });
   }
 }

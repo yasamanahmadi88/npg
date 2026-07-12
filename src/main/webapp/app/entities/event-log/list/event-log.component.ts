@@ -75,9 +75,8 @@ export class EventLogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ============= Lifecycle Hooks =============
   ngOnInit(): void {
-    // this.loadInitialData();
     this.expanded = true;
-    this.isLoading = false;
+    this.loadInitialData();
   }
 
   ngAfterViewInit(): void {

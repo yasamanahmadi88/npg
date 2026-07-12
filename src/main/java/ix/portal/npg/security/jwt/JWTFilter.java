@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ix.portal.npg.security.SecurityCache;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -51,6 +52,24 @@ public class JWTFilter extends GenericFilterBean {
         String requestUri = httpServletRequest.getRequestURI();
         String jwt = resolveToken(httpServletRequest);
         SessionInfo sessionInfo = securityCache.getSessionInfoByToken(jwt);
+
+        // Rehydrate in-memory session when JWT is still valid (e.g. after app restart).
+        // Without this, list APIs return 401 and entity forms render empty despite DB data.
+        if (StringUtils.hasText(jwt) && sessionInfo == null && this.tokenProvider.validateToken(jwt)) {
+            Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+            securityCache.storeSession(
+                authentication.getPrincipal(),
+                httpServletRequest.getSession(true).getId(),
+                httpServletRequest.getRemoteAddr(),
+                authentication.getName(),
+                jwt,
+                httpServletRequest.getHeader("user-agent"),
+                LocalDateTime.now(),
+                null,
+                Boolean.TRUE
+            );
+            sessionInfo = securityCache.getSessionInfoByToken(jwt);
+        }
 
         if (!isPublicRequest(requestUri)) {
             if (jwt == null || sessionInfo == null) {
