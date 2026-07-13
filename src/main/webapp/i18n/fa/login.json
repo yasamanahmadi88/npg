@@ -5,7 +5,14 @@
       "password": "رمزعبور",
       "password.placeholder": "رمزعبور شما",
       "rememberme": "مرا بخاطر بسپار",
-      "button": "ورود"
+      "button": "ورود",
+      "captcha": "تصویر امنیتی",
+      "captcha.placeholder": "کد تصویر امنیتی",
+      "captcha.required": "وارد کردن تصویر امنیتی الزامی است.",
+      "captcha.loading": "در حال بارگذاری تصویر امنیتی…",
+      "captcha.unavailable": "تصویر امنیتی در دسترس نیست",
+      "captcha.refresh": "بارگذاری مجدد تصویر امنیتی",
+      "captcha.imageAlt": "تصویر چالش امنیتی"
     },
     "messages": {
       "error": {
@@ -17,6 +24,7 @@
     },
     "error": {
       "captcha": "تصویر امنیتی درست وارد نشده است",
+      "captchaLoad": "بارگذاری تصویر امنیتی ناموفق بود. لطفا دوباره تلاش کنید.",
       "permissionNeeded": "به صفحه ی مورد نظر دسترسی ندارید",
       "close": "بستن",
       "haveNot": "شما به صفحه مورد نظر دسترسی ندارید",

@@ -223,3 +223,8 @@ ix:
 portal:
   captcha:
     backUrl: http://localhost:8080
+
+# Local offline CAPTCHA (BotDetect replacement). Keep enabled outside dedicated tests.
+captcha:
+  enabled: true
+  dev-bypass: false

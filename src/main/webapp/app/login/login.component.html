@@ -1,35 +1,51 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <div class="fadeIn first d-flex justify-content-center col-12">
-      <div class="npg-logo"></div>
+      <div class="npg-logo" role="img" [attr.aria-label]="'login.title' | translate"></div>
     </div>
 
-    <form class="form mt-3" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
-      <input
-        type="text"
-        class="fadeIn first"
-        name="username"
-        id="username"
-        placeholder="{{ 'global.form.username.placeholder' | translate }}"
-        formControlName="username"
-        #username
-        data-cy="username"
-      />
+    <form class="form mt-3" role="form" (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+      <div class="form-group fadeIn first">
+        <label class="visually-hidden" for="username" jhiTranslate="global.form.username.label">Username</label>
+        <input
+          type="text"
+          class="fadeIn first"
+          name="username"
+          id="username"
+          placeholder="{{ 'global.form.username.placeholder' | translate }}"
+          formControlName="username"
+          #username
+          data-cy="username"
+          autocomplete="username"
+          [attr.aria-invalid]="fieldInvalid('username')"
+          [attr.aria-describedby]="fieldInvalid('username') ? 'username-error' : null"
+        />
+        @if (fieldInvalid('username')) {
+          <div id="username-error" class="field-error" role="alert" jhiTranslate="entity.validation.required">This field is required.</div>
+        }
+      </div>
 
       <div class="form-group fadeIn second">
+        <label class="visually-hidden" for="password" jhiTranslate="login.form.password">Password</label>
         <input
           type="password"
           name="password"
           id="password"
-          autocomplete="on"
+          autocomplete="current-password"
           placeholder="{{ 'login.form.password.placeholder' | translate }}"
           formControlName="password"
           data-cy="password"
+          [attr.aria-invalid]="fieldInvalid('password')"
+          [attr.aria-describedby]="fieldInvalid('password') ? 'password-error' : null"
         />
+        @if (fieldInvalid('password')) {
+          <div id="password-error" class="field-error" role="alert" jhiTranslate="entity.validation.required">This field is required.</div>
+        }
       </div>
 
-      <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-start captcha-row">
         <div class="form-group fadeIn first captchaInput">
+          <label class="visually-hidden" for="userCaptchaInput" jhiTranslate="login.form.captcha">Captcha</label>
           <input
             #userCaptchaInput
             type="text"
@@ -40,49 +56,77 @@
             autocomplete="off"
             [maxLength]="6"
             maxlength="6"
+            data-cy="captcha"
+            [attr.aria-invalid]="fieldInvalid('userCaptchaInput')"
+            [attr.aria-describedby]="fieldInvalid('userCaptchaInput') ? 'captcha-error' : null"
+            placeholder="{{ 'login.form.captcha.placeholder' | translate }}"
           />
+          @if (fieldInvalid('userCaptchaInput')) {
+            <div id="captcha-error" class="field-error" role="alert" jhiTranslate="login.form.captcha.required">Captcha is required.</div>
+          }
         </div>
 
         <div class="form-group fadeIn first d-flex">
-          <div class="input-group formsData captcha-preview">
-            @if (captchaImageUrl && !loading) {
-              <img class="captcha-image" [src]="captchaImageUrl" alt="Captcha" />
+          <div class="input-group formsData captcha-preview" aria-live="polite">
+            @if (captchaLoading) {
+              <span class="captcha-status" jhiTranslate="login.form.captcha.loading">Loading captcha…</span>
+            } @else if (captchaImageUrl) {
+              <img class="captcha-image" [src]="captchaImageUrl" alt="{{ 'login.form.captcha.imageAlt' | translate }}" />
+            } @else {
+              <span class="captcha-status" jhiTranslate="login.form.captcha.unavailable">Captcha unavailable</span>
             }
-            <button type="button" class="captcha-refresh" (click)="reloadCaptcha()" [disabled]="loading" title="Refresh Captcha">↻</button>
+            <button
+              type="button"
+              class="captcha-refresh"
+              (click)="reloadCaptcha()"
+              [disabled]="isBusy"
+              [attr.aria-label]="'login.form.captcha.refresh' | translate"
+              title="{{ 'login.form.captcha.refresh' | translate }}"
+              data-cy="captchaRefresh"
+            >
+              ↻
+            </button>
           </div>
         </div>
       </div>
 
       @if (authenticationError) {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" role="alert">
           <span class="text-danger" [innerHTML]="'login.messages.error.authentication' | translate"></span>
         </div>
       }
       @if (concurrentSessionError) {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" role="alert">
           <span jhiTranslate="error.user.has.concurrent.session" class="text-danger"></span>
         </div>
       }
       @if (wrongCaptcha) {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" role="alert">
           <span jhiTranslate="login.error.captcha" class="text-danger"></span>
         </div>
       }
       @if (tooManyFailedReq) {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" role="alert">
           <span jhiTranslate="login.error.tooManyFailedReq" class="text-danger"></span>
         </div>
       }
       @if (captchaLoadError) {
-        <div class="alert alert-danger">
-          <span class="text-danger">Captcha could not be loaded.</span>
+        <div class="alert alert-danger" role="alert">
+          <span class="text-danger" jhiTranslate="login.error.captchaLoad">Captcha could not be loaded. Please retry.</span>
         </div>
       }
 
-      <input [disabled]="loading || loginForm.invalid" type="submit" class="fadeIn first" value="{{ 'global.menu.account.login' | translate }}" />
-      @if (loading) {
-        <fa-icon icon="sync" animation="spin"></fa-icon>
-      }
+      <button
+        type="submit"
+        class="fadeIn first login-submit"
+        [disabled]="loginSubmitting"
+        data-cy="submit"
+      >
+        @if (loginSubmitting) {
+          <fa-icon icon="sync" animation="spin" class="me-1"></fa-icon>
+        }
+        {{ 'global.menu.account.login' | translate }}
+      </button>
     </form>
   </div>
 </div>

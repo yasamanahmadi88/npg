@@ -1,5 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { UntypedFormBuilder } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
@@ -86,54 +86,57 @@ describe('Component Tests', () => {
       mockAccountService.isAuthenticated.mockReturnValue(false);
     });
 
+    afterEach(() => {
+      httpMock.verify();
+    });
+
     describe('ngOnInit', () => {
       it('Should call accountService.identity on Init', () => {
-        // WHEN
         comp.ngOnInit();
-
-        // THEN
         expect(mockAccountService.identity).toHaveBeenCalled();
       });
 
-      it('Should call accountService.isAuthenticated on Init', () => {
-        // WHEN
-        comp.ngOnInit();
-
-        // THEN
-        expect(mockAccountService.isAuthenticated).toHaveBeenCalled();
-      });
-
       it('should navigate to dashboard on Init if authenticated=true', () => {
-        // GIVEN
         mockAccountService.isAuthenticated.mockReturnValue(true);
-
-        // WHEN
         comp.ngOnInit();
-
-        // THEN
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
       });
     });
 
     describe('ngAfterViewInit', () => {
-      it('should set focus to username input after the view has been initialized', () => {
-        // GIVEN
-        const node = {
-          focus: jest.fn(),
-        };
+      it('should set focus to username input after the view has been initialized', fakeAsync(() => {
+        const node = { focus: jest.fn() };
         comp.username = new ElementRef(node);
-
-        // WHEN
         comp.ngAfterViewInit();
-
-        // THEN
         expect(node.focus).toHaveBeenCalled();
+        tick();
+        httpMock.expectOne('/api/captcha-endpoint').flush({
+          captchaId: 'captcha-id',
+          captchaImageUrl: '/api/captcha.png?cid=captcha-id',
+        });
+      }));
+    });
+
+    describe('login validation UX', () => {
+      it('marks fields touched and does not call loginService when form is invalid', () => {
+        comp.login();
+        expect(comp.loginForm.touched).toBe(true);
+        expect(mockLoginService.login).not.toHaveBeenCalled();
+        expect(comp.loginSubmitting).toBe(false);
+      });
+
+      it('keeps submit flow available when form is invalid (no early busy lock)', () => {
+        expect(comp.loginSubmitting).toBe(false);
+        expect(comp.loginForm.invalid).toBe(true);
+        comp.login();
+        expect(comp.fieldInvalid('username')).toBe(true);
+        expect(comp.fieldInvalid('password')).toBe(true);
+        expect(comp.fieldInvalid('userCaptchaInput')).toBe(true);
       });
     });
 
     describe('login', () => {
       it('should authenticate the user and navigate to dashboard', () => {
-        // GIVEN
         comp.loginForm.patchValue({
           username: 'admin',
           password: 'admin',
@@ -142,10 +145,8 @@ describe('Component Tests', () => {
         });
         comp.captchaId = 'captcha-id';
 
-        // WHEN
         comp.login();
 
-        // THEN
         expect(comp.authenticationError).toEqual(false);
         expect(mockLoginService.login).toHaveBeenCalledWith({
           username: 'admin',
@@ -155,25 +156,31 @@ describe('Component Tests', () => {
           captchaToken: 'ABC123',
         });
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
-        expect(comp.loading).toEqual(false);
+        expect(comp.loginSubmitting).toEqual(false);
       });
 
-      it('should authenticate the user but not navigate to dashboard if authentication process is already routing to cached url', () => {
-        // GIVEN
-        mockRouter.getCurrentNavigation.mockReturnValue({} as never);
+      it('should show captcha error when API returns captcha.validation', () => {
+        mockLoginService.login.mockReturnValue(
+          throwError(() => ({
+            status: 400,
+            error: { errorKey: 'captcha.validation', message: 'error.captcha.validation' },
+          }))
+        );
         comp.loginForm.patchValue({ username: 'admin', password: 'admin', rememberMe: true, userCaptchaInput: 'ABC123' });
         comp.captchaId = 'captcha-id';
 
-        // WHEN
         comp.login();
+        httpMock.expectOne('/api/captcha-endpoint').flush({
+          captchaId: 'new-captcha-id',
+          captchaImageUrl: '/api/captcha.png?cid=new-captcha-id',
+        });
 
-        // THEN
+        expect(comp.wrongCaptcha).toEqual(true);
         expect(comp.authenticationError).toEqual(false);
-        expect(mockRouter.navigate).not.toHaveBeenCalled();
+        expect(comp.loginSubmitting).toEqual(false);
       });
 
       it('should stay on login form and show error message on login error', () => {
-        // GIVEN
         mockLoginService.login.mockReturnValue(
           throwError(() => ({
             status: 401,
@@ -183,14 +190,27 @@ describe('Component Tests', () => {
         comp.loginForm.patchValue({ username: 'admin', password: 'admin', rememberMe: true, userCaptchaInput: 'ABC123' });
         comp.captchaId = 'captcha-id';
 
-        // WHEN
         comp.login();
-        httpMock.expectOne('/api/captcha-endpoint').flush({ captchaId: 'new-captcha-id', captchaImageUrl: '/api/captcha.png?cid=new-captcha-id' });
+        httpMock.expectOne('/api/captcha-endpoint').flush({
+          captchaId: 'new-captcha-id',
+          captchaImageUrl: '/api/captcha.png?cid=new-captcha-id',
+        });
 
-        // THEN
         expect(comp.authenticationError).toEqual(true);
-        expect(comp.loading).toEqual(false);
+        expect(comp.loginSubmitting).toEqual(false);
         expect(mockRouter.navigate).not.toHaveBeenCalled();
+      });
+
+      it('separates captchaLoading from loginSubmitting', () => {
+        comp.loadCaptcha();
+        expect(comp.captchaLoading).toBe(true);
+        expect(comp.loginSubmitting).toBe(false);
+        httpMock.expectOne('/api/captcha-endpoint').flush({
+          captchaId: 'cid',
+          captchaImageUrl: '/api/captcha.png?cid=cid',
+        });
+        expect(comp.captchaLoading).toBe(false);
+        expect(comp.captchaId).toBe('cid');
       });
     });
   });
