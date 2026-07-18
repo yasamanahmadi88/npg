@@ -102,8 +102,29 @@ class FileReportGenerationLogResourceIT {
             .perform(get(ENTITY_API_URL))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(header().exists("X-Table-Count"))
             .andExpect(jsonPath("$.[*].id").value(hasItem(fileReportGenerationLogEntity.getId().intValue())))
             .andExpect(jsonPath("$.[*].reportName").value(hasItem(DEFAULT_REPORT_NAME)));
+    }
+
+    @Test
+    @Transactional
+    void getAllFileReportGenerationLogs_ignoresBlankReportNameEquals() throws Exception {
+        fileReportGenerationLogRepository.saveAndFlush(fileReportGenerationLogEntity);
+
+        // Mimics Angular sending empty mat-option as reportName.equals=
+        restFileReportGenerationLogMockMvc
+            .perform(
+                get(ENTITY_API_URL)
+                    .param("reportName.equals", "")
+                    .param("porNumber.equals", "   ")
+                    .param("page", "0")
+                    .param("size", "20")
+            )
+            .andExpect(status().isOk())
+            .andExpect(header().exists("X-Total-Count"))
+            .andExpect(header().exists("X-Table-Count"))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(fileReportGenerationLogEntity.getId().intValue())));
     }
 
     @Test

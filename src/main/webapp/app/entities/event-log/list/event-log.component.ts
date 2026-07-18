@@ -75,9 +75,8 @@ export class EventLogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // ============= Lifecycle Hooks =============
   ngOnInit(): void {
-    // this.loadInitialData();
     this.expanded = true;
-    this.isLoading = false;
+    this.loadInitialData();
   }
 
   ngAfterViewInit(): void {
@@ -195,15 +194,18 @@ export class EventLogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadInitialData(): void {
     this.isLoading = true;
+    this.isDataLoaded = false;
     this.buildQuery();
 
     this.eventLogService.query(this.query).subscribe({
       next: (res: HttpResponse<IEventLog[]>) => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onSuccess(res.body, res.headers);
       },
       error: () => {
         this.isLoading = false;
+        this.isDataLoaded = true;
         this.onError();
       },
     });
@@ -274,6 +276,10 @@ export class EventLogComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private onError(): void {
     this.ngbPaginationPage = 1;
+    this.eventLogs = [];
+    this.dataSource.data = [];
+    this.isDataLoaded = true;
+    this.isLoading = false;
   }
 
   private handleNavigation(): void {

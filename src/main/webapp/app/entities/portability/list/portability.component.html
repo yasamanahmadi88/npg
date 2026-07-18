@@ -2,7 +2,7 @@
 <jhi-overlay-loading></jhi-overlay-loading>
 }
 
-<mat-card appearance="outlined" *jhiHasPermission="['portability', 'view']">
+<mat-card appearance="outlined">
   <mat-card-header>
     <mat-card-title>
       <div>
@@ -20,7 +20,7 @@
         <mat-expansion-panel-header (click)="checkExpanded()">
           <mat-panel-title jhiTranslate="npgPortalApp.portability.portalSearch"></mat-panel-title>
         </mat-expansion-panel-header>
-        <form style="min-height: 450px" [formGroup]="editForm" (ngSubmit)="search()">
+        <form class="entity-search-form" [formGroup]="editForm" (ngSubmit)="search()">
           <table class="table table-striped" aria-describedby="showHealthLabel">
             <tbody>
               <tr>
@@ -107,7 +107,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porReceiver"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="porReceiver">
+                  <mat-select class="npg-mat-select" formControlName="porReceiver">
                     <mat-option value=""></mat-option>
                     <mat-option value="MCI">MCI</mat-option>
                     <mat-option value="ITSC">ITSC</mat-option>
@@ -121,7 +121,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porAccType"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="porAccType">
+                  <mat-select class="npg-mat-select" formControlName="porAccType">
                     <mat-option value=""></mat-option>
                     <mat-option value="prepaid">Prepaid</mat-option>
                     <mat-option value="postpaid">Postpaid</mat-option>
@@ -132,7 +132,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porType"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="porType" (selectionChange)="porTypeChange()">
+                  <mat-select class="npg-mat-select" formControlName="porType" (selectionChange)="porTypeChange()">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="IN">IN</mat-option>
                     <mat-option value="OUT">OUT</mat-option>
@@ -150,9 +150,9 @@
 
                 <td>
                   @if (editForm.get('porType')?.value == null) {
-                  <mat-select class="form-control" [placeholder]="'npgPortalApp.portability.porTypeFirst' | translate"> </mat-select>
+                  <mat-select class="npg-mat-select" [placeholder]="'npgPortalApp.portability.porTypeFirst' | translate"> </mat-select>
                   } @if (editForm.get('porType')?.value === 'IN') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create IN">create</mat-option>
                     <mat-option value="cancel IN">cancel</mat-option>
@@ -171,7 +171,7 @@
                     <mat-option value="closed IN">closed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'OUT') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create OUT">create</mat-option>
                     <mat-option value="failed OUT">failed</mat-option>
@@ -187,7 +187,7 @@
                     <mat-option value="closed OUT">closed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'EMERGENCY_RESTORE_IN') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create EMERGENCY_RESTORE IN">create</mat-option>
                     <mat-option value="waiting exec EMERGENCY_RESTORE IN">waiting exec</mat-option>
@@ -196,7 +196,7 @@
                     <mat-option value="failed EMERGENCY_RESTORE IN">failed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'EMERGENCY_RESTORE_OUT') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create EMERGENCY_RESTORE OUT">create</mat-option>
                     <mat-option value="waiting ported EMERGENCY_RESTORE OUT">waiting ported</mat-option>
@@ -206,7 +206,7 @@
                     <mat-option value="failed EMERGENCY_RESTORE OUT">failed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'TERMINATE_IN') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create TERMINATE IN">create</mat-option>
                     <mat-option value="execute TERMINATE IN">execute</mat-option>
@@ -214,21 +214,21 @@
                     <mat-option value="failed TERMINATE IN">failed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'TERMINATE_OUT') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create TERMINATE OUT">create</mat-option>
                     <mat-option value="terminated TERMINATE OUT">terminated</mat-option>
                     <mat-option value="failed TERMINATE OUT">failed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'TERMINATE_OLO') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create TERMINATE OLO">create</mat-option>
                     <mat-option value="terminated TERMINATE OLO">terminated</mat-option>
                     <mat-option value="failed TERMINATE OLO">failed</mat-option>
                   </mat-select>
                   } @if (editForm.get('porType')?.value === 'OLO') {
-                  <mat-select class="form-control" formControlName="porStatus">
+                  <mat-select class="npg-mat-select" formControlName="porStatus">
                     <mat-option [value]="null"></mat-option>
                     <mat-option value="create OLO">create</mat-option>
                     <mat-option value="failed OLO">failed</mat-option>
@@ -242,7 +242,7 @@
                   <label class="form-control-label mt-1" jhiTranslate="npgPortalApp.portability.porRspCode"></label>
                 </td>
                 <td colspan="3">
-                  <mat-select style="text-align: left" class="form-control" formControlName="porRspCode">
+                  <mat-select style="text-align: left" class="npg-mat-select" formControlName="porRspCode">
                     <mat-option [value]="null"></mat-option>
                     <mat-option style="text-align: left" value="0"
                       >Code: 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: Approved</mat-option
@@ -285,7 +285,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.porRouting"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="porRouting">
+                  <mat-select class="npg-mat-select" formControlName="porRouting">
                     <mat-option value=""></mat-option>
                     <mat-option value="D21">D21</mat-option>
                     <mat-option value="D22">D22</mat-option>
@@ -300,7 +300,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.from"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="donor">
+                  <mat-select class="npg-mat-select" formControlName="donor">
                     <mat-option value=""></mat-option>
                     <mat-option value="MCI">MCI</mat-option>
                     <mat-option value="ITSC">ITSC</mat-option>
@@ -314,7 +314,7 @@
                   <label class="form-control-label mt-2" jhiTranslate="npgPortalApp.portability.to"></label>
                 </td>
                 <td>
-                  <mat-select class="form-control" formControlName="recipient">
+                  <mat-select class="npg-mat-select" formControlName="recipient">
                     <mat-option value=""></mat-option>
                     <mat-option value="MCI">MCI</mat-option>
                     <mat-option value="ITSC">ITSC</mat-option>

@@ -1,8 +1,11 @@
 import { Route } from '@angular/router';
 
-import { PortabilityDashboardComponent } from '../../common/portability-dashboard/portability-dashboard.component';
+import { RegisterComponent } from './register.component';
 
 export const registerRoute: Route = {
-  path: '',
-  component: PortabilityDashboardComponent,
+  path: 'register',
+  component: RegisterComponent,
+  data: {
+    pageTitle: 'register.title',
+  },
 };

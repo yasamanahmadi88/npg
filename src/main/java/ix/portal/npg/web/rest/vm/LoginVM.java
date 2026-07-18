@@ -16,12 +16,6 @@ public class LoginVM {
     @Size(min = 4, max = 100)
     private String password;
 
-    /*    @NotNull
-    private String userEnteredCaptchaCode;
-
-    @NotNull
-    private String captchaId;*/
-
     private boolean rememberMe;
 
     public String getUsername() {
@@ -48,43 +42,8 @@ public class LoginVM {
         this.rememberMe = rememberMe;
     }
 
-    /*   public String getUserEnteredCaptchaCode() {
-        return userEnteredCaptchaCode;
-    }
-
-    public void setUserEnteredCaptchaCode(String userEnteredCaptchaCode) {
-        this.userEnteredCaptchaCode = userEnteredCaptchaCode;
-    }
-
-    public String getCaptchaId() {
-        return captchaId;
-    }
-
-    public void setCaptchaId(String captchaId) {
-        this.captchaId = captchaId;
-    }*/
-
     @Override
     public String toString() {
-        return (
-            "LoginVM{" +
-            "username='" +
-            username +
-            '\'' +
-            ", password='" +
-            password +
-            '\'' +
-            /*   ", userEnteredCaptchaCode='" +
-            userEnteredCaptchaCode +
-            '\'' +
-            ", captchaId='" +
-            captchaId +
-            '\'' +*/
-            ", rememberMe=" +
-            rememberMe +
-            '}'
-        );
+        return "LoginVM{" + "username='" + username + '\'' + ", rememberMe=" + rememberMe + '}';
     }
 }
-
-

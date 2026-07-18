@@ -1,217 +1,90 @@
-# npgPortal
+# NPG Portal
 
-This application was generated using JHipster 7.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.1.0](https://www.jhipster.tech/documentation-archive/v7.1.0).
+Number Portability Gateway Management Portal — JHipster-origin enterprise SPA + Spring Boot API.
 
-## Development
+## Stack (validated)
 
-Before you can build this project, you must install and configure the following dependencies on your machine:
+| Layer | Version |
+| ----- | ------- |
+| Angular | 21.2.18 |
+| Node.js | 22.22.x (engines: `>=22.12.0 <23`) |
+| TypeScript | 5.9.x |
+| Java | 25 |
+| Spring Boot | 4.0.7 |
+| Hibernate | 7.2.x |
+| Database | Oracle (dev/prod), H2 (tests) |
+| Package manager | npm |
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+## Prerequisites
 
-After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
+1. **JDK 25** on `PATH` (`JAVA_HOME` set).
+2. **Node.js 22.22+** and npm 10.x.
+3. Access to an Oracle instance for full local backend runs, **or** override datasource to a disposable DB.
+4. Copy `.env.example` and export required variables for production-like runs.
 
-```
-npm install
-```
+Corporate npm installs may use Artifactory (see `.npmrc.artifactory.bak`). This repository’s default `.npmrc` points at `registry.npmjs.org` for environments without Artifactory.
 
-We use npm scripts and [Angular CLI][] with [Webpack][] as our build system.
+## Frontend
 
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
-
-```
-./mvnw
-npm start
-```
-
-Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
-
-The `npm run` command will list all of the scripts available to run for this project.
-
-### PWA Support
-
-JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
-
-The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.module.ts`:
-
-```typescript
-ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+```bash
+npm ci
+npm start          # http://localhost:4200 (proxies /api → :8080)
+npm run lint
+npx jest --config jest.conf.js --watch=false --coverage=false
+npx ng build --configuration production
 ```
 
-### Managing dependencies
+### Theme
 
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
+- Light and dark themes via `html[data-theme]` / CSS tokens (`content/scss/_theme-tokens.scss`).
+- Navbar toggle (sun/moon) with accessible label/`aria-pressed`.
+- Preference key: `npg-portal-theme` in `localStorage`.
+- System `prefers-color-scheme` used when no explicit preference exists.
+- Early init: `content/js/theme-init.js` (no page reload required to switch).
 
-```
-npm install --save --save-exact leaflet
-```
+### Routing / SPA fallback
 
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
+- Angular routes are client-side; production JAR serves `index.html` via `ClientForwardController` for non-API paths.
+- Deep links and refresh require the backend (or reverse proxy) SPA fallback — not only `ng serve`.
 
-```
-npm install --save-dev --save-exact @types/leaflet
-```
+## Backend
 
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/app.module.ts](src/main/webapp/app/app.module.ts) file:
-
-```
-import 'leaflet/dist/leaflet.js';
-```
-
-Edit [src/main/webapp/content/scss/vendor.scss](src/main/webapp/content/scss/vendor.scss) file:
-
-```
-@import '~leaflet/dist/leaflet.css';
+```bash
+./mvnw -P-webapp                 # run with default Maven profiles
+./mvnw -ntp -P-webapp verify     # unit + integration tests (H2)
 ```
 
-Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
+### Environment variables
 
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+See `.env.example`. Production **requires**:
 
-### Using Angular CLI
+- `SPRING_DATASOURCE_URL`
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+- `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` (generate: `openssl rand -base64 64`)
 
-You can also use [Angular CLI][] to generate some custom client code.
+### Security notes
 
-For example, the following command:
+- Authentication: Bearer JWT + server-side session registry (`SecurityCache`).
+- CSRF disabled because the SPA uses Authorization headers (stateless), not cookie form posts.
+- CORS origins are allow-listed in `application.yml` (`jhipster.cors`); wildcard + credentials is rejected.
 
-```
-ng generate component my-component
-```
+## Docker
 
-will generate few files:
+Jib builds images (`./mvnw -Pprod jib:dockerBuild`) using `eclipse-temurin:25-jre`. Compose fragments live under `src/main/docker/`. Full compose Oracle service is not bundled — provide an external DB.
 
-```
-create src/main/webapp/app/my-component/my-component.component.html
-create src/main/webapp/app/my-component/my-component.component.ts
-update src/main/webapp/app/app.module.ts
-```
+## Documentation
 
-## Building for production
+| Doc | Purpose |
+| --- | ------- |
+| `docs/upgrade-audit.md` | Version matrix + issue ledger |
+| `docs/root-cause-analysis.md` | Confirmed root causes |
+| `docs/security-review.md` | ASVS-oriented security report |
+| `docs/test-report.md` | Executed test evidence |
+| `docs/change-log.md` | Change summary |
+| `docs/remaining-risks.md` | Blockers and residual risk |
+| `docs/final-validation-report.md` | Acceptance PASS/FAIL/BLOCKED |
 
-### Packaging as jar
+## CI
 
-To build the final jar and optimize the npgPortal application for production, run:
-
-```
-./mvnw -Pprod clean verify
-```
-
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
-
-```
-java -jar target/*.jar
-```
-
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
-
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-```
-./mvnw -Pprod,war clean verify
-```
-
-## Testing
-
-To launch your application's tests, run:
-
-```
-./mvnw verify
-```
-
-### Client tests
-
-Unit tests are run by [Jest][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
-
-```
-npm test
-```
-
-For more information, refer to the [Running tests page][].
-
-### Code quality
-
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker-compose -f src/main/docker/sonar.yml up -d
-```
-
-Note: we have turned off authentication in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
-
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
-
-Then, run a Sonar analysis:
-
-```
-./mvnw -Pprod clean verify sonar:sonar
-```
-
-If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
-
-```
-./mvnw initialize sonar:sonar
-```
-
-For more information, refer to the [Code quality page][].
-
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a oracle database in a docker container, run:
-
-```
-docker-compose -f src/main/docker/oracle.yml up -d
-```
-
-To stop it and remove the container, run:
-
-```
-docker-compose -f src/main/docker/oracle.yml down
-```
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-```
-./mvnw -Pprod verify jib:dockerBuild
-```
-
-Then run:
-
-```
-docker-compose -f src/main/docker/app.yml up -d
-```
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 7.1.0 archive]: https://www.jhipster.tech/documentation-archive/v7.1.0
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.1.0/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.1.0/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.1.0/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v7.1.0/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v7.1.0/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.1.0/setting-up-ci/
-[node.js]: https://nodejs.org/
-[webpack]: https://webpack.github.io/
-[angular cli]: https://cli.angular.io/
-[browsersync]: https://www.browsersync.io/
-[jest]: https://facebook.github.io/jest/
-[jasmine]: https://jasmine.github.io/2.0/introduction.html
-[leaflet]: https://leafletjs.com/
-[definitelytyped]: https://definitelytyped.org/
+GitHub Actions workflow: `.github/workflows/ci.yml` (frontend lint/test/build, backend verify, heuristic secret scan).

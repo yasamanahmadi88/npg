@@ -5,7 +5,7 @@ import static ix.portal.npg.config.Constants.EVENT_UNSAFE_CONNECTION;
 import ix.portal.npg.repository.CustomAuditEventRepository;
 import ix.portal.npg.security.SecurityUtils;
 import ix.portal.npg.security.captcha.CaptchaValidationService;
-import ix.portal.npg.security.captcha.exception.InvalidCaptchaException;
+import ix.portal.npg.web.rest.errors.InvalidCaptchaException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;

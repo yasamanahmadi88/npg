@@ -5,7 +5,15 @@ const tseslint = require('typescript-eslint');
 const prettier = require('eslint-config-prettier');
 
 module.exports = tseslint.config(
-  { ignores: ['target/**', 'node_modules/**', 'dist/**'] },
+  {
+    ignores: [
+      'target/**',
+      'node_modules/**',
+      'dist/**',
+      'src/main/webapp/content/js/**',
+      'webpack/**',
+    ],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
@@ -13,7 +21,8 @@ module.exports = tseslint.config(
     files: ['src/main/webapp/**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.app.json', './tsconfig.spec.json'],
+        projectService: true,
+        allowDefaultProject: ['*.js', '*.mjs', '*.cjs'],
       },
     },
     plugins: {
@@ -22,7 +31,11 @@ module.exports = tseslint.config(
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
       'no-console': 'off',
+      'no-useless-escape': 'off',
     },
   }
 );

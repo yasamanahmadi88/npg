@@ -6,6 +6,7 @@ import { VERSION } from 'app/app.constants';
 import { LANGUAGES } from 'app/config/language.constants';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { ThemeService } from 'app/core/theme/theme.service';
 import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 
@@ -32,7 +33,8 @@ export class NavbarComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    public themeService: ThemeService
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION;
@@ -46,6 +48,10 @@ export class NavbarComponent implements OnInit {
       this.openAPIEnabled = profileInfo.openAPIEnabled;
     });
     this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   isAuthenticated(): boolean {
@@ -83,7 +89,7 @@ export class NavbarComponent implements OnInit {
   @HostListener('document:keypress', ['$event'])
   onDocumentKeypress(event: KeyboardEvent): void {
     if (event.key === 'Enter' && this.searchedNumber) {
-      this.router.navigate(['./portability', this.searchedNumber]);
+      this.router.navigate(['/portability', this.searchedNumber]);
       this.searchedNumber = undefined;
     }
   }

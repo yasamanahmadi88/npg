@@ -21,8 +21,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.JHipsterProperties;
 
@@ -100,8 +98,9 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         if (Boolean.TRUE.equals(config.getAllowCredentials()) &&
             !CollectionUtils.isEmpty(config.getAllowedOrigins()) &&
             config.getAllowedOrigins().contains("*")) {
-            config.setAllowedOriginPatterns(new java.util.ArrayList<>(config.getAllowedOrigins()));
-            config.setAllowedOrigins(null);
+            throw new IllegalStateException(
+                "CORS misconfiguration: wildcard origin '*' cannot be used with allow-credentials=true"
+            );
         }
 
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
@@ -115,32 +114,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
 
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                    .addMapping("/**")
-                    .allowCredentials(false)
-                    .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")
-                    .allowedHeaders("*")
-                    .allowedOriginPatterns("*")
-                    .allowedOrigins(
-                        "http://localhost:9000",
-                        "http://172.20.200.17",
-                        "http://172.20.200.16",
-                        "https://tnpg.mci.ir",
-                        "https://npg.mci.ir",
-                        "https://172.20.200.17",
-                        "https://172.20.200.16",
-                        "http://tnpg.mci.ir",
-                        "http://npg.mci.ir"
-                    );
-            }
-        };
     }
 }
 

@@ -115,19 +115,23 @@ export class PortabilityComponent implements OnInit {
       if (portability && Array.isArray(portability) && portability.length > 0) {
         this.portabilities = portability;
         this.portability = portability;
+        this.dataSource = new MatTableDataSource<IPortability>(this.portability ?? []);
       } else {
-        this.portabilities = [];
-        this.portability = [];
+        // Search-first pages previously rendered an empty table until the user searched.
+        // Load the first page with no filters so DB rows are visible immediately.
+        this.search();
       }
-      this.dataSource = new MatTableDataSource<IPortability>(this.portability ?? []);
     });
   }
 
   clear(): void {
     this.editForm.reset();
     this.query = {};
-    this.router.navigate(['./portability']);
-    this.portabilities = undefined;
+    this.router.navigate(['/portability']);
+    this.portabilities = [];
+    this.portability = [];
+    this.dataSource = new MatTableDataSource<IPortability>([]);
+    this.search();
   }
 
   trackId(index: number, item: IPortability): number {
@@ -160,8 +164,9 @@ export class PortabilityComponent implements OnInit {
 
   search(): void {
     this.isLoading = true;
-    this.dataSource = undefined;
-    this.portabilities = undefined;
+    this.portabilities = [];
+    this.portability = [];
+    this.dataSource = new MatTableDataSource<IPortability>([]);
     this.query = {};
 
     if (this.editForm.get(['porRequestId'])?.value) {
@@ -381,5 +386,8 @@ export class PortabilityComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.portabilities = [];
+    this.portability = [];
+    this.dataSource = new MatTableDataSource<IPortability>([]);
   }
 }

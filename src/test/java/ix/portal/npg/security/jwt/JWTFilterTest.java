@@ -174,6 +174,70 @@ class JWTFilterTest {
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
     }
 
+    @Test
+    void testJWTFilterRehydratesMissingSessionForValidToken() throws Exception {
+        UsernamePasswordAuthenticationToken authentication = createAuthentication();
+        String jwt = tokenProvider.createToken(authentication, false);
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        request.setRequestURI("/api/settings");
+        request.setMethod("GET");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        FilterChain filterChain = (servletRequest, servletResponse) -> {};
+
+        jwtFilter.doFilter(request, response, filterChain);
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(securityCache.getSessionInfoByToken(jwt)).isNotNull();
+        assertThat(SecurityContextHolder.getContext().getAuthentication().getName()).isEqualTo("test-user");
+    }
+
+    @Test
+    void testJWTFilterSkipsRateLimitForAccountEndpoint() throws Exception {
+        UsernamePasswordAuthenticationToken authentication = createAuthentication();
+        String jwt = tokenProvider.createToken(authentication, false);
+
+        securityCache.storeSession(
+            authentication.getPrincipal(),
+            "test-session-id",
+            "127.0.0.1",
+            authentication.getName(),
+            jwt,
+            "test-user-agent",
+            LocalDateTime.now(),
+            null,
+            true
+        );
+
+        // Replace GET bucket with an already-empty bucket to force 429 on normal APIs.
+        io.github.bucket4j.Bandwidth empty = io.github.bucket4j.Bandwidth.classic(
+            1,
+            io.github.bucket4j.Refill.greedy(1, java.time.Duration.ofHours(1))
+        );
+        io.github.bucket4j.Bucket emptyBucket = io.github.bucket4j.Bucket.builder().addLimit(empty).build();
+        emptyBucket.tryConsume(1);
+        securityCache.getSessionInfoByToken(jwt).setBucketGet(emptyBucket);
+
+        MockHttpServletRequest settings = new MockHttpServletRequest();
+        settings.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        settings.setRequestURI("/api/settings");
+        settings.setMethod("GET");
+        MockHttpServletResponse settingsResponse = new MockHttpServletResponse();
+        jwtFilter.doFilter(settings, settingsResponse, (req, res) -> {});
+        assertThat(settingsResponse.getStatus()).isEqualTo(429);
+
+        MockHttpServletRequest account = new MockHttpServletRequest();
+        account.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        account.setRequestURI("/api/account");
+        account.setMethod("GET");
+        MockHttpServletResponse accountResponse = new MockHttpServletResponse();
+        jwtFilter.doFilter(account, accountResponse, (req, res) -> {});
+
+        assertThat(accountResponse.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
     private UsernamePasswordAuthenticationToken createAuthentication() {
         Collection<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
 

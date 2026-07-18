@@ -149,5 +149,6 @@ export class CrmToCrdbResponseMapComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.crmToCrdbResponseMaps = [];
   }
 }

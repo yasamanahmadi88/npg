@@ -166,9 +166,52 @@ public class FileReportGenerationLogResource {
         FileReportGenerationLogCriteria criteria,
         Pageable pageable
     ) {
-        log.debug("REST request to get FileReportGenerationLogs by criteria: {}", criteria);
+        log.info(
+            "REST request to get FileReportGenerationLogs by criteria: {}, pageable: {}",
+            criteria,
+            pageable
+        );
         Page<FileReportGenerationLogDTO> page = fileReportGenerationLogQueryService.findByCriteria(criteria, pageable);
+        long tableCount = fileReportGenerationLogRepository.count();
+
+        // Safety net for blank filters / page-0 empty results while the table has rows.
+        if (
+            page.isEmpty() &&
+            tableCount > 0 &&
+            pageable.getPageNumber() == 0 &&
+            !fileReportGenerationLogQueryService.hasActiveFilter(criteria)
+        ) {
+            log.warn(
+                "FileReportGenerationLog: empty page-0 with inactive/blank criteria while tableCount={}. Retrying unfiltered query.",
+                tableCount
+            );
+            page = fileReportGenerationLogQueryService.findByCriteria(new FileReportGenerationLogCriteria(), pageable);
+        }
+
+        log.info(
+            "FileReportGenerationLog query result: matchingTotal={}, returnedPageSize={}, unfilteredTableCount={}, sort={}",
+            page.getTotalElements(),
+            page.getNumberOfElements(),
+            tableCount,
+            pageable.getSort()
+        );
+        if (page.isEmpty() && tableCount > 0) {
+            log.warn(
+                "FileReportGenerationLog table has {} row(s) but this request matched 0. " +
+                    "Check request filters/criteria and page index (pageable.page={}). criteria={}",
+                tableCount,
+                pageable.getPageNumber(),
+                criteria
+            );
+        }
+        if (page.isEmpty() && tableCount == 0) {
+            log.warn(
+                "FileReportGenerationLog mapped table is empty for the connected datasource user/schema. " +
+                    "Verify JDBC URL/user and that data exists in TBL_FILE_REPORT_GENERATION_LOG."
+            );
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        headers.add("X-Table-Count", String.valueOf(tableCount));
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

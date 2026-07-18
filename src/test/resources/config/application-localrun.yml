@@ -19,6 +19,8 @@ mediation:
     parser:
       url: http://localhost:9999
       active: false
+
+# Interactive localrun must exercise real CAPTCHA like production.
 captcha:
-  enabled: false
-  dev-bypass: true
+  enabled: true
+  dev-bypass: false

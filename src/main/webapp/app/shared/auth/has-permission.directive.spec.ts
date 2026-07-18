@@ -53,6 +53,18 @@ describe('HasPermissionDirective tests', () => {
     expect(fixture.debugElement.query(By.css('div'))).not.toBeNull();
   });
 
+  it('should show content when only flat resourceName is present', () => {
+    mockAccountService.hasAnyAuthority = jest.fn(() => false);
+    mockAccountService.userIdentity = {
+      resourceAuthorities: [{ resourceName: 'portability', verb: 'VIEW' }],
+    } as Account;
+
+    const fixture = TestBed.createComponent(TestHasPermissionDirectiveComponent);
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('div'))).not.toBeNull();
+  });
+
   it('should hide content when permission is missing', () => {
     mockAccountService.hasAnyAuthority = jest.fn(() => false);
     mockAccountService.userIdentity = {
