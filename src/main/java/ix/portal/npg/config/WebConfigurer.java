@@ -1,30 +1,28 @@
 package ix.portal.npg.config;
 
-import static java.net.URLDecoder.decode;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.server.WebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import tech.jhipster.config.JHipsterProperties;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.*;
-import jakarta.servlet.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.server.*;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.boot.web.server.servlet.ConfigurableServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import tech.jhipster.config.JHipsterConstants;
-import tech.jhipster.config.JHipsterProperties;
+
+import static java.net.URLDecoder.decode;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
@@ -92,6 +90,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         return extractedPath.substring(0, extractionEndIndex);
     }
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -100,8 +99,9 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         if (Boolean.TRUE.equals(config.getAllowCredentials()) &&
             !CollectionUtils.isEmpty(config.getAllowedOrigins()) &&
             config.getAllowedOrigins().contains("*")) {
-            config.setAllowedOriginPatterns(new java.util.ArrayList<>(config.getAllowedOrigins()));
-            config.setAllowedOrigins(null);
+            throw new IllegalStateException(
+                "CORS misconfiguration: wildcard origin '*' cannot be used with allow-credentials=true"
+            );
         }
 
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
@@ -115,32 +115,6 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
 
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                    .addMapping("/**")
-                    .allowCredentials(false)
-                    .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH")
-                    .allowedHeaders("*")
-                    .allowedOriginPatterns("*")
-                    .allowedOrigins(
-                        "http://localhost:9000",
-                        "http://172.20.200.17",
-                        "http://172.20.200.16",
-                        "https://tnpg.mci.ir",
-                        "https://npg.mci.ir",
-                        "https://172.20.200.17",
-                        "https://172.20.200.16",
-                        "http://tnpg.mci.ir",
-                        "http://npg.mci.ir"
-                    );
-            }
-        };
     }
 }
 

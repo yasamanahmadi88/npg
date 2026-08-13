@@ -1,40 +1,48 @@
-const path = require('path');
-
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { hashElement } = require('folder-hash');
-const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
 const webpack = require('webpack');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { merge } = require('webpack-merge');
+const path = require('path');
+const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackNotifierPlugin = require('webpack-notifier');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const ESLintPlugin = require('eslint-webpack-plugin');
 
 const environment = require('./environment');
-const proxyConfig = require('./proxy.conf');
 
-module.exports = async (config, options, targetOptions) => {
-  const languagesHash = await hashElement(path.resolve(__dirname, '../src/main/webapp/i18n'), {
-    algo: 'md5',
-    encoding: 'hex',
-    files: { include: ['*.json'] },
-  });
+const tls = process.env.TLS;
+
+module.exports = (config, options, targetOptions) => {
+  config.cache = {
+    // 1. Set cache type to filesystem
+    type: 'filesystem',
+    cacheDirectory: path.resolve(__dirname, '../target/webpack'),
+    buildDependencies: {
+      // 2. Add your config as buildDependency to get cache invalidation on config change
+      config: [
+        __filename,
+        path.resolve(__dirname, 'webpack.custom.js'),
+        path.resolve(__dirname, '../angular.json'),
+        path.resolve(__dirname, '../tsconfig.app.json'),
+        path.resolve(__dirname, '../tsconfig.json'),
+      ],
+    },
+  };
 
   // PLUGINS
   if (config.mode === 'development') {
     config.plugins.push(
+      // Temporarily disabled during Angular 21 migration.
+      // ESLint will be fixed and run separately after the build is green.
+      // new ESLintPlugin({
+      //   extensions: ['js', 'ts'],
+      // }),
       new WebpackNotifierPlugin({
         title: 'Npg Portal',
         contentImage: path.join(__dirname, 'logo-jhipster.png'),
-      }),
+      })
     );
   }
-
-  // configuring proxy for back end service
-  const tls = config.devServer?.server?.type === 'https';
-  if (config.devServer) {
-    config.devServer.proxy = proxyConfig({ tls });
-  }
-
   if (targetOptions.target === 'serve' || config.watch) {
     config.plugins.push(
       new BrowserSyncPlugin(
@@ -43,18 +51,10 @@ module.exports = async (config, options, targetOptions) => {
           port: 9000,
           https: tls,
           proxy: {
-            target: `http${tls ? 's' : ''}://localhost:${targetOptions.target === 'serve' ? '9060' : '8080'}`,
-            ws: true,
+            target: `http${tls ? 's' : ''}://localhost:${targetOptions.target === 'serve' ? '4200' : '8080'}`,
             proxyOptions: {
-              changeOrigin: false, //pass the Host header to the backend unchanged https://github.com/Browsersync/browser-sync/issues/430
+              changeOrigin: false, //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
             },
-            proxyReq: [
-              function (proxyReq) {
-                // URI that will be retrieved by the ForwardedHeaderFilter on the server side
-                proxyReq.setHeader('X-Forwarded-Host', 'localhost:9000');
-                proxyReq.setHeader('X-Forwarded-Proto', `http${tls ? 's' : ''}`);
-              },
-            ],
           },
           socket: {
             clients: {
@@ -72,8 +72,8 @@ module.exports = async (config, options, targetOptions) => {
         },
         {
           reload: targetOptions.target === 'build', // enabled for build --watch
-        },
-      ),
+        }
+      )
     );
   }
 
@@ -82,25 +82,13 @@ module.exports = async (config, options, targetOptions) => {
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
-        // Webpack statistics in temporary folder
-        reportFilename: '../../stats.html',
-      }),
+        // Webpack statistics in target folder
+        reportFilename: '../stats.html',
+      })
     );
   }
 
   const patterns = [
-    {
-      // https://github.com/swagger-api/swagger-ui/blob/v4.6.1/swagger-ui-dist-package/README.md
-      context: require('swagger-ui-dist').getAbsoluteFSPath(),
-      from: '*.{js,css,html,png}',
-      to: 'swagger-ui/',
-      globOptions: { ignore: ['**/index.html'] },
-    },
-    {
-      from: path.join(path.dirname(require.resolve('axios/package.json')), 'dist/axios.min.js'),
-      to: 'swagger-ui/',
-    },
-    { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui/' },
     // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
   ];
 
@@ -110,28 +98,29 @@ module.exports = async (config, options, targetOptions) => {
 
   config.plugins.push(
     new webpack.DefinePlugin({
-      I18N_HASH: JSON.stringify(languagesHash.hash),
+      __TIMESTAMP__: JSON.stringify(environment.__TIMESTAMP__ || new Date().getTime()),
       // APP_VERSION is passed as an environment variable from the Gradle / Maven build tasks.
-      __VERSION__: JSON.stringify(environment.__VERSION__),
+      __VERSION__: JSON.stringify(environment.__VERSION__ || 'DEV'),
+      __DEBUG_INFO_ENABLED__: JSON.stringify(environment.__DEBUG_INFO_ENABLED__ || config.mode === 'development'),
       // The root URL for API calls, ending with a '/' - for example: `"https://www.jhipster.tech:8081/myservice/"`.
       // If this URL is left empty (""), then it will be relative to the current context.
       // If you use an API server, in `prod` mode, you will need to enable CORS
       // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-      SERVER_API_URL: JSON.stringify(environment.SERVER_API_URL),
+      __SERVER_API_URL__: JSON.stringify(environment.__SERVER_API_URL__ || ''),
     }),
     new MergeJsonWebpackPlugin({
       output: {
         groupBy: [
-            { pattern: './src/main/webapp/i18n/en/*.json', fileName: './i18n/en.json' },
-            { pattern: './src/main/webapp/i18n/fa/*.json', fileName: './i18n/fa.json' },
-            // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
+          { pattern: './src/main/webapp/i18n/en/*.json', fileName: './i18n/en.json' },
+          { pattern: './src/main/webapp/i18n/fa/*.json', fileName: './i18n/fa.json' },
+          // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
         ],
       },
-    }),
+    })
   );
 
   config = merge(
-    config,
+    config
     // jhipster-needle-add-webpack-config - JHipster will add custom config
   );
 

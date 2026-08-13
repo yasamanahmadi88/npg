@@ -1,0 +1,25 @@
+{
+  "name": "BusinessConfig",
+  "skipClient": true,
+  "skipServer": true,
+  "fields": [
+    {
+      "fieldName": "value",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "512"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20211122190125",
+  "entityTableName": "busincon",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

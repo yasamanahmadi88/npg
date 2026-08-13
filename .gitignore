@@ -163,3 +163,24 @@ Desktop.ini
 *.before-*
 *.backup
 backup-before-*/
+.env
+.env.local
+*.artifactory.bak
+pom.xml.corrupted-before-cleanup.bak
+src.rar
+portability-it-error.log
+portability-single.log
+spring-security-access-get.log
+webmvc-test-get.log
+/test-results/
+/playwright-report/
+/target/playwright-report/
+######################
+# Private keys and local TLS material
+######################
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.key
+*.private.pem

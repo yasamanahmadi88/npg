@@ -9,10 +9,10 @@ public final class NpgPortalLocalRunApp {
         System.setProperty("spring.profiles.active", "localrun");
         System.setProperty("oracle.jdbc.autoCommitSpecCompliant", "false");
 
-        // Local development only: bypass captcha to isolate authentication/page issues.
-        System.setProperty("captcha.enabled", "false");
-        System.setProperty("captcha.dev-bypass", "true");
-        System.setProperty("captcha.devBypass", "true");
+        // Interactive local login must enforce CAPTCHA exactly like production.
+        System.setProperty("captcha.enabled", "true");
+        System.setProperty("captcha.dev-bypass", "false");
+        System.setProperty("captcha.devBypass", "false");
 
         NpgPortalApp.main(args);
     }

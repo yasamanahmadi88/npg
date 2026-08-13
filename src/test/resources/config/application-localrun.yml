@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  liquibase:
+    contexts: test
   mail:
     host: localhost
     port: 25
@@ -19,6 +21,7 @@ mediation:
     parser:
       url: http://localhost:9999
       active: false
+
 captcha:
-  enabled: false
-  dev-bypass: true
+  enabled: true
+  dev-bypass: false

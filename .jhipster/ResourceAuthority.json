@@ -1,0 +1,38 @@
+{
+  "name": "ResourceAuthority",
+  "skipClient": true,
+  "skipServer": true,
+  "fields": [
+    {
+      "fieldName": "verb",
+      "fieldType": "Verb",
+      "fieldValues": "NO_GRANT,VIEW,CREATE,EDIT,DELETE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "authorityId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "resource",
+      "otherEntityRelationshipName": "resourceAuthorities",
+      "relationshipName": "resource",
+      "otherEntityField": "displayName"
+    }
+  ],
+  "changelogDate": "20210203133525",
+  "entityTableName": "res",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

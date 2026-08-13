@@ -5,7 +5,14 @@
       "password": "Password",
       "password.placeholder": "Your password",
       "rememberme": "Remember me",
-      "button": "Sign in"
+      "button": "Sign in",
+      "username": "Username",
+      "captcha": "Security code",
+      "captchaImageAlt": "Security code image",
+      "refreshCaptcha": "Load a new security image",
+      "captchaLoading": "Loading security image...",
+      "signingIn": "Signing in...",
+      "captchaUnavailable": "Reload the security image before signing in."
     },
     "messages": {
       "error": {
@@ -20,7 +27,10 @@
       "permissionNeeded": "Permission Needed",
       "close": "Close",
       "haveNot": "You dont have permission to access to request page",
-      "tooManyFailedReq": "Too many attempts. try again later."
+      "tooManyFailedReq": "Too many attempts. try again later.",
+      "requiredFields": "Please complete all required fields.",
+      "captchaRequired": "Enter the six-character security code.",
+      "captchaLoad": "The security image could not be loaded. Please try again."
     }
   }
 }

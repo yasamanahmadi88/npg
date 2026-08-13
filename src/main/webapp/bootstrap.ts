@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 import { DEBUG_INFO_ENABLED } from './app/app.constants';
@@ -10,7 +10,10 @@ if (!DEBUG_INFO_ENABLED) {
 }
 
 platformBrowser()
-  .bootstrapModule(AppModule, { preserveWhitespaces: true })
+  .bootstrapModule(AppModule, {
+    preserveWhitespaces: true,
+    applicationProviders: [provideZoneChangeDetection()],
+  })
   // eslint-disable-next-line no-console
   .then(() => console.log('Application started'))
   .catch(err => {

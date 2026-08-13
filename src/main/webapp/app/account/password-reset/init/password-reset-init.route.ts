@@ -1,7 +1,11 @@
 import { Route } from '@angular/router';
-import { PortabilityDashboardComponent } from '../../../common/portability-dashboard/portability-dashboard.component';
+
+import { PasswordResetInitComponent } from './password-reset-init.component';
 
 export const passwordResetInitRoute: Route = {
-  path: '',
-  component: PortabilityDashboardComponent,
+  path: 'reset/request',
+  component: PasswordResetInitComponent,
+  data: {
+    pageTitle: 'global.menu.account.password',
+  },
 };

@@ -5,17 +5,27 @@ import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import ix.portal.npg.security.jwt.SessionInfo;
 import ix.portal.npg.service.SettingQueryService;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SecurityCache {
+    /**
+     * Floor so legacy SETTING rows (e.g. 6 GET/min) cannot empty SPA list pages with HTTP 429.
+     */
+    private static final long MIN_GET_BUCKET_SIZE = 100L;
+    private static final long MIN_GET_TOKENS_PER_MINUTE = 60L;
+    private static final long MIN_POST_BUCKET_SIZE = 30L;
+    private static final long MIN_POST_TOKENS_PER_MINUTE = 30L;
 
+    //    @Value("${bucket4j.get.bucket-size}")
     @Value("${bucket4j.get.bucket-size}")
     long bucketSizeForGet;
 
@@ -92,7 +102,8 @@ public class SecurityCache {
 
             if (sessionInfos.get(jwtToken) != null) {
                 SessionInfo sessionInfo = sessionInfos.get(jwtToken);
-                if (isTokenExpired(sessionInfo)) removeSession(jwtToken); else return sessionInfo.setLastActionDate(LocalDateTime.now());
+                if (isTokenExpired(sessionInfo)) removeSession(jwtToken);
+                else return sessionInfo.setLastActionDate(LocalDateTime.now());
             }
 
             return null;
@@ -138,34 +149,45 @@ public class SecurityCache {
     }
 
     private Bucket createNewBucket(String reqType) {
-        Refill refill;
-        Bandwidth limit;
+        refreshBucketLimitsFromSettings();
 
+        long getBucket = Math.max(bucketSizeForGet, MIN_GET_BUCKET_SIZE);
+        long getTpm = Math.max(tokenPerMinuteForGet, MIN_GET_TOKENS_PER_MINUTE);
+        long postBucket = Math.max(bucketSizeForPost, MIN_POST_BUCKET_SIZE);
+        long postTpm = Math.max(tokenPerMinuteForPost, MIN_POST_TOKENS_PER_MINUTE);
+
+        if (reqType.equals("get")) {
+            Refill refill = Refill.greedy(getTpm, Duration.ofMinutes(1));
+            Bandwidth limit = Bandwidth.classic(getBucket, refill);
+            return Bucket.builder().addLimit(limit).build();
+        }
+
+        Refill refill = Refill.greedy(postTpm, Duration.ofMinutes(1));
+        Bandwidth limit = Bandwidth.classic(postBucket, refill);
+        return Bucket.builder().addLimit(limit).build();
+    }
+    private void refreshBucketLimitsFromSettings() {
         settingQueryService
             .findByKey("bucket4j.get.token-per-minute")
-            .ifPresent(settingDTO -> tokenPerMinuteForGet = Long.parseLong(settingDTO.getValue()));
+                    .ifPresent(settingDTO -> tokenPerMinuteForGet = parsePositiveLong(settingDTO.getValue(), tokenPerMinuteForGet));
 
         settingQueryService
             .findByKey("bucket4j.get.bucket-size")
-            .ifPresent(settingDTO -> bucketSizeForGet = Long.parseLong(settingDTO.getValue()));
-
+            .ifPresent(settingDTO -> bucketSizeForGet = parsePositiveLong(settingDTO.getValue(), bucketSizeForGet));
         settingQueryService
             .findByKey("bucket4j.post.token-per-minute")
-            .ifPresent(settingDTO -> tokenPerMinuteForPost = Long.parseLong(settingDTO.getValue()));
-
+            .ifPresent(settingDTO -> tokenPerMinuteForPost = parsePositiveLong(settingDTO.getValue(), tokenPerMinuteForPost));
         settingQueryService
             .findByKey("bucket4j.post.bucket-size")
-            .ifPresent(settingDTO -> bucketSizeForPost = Long.parseLong(settingDTO.getValue()));
+            .ifPresent(settingDTO -> bucketSizeForPost = parsePositiveLong(settingDTO.getValue(), bucketSizeForPost));    }
 
-        if (reqType.equals("get")) {
-            refill = Refill.greedy(tokenPerMinuteForGet, Duration.ofMinutes(1));
-            limit = Bandwidth.classic(bucketSizeForGet, refill);
-        } else {
-            refill = Refill.greedy(tokenPerMinuteForPost, Duration.ofMinutes(1));
-            limit = Bandwidth.classic(bucketSizeForPost, refill);
+    private long parsePositiveLong(String raw, long fallback) {
+        try {
+            long value = Long.parseLong(raw.trim());
+            return value > 0 ? value : fallback;
+        } catch (Exception ex) {
+            return fallback;
         }
-
-        return Bucket.builder().addLimit(limit).build();
     }
 }
 

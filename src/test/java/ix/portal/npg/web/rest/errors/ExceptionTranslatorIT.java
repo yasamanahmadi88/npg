@@ -83,7 +83,18 @@ class ExceptionTranslatorIT {
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("$.parameters.message").value("error.http.401"))
             .andExpect(jsonPath("$.parameters.path").value("/api/exception-translator-test/unauthorized"))
-            .andExpect(jsonPath("$.detail").value("test authentication failed!"));
+            .andExpect(jsonPath("$.detail").value("test authentication failed!"))
+            .andExpect(jsonPath("$.cause").doesNotExist())
+            .andExpect(jsonPath("$.stackTrace").doesNotExist())
+            .andExpect(jsonPath("$.trace").doesNotExist())
+            .andExpect(jsonPath("$.exception").doesNotExist())
+            .andExpect(jsonPath("$.parameters.cause").doesNotExist())
+            .andExpect(jsonPath("$.parameters.stackTrace").doesNotExist())
+            .andExpect(jsonPath("$.parameters.trace").doesNotExist())
+            .andExpect(jsonPath("$.parameters.exception").doesNotExist())
+            .andExpect(jsonPath("$.localizedMessage").doesNotExist())
+            .andExpect(jsonPath("$.message").doesNotExist())
+            .andExpect(jsonPath("$.suppressed").doesNotExist());
     }
 
     @Test
@@ -113,6 +124,17 @@ class ExceptionTranslatorIT {
             .andExpect(status().isInternalServerError())
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("$.parameters.message").value("error.http.500"))
-            .andExpect(jsonPath("$.title").value("Internal Server Error"));
+            .andExpect(jsonPath("$.title").value("Internal Server Error"))
+            .andExpect(jsonPath("$.cause").doesNotExist())
+            .andExpect(jsonPath("$.stackTrace").doesNotExist())
+            .andExpect(jsonPath("$.trace").doesNotExist())
+            .andExpect(jsonPath("$.exception").doesNotExist())
+            .andExpect(jsonPath("$.parameters.cause").doesNotExist())
+            .andExpect(jsonPath("$.parameters.stackTrace").doesNotExist())
+            .andExpect(jsonPath("$.parameters.trace").doesNotExist())
+            .andExpect(jsonPath("$.parameters.exception").doesNotExist())
+            .andExpect(jsonPath("$.localizedMessage").doesNotExist())
+            .andExpect(jsonPath("$.message").doesNotExist())
+            .andExpect(jsonPath("$.suppressed").doesNotExist());
     }
 }

@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ix.portal.npg.IntegrationTest;
 import ix.portal.npg.domain.User;
 import ix.portal.npg.repository.UserRepository;
-import ix.portal.npg.web.rest.vm.LoginVM;
+import ix.portal.npg.web.rest.vm.LoginCaptchaVM;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -50,9 +50,11 @@ class UserJWTControllerIT {
 
         userRepository.saveAndFlush(user);
 
-        LoginVM login = new LoginVM();
+        LoginCaptchaVM login = new LoginCaptchaVM();
         login.setUsername("user-jwt-controller");
         login.setPassword("test");
+        login.setCaptchaId("test-captcha-id");
+        login.setCaptchaToken("ABC123");
 
         mockMvc
             .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))
@@ -74,9 +76,11 @@ class UserJWTControllerIT {
 
         userRepository.saveAndFlush(user);
 
-        LoginVM login = new LoginVM();
+        LoginCaptchaVM login = new LoginCaptchaVM();
         login.setUsername("user-jwt-controller-remember-me");
         login.setPassword("test");
+        login.setCaptchaId("test-captcha-id");
+        login.setCaptchaToken("ABC123");
         login.setRememberMe(true);
 
         mockMvc
@@ -90,9 +94,11 @@ class UserJWTControllerIT {
 
     @Test
     void testAuthorizeFails() throws Exception {
-        LoginVM login = new LoginVM();
+        LoginCaptchaVM login = new LoginCaptchaVM();
         login.setUsername("wrong-user");
         login.setPassword("wrong password");
+        login.setCaptchaId("test-captcha-id");
+        login.setCaptchaToken("ABC123");
 
         mockMvc
             .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(login)))

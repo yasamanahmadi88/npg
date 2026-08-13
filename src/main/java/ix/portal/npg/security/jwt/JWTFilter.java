@@ -3,7 +3,10 @@ package ix.portal.npg.security.jwt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ix.portal.npg.security.SecurityCache;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -38,8 +41,8 @@ public class JWTFilter extends GenericFilterBean {
         Authentication existingAuthentication = SecurityContextHolder.getContext().getAuthentication();
         if (
             existingAuthentication != null &&
-            existingAuthentication.isAuthenticated() &&
-            !(existingAuthentication instanceof AnonymousAuthenticationToken)
+                existingAuthentication.isAuthenticated() &&
+                !(existingAuthentication instanceof AnonymousAuthenticationToken)
         ) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -52,6 +55,24 @@ public class JWTFilter extends GenericFilterBean {
         String jwt = resolveToken(httpServletRequest);
         SessionInfo sessionInfo = securityCache.getSessionInfoByToken(jwt);
 
+
+        // Rehydrate in-memory session when JWT is still valid (e.g. after app restart).
+        // Without this, list APIs return 401 and entity forms render empty despite DB data.
+        if (StringUtils.hasText(jwt) && sessionInfo == null && this.tokenProvider.validateToken(jwt)) {
+            Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+            securityCache.storeSession(
+                authentication.getPrincipal(),
+                httpServletRequest.getSession(true).getId(),
+                httpServletRequest.getRemoteAddr(),
+                authentication.getName(),
+                jwt,
+                httpServletRequest.getHeader("user-agent"),
+                LocalDateTime.now(),
+                null,
+                Boolean.TRUE
+            );
+            sessionInfo = securityCache.getSessionInfoByToken(jwt);
+        }
         if (!isPublicRequest(requestUri)) {
             if (jwt == null || sessionInfo == null) {
                 writeUnauthorized((HttpServletResponse) servletResponse, "error.npg.token.empty");
@@ -70,7 +91,7 @@ public class JWTFilter extends GenericFilterBean {
             securityCache.removeSession(jwt);
         }
 
-        if (sessionInfo != null) {
+        if (sessionInfo != null && !shouldSkipRateLimit(requestUri, httpServletRequest.getMethod())) {
             if (httpServletRequest.getMethod().equals("POST")) {
                 if (!sessionInfo.getBucketPost().tryConsume(1)) {
                     HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
@@ -93,6 +114,12 @@ public class JWTFilter extends GenericFilterBean {
         if (flag) filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    private boolean shouldSkipRateLimit(String requestUri, String method) {
+        // Account identity is fetched on almost every navigation; counting it against the
+        // GET bucket emptied entity lists under the historical 6 req/min limit.
+        return "GET".equalsIgnoreCase(method) && requestUri != null && requestUri.endsWith("/api/account");
+    }
+
     private void writeUnauthorized(HttpServletResponse response, String message) throws IOException {
         response.setContentType("text/plain;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -102,38 +129,38 @@ public class JWTFilter extends GenericFilterBean {
     private boolean isPublicRequest(String requestUri) {
         return (
             requestUri.equals("/") ||
-            requestUri.endsWith("/login") ||
-            requestUri.endsWith("error") ||
-            requestUri.endsWith("api/cp-eyrtyertye") ||
-            requestUri.endsWith("api/authenticate") ||
-            requestUri.endsWith("api/logout") ||
-            requestUri.endsWith("api/public/backUrl") ||
-            requestUri.endsWith("/captcha-endpoint") ||
-            requestUri.endsWith("api/captcha.png") ||
-            requestUri.endsWith("api/captcha-validate") ||
-            requestUri.endsWith("management/info") ||
-            requestUri.endsWith("management/health") ||
-            requestUri.startsWith("/management/health/") ||
-            requestUri.startsWith("/i18n/") ||
-            requestUri.startsWith("/content/") ||
-            requestUri.startsWith("/assets/") ||
-            requestUri.startsWith("/app/") ||
-            requestUri.endsWith(".js") ||
-            requestUri.endsWith(".html") ||
-            requestUri.endsWith(".css") ||
-            requestUri.endsWith(".json") ||
-            requestUri.endsWith(".map") ||
-            requestUri.endsWith(".woff") ||
-            requestUri.endsWith(".woff2") ||
-            requestUri.endsWith(".ttf") ||
-            requestUri.endsWith(".eot") ||
-            requestUri.endsWith(".png") ||
-            requestUri.endsWith(".jpg") ||
-            requestUri.endsWith(".jpeg") ||
-            requestUri.endsWith(".gif") ||
-            requestUri.endsWith(".svg") ||
-            requestUri.endsWith(".ico") ||
-            requestUri.matches("^/mci-logo.*png$")
+                requestUri.endsWith("/login") ||
+                requestUri.endsWith("error") ||
+                requestUri.endsWith("api/cp-eyrtyertye") ||
+                requestUri.endsWith("api/authenticate") ||
+                requestUri.endsWith("api/logout") ||
+                requestUri.endsWith("api/public/backUrl") ||
+                requestUri.endsWith("/captcha-endpoint") ||
+                requestUri.endsWith("api/captcha.png") ||
+                requestUri.endsWith("api/captcha-validate") ||
+                requestUri.endsWith("management/info") ||
+                requestUri.endsWith("management/health") ||
+                requestUri.startsWith("/management/health/") ||
+                requestUri.startsWith("/i18n/") ||
+                requestUri.startsWith("/content/") ||
+                requestUri.startsWith("/assets/") ||
+                requestUri.startsWith("/app/") ||
+                requestUri.endsWith(".js") ||
+                requestUri.endsWith(".html") ||
+                requestUri.endsWith(".css") ||
+                requestUri.endsWith(".json") ||
+                requestUri.endsWith(".map") ||
+                requestUri.endsWith(".woff") ||
+                requestUri.endsWith(".woff2") ||
+                requestUri.endsWith(".ttf") ||
+                requestUri.endsWith(".eot") ||
+                requestUri.endsWith(".png") ||
+                requestUri.endsWith(".jpg") ||
+                requestUri.endsWith(".jpeg") ||
+                requestUri.endsWith(".gif") ||
+                requestUri.endsWith(".svg") ||
+                requestUri.endsWith(".ico") ||
+                requestUri.matches("^/mci-logo.*png$")
         );
     }
 

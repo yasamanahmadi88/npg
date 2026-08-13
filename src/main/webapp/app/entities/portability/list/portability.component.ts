@@ -1,7 +1,8 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+﻿import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IPortability } from '../portability.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
@@ -14,7 +15,7 @@ import { DATE_FORMAT, DATE_TIME_FORMAT } from '../../../config/input.constants';
 import { TranslateService } from '@ngx-translate/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import moment from 'moment';
-import { EventManager } from '../../../core/util/event-manager.service';
+
 import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
@@ -23,7 +24,7 @@ import { MatSort, Sort } from '@angular/material/sort';
   styleUrls: ['./portability.scss'],
   standalone: false,
 })
-export class PortabilityComponent implements OnInit {
+export class PortabilityComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('empTbSort') empTbSort = new MatSort();
   pageToLoad = 1;
 
@@ -51,14 +52,13 @@ export class PortabilityComponent implements OnInit {
   isLoading = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
+  readonly pageSizeOptions = [10, 20, 50, 75, 100];
   page?: number;
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  currentSearch!: string;
-  eventSubscriber!: Subscription;
   displayedColumns = ['id', 'porType', 'porCrDate', 'porNumber', 'porAccType', 'porIdNumber', 'porRequestId', 'porOpd', 'porOpr', 'action'];
-  dataSource: MatTableDataSource<IPortability[]> | any = [];
+  dataSource: MatTableDataSource<IPortability> = new MatTableDataSource<IPortability>([]);
   portability?: IPortability[];
 
   dpConfig: IDatePickerConfig = {
@@ -75,6 +75,42 @@ export class PortabilityComponent implements OnInit {
   };
   expanded = false;
   private query: any = {};
+  private requestSubscription?: Subscription;
+  private routeStateSubscription?: Subscription;
+  private sortSubscription?: Subscription;
+  private routeStateInitialized = false;
+  private routeFilterSignature = '';
+  private readonly filterParamNames = [
+    'porRequestId',
+    'porNumber',
+    'porCrDate',
+    'porIdNumber',
+    'porMnpid',
+    'porReceiver',
+    'porRouting',
+    'porStatus',
+    'porPortedDate',
+    'porUpdDate',
+    'porDeadline',
+    'porErr',
+    'porAccType',
+    'porType',
+    'porRspCode',
+    'donor',
+    'recipient',
+  ] as const;
+  private readonly dateFilterParamNames = new Set<string>(['porCrDate', 'porPortedDate', 'porUpdDate', 'porDeadline']);
+  private readonly sortableColumns = new Set([
+    'id',
+    'porType',
+    'porCrDate',
+    'porNumber',
+    'porAccType',
+    'porIdNumber',
+    'porRequestId',
+    'porOpd',
+    'porOpr',
+  ]);
 
   constructor(
     protected portabilityService: PortabilityService,
@@ -82,52 +118,155 @@ export class PortabilityComponent implements OnInit {
     protected router: Router,
     protected modalService: NgbModal,
     protected translateService: TranslateService,
-    protected fb: UntypedFormBuilder,
-    protected eventManager: EventManager
+    protected fb: UntypedFormBuilder
   ) {
     this.page = 1;
-    this.ascending = false;
+    this.ascending = true;
     this.predicate = 'porCrDate';
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.totalItems = 0;
   }
 
-  loadPage(page?: any, dontNavigate?: boolean): void {
+  loadPage(page?: number | { pageIndex?: number; pageSize?: number }, dontNavigate = false): void {
+    this.requestSubscription?.unsubscribe();
+
+    let routePage = this.page ?? 1;
+    if (typeof page === 'number') {
+      routePage = page;
+    } else if (page?.pageIndex !== undefined) {
+      routePage = page.pageIndex + 1;
+    }
+
+    routePage = Number.isFinite(routePage) ? Math.max(Math.trunc(routePage), 1) : 1;
+
+    const requestedSize = typeof page === 'number' ? this.itemsPerPage : (page?.pageSize ?? this.itemsPerPage);
+    this.itemsPerPage = requestedSize > 0 ? requestedSize : ITEMS_PER_PAGE;
+    this.pageToLoad = routePage;
+
+    const request = {
+      ...this.query,
+      page: routePage - 1,
+      size: this.itemsPerPage,
+      sort: this.sort(),
+    };
+
     this.isLoading = true;
-    this.pageToLoad = page.pageIndex ?? this.page ?? 1;
-    this.query['page'] = this.pageToLoad;
-    this.query['size'] = page.pageSize;
-    this.query['sort'] = this.sort();
-    this.portabilityService.query(this.query).subscribe(
-      (res: HttpResponse<IPortability[] | any>) => {
-        this.isLoading = false;
-        this.onSuccess2(res.body, res.headers, this.pageToLoad, false);
-      },
-      () => {
-        this.isLoading = false;
-        this.onError();
+    this.requestSubscription = this.portabilityService
+      .query(request)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: (res: HttpResponse<IPortability[] | any>) => {
+          this.onSuccess(res.body, res.headers, routePage, !dontNavigate);
+        },
+        error: () => this.onError(),
+      });
+  }
+
+  ngOnInit(): void {
+    this.routeStateSubscription?.unsubscribe();
+    this.routeStateSubscription = combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(
+      ([data, params]) => {
+        const portability = data['portability'];
+
+        if (Array.isArray(portability)) {
+          this.portabilities = portability;
+          this.portability = portability;
+          this.dataSource.data = portability;
+          return;
+        }
+
+        const configuredDefaultSort =
+          typeof data['defaultSort'] === 'string'
+            ? data['defaultSort']
+            : 'porCrDate,asc';
+
+        const [defaultPredicateCandidate, defaultDirectionCandidate] = configuredDefaultSort.split(',');
+        const defaultPredicate = this.sortableColumns.has(defaultPredicateCandidate)
+          ? defaultPredicateCandidate
+          : 'porCrDate';
+        const defaultAscending = defaultDirectionCandidate !== DESC;
+
+        const pageParameter = params.get('page');
+        const parsedPage = pageParameter !== null ? Number(pageParameter) : 1;
+        const routePage = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+
+        const sizeParameter = params.get('size');
+        const parsedSize = sizeParameter !== null ? Number(sizeParameter) : ITEMS_PER_PAGE;
+        const routeSize = this.pageSizeOptions.includes(parsedSize) ? parsedSize : ITEMS_PER_PAGE;
+
+        const requestedSort = params.get(SORT);
+        const [requestedPredicate, requestedDirection] =
+          requestedSort !== null
+            ? requestedSort.split(',')
+            : [defaultPredicate, defaultAscending ? ASC : DESC];
+
+        const requestedSortIsValid =
+          this.sortableColumns.has(requestedPredicate) &&
+          (requestedDirection === ASC || requestedDirection === DESC);
+
+        const routePredicate = requestedSortIsValid ? requestedPredicate : defaultPredicate;
+        const routeAscending = requestedSortIsValid ? requestedDirection === ASC : defaultAscending;
+        const routeFilterState = this.getFilterStateFromRoute(params);
+        const routeFilterSignature = JSON.stringify(routeFilterState);
+
+        const stateChanged =
+          !this.routeStateInitialized ||
+          routePage !== this.page ||
+          routeSize !== this.itemsPerPage ||
+          routePredicate !== this.predicate ||
+          routeAscending !== this.ascending ||
+          routeFilterSignature !== this.routeFilterSignature;
+
+        if (!stateChanged) {
+          return;
+        }
+
+        this.routeStateInitialized = true;
+        this.page = routePage;
+        this.itemsPerPage = routeSize;
+        this.predicate = routePredicate;
+        this.ascending = routeAscending;
+        this.routeFilterSignature = routeFilterSignature;
+        this.editForm.patchValue(routeFilterState, { emitEvent: false });
+        this.applyFiltersFromForm();
+
+        this.loadPage(routePage, true);
       }
     );
   }
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ portability }) => {
-      if (portability && Array.isArray(portability) && portability.length > 0) {
-        this.portabilities = portability;
-        this.portability = portability;
-      } else {
-        this.portabilities = [];
-        this.portability = [];
+  ngAfterViewInit(): void {
+    this.sortSubscription?.unsubscribe();
+    this.sortSubscription = this.empTbSort.sortChange.subscribe((sort: Sort) => {
+      if (!sort.direction) {
+        return;
       }
-      this.dataSource = new MatTableDataSource<IPortability>(this.portability ?? []);
+
+      this.predicate = sort.active;
+      this.ascending = sort.direction === ASC;
+      this.loadPage(1);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.requestSubscription?.unsubscribe();
+    this.routeStateSubscription?.unsubscribe();
+    this.sortSubscription?.unsubscribe();
   }
 
   clear(): void {
     this.editForm.reset();
-    this.query = {};
-    this.router.navigate(['./portability']);
+    this.applyFiltersFromForm();
+    this.routeFilterSignature = JSON.stringify(this.getCurrentFilterState());
+    this.dataSource.data = [];
     this.portabilities = undefined;
+    this.page = 1;
+    this.pageToLoad = 1;
+    this.loadPage(1);
   }
 
   trackId(index: number, item: IPortability): number {
@@ -160,10 +299,65 @@ export class PortabilityComponent implements OnInit {
 
   search(): void {
     this.isLoading = true;
-    this.dataSource = undefined;
+    this.dataSource.data = [];
     this.portabilities = undefined;
-    this.query = {};
+    this.applyFiltersFromForm();
+    this.routeFilterSignature = JSON.stringify(this.getCurrentFilterState());
+    this.page = 1;
+    this.pageToLoad = 1;
+    this.loadPage(1);
+  }
+  porTypeChange(): void {
+    this.editForm.get('porStatus')?.setValue(null);
+  }
 
+  private getFilterStateFromRoute(params: ParamMap): Record<string, string | null> {
+    const state: Record<string, string | null> = {};
+
+    for (const name of this.filterParamNames) {
+      const value = params.get(name);
+      state[name] = value !== null && value.trim() !== '' ? value : null;
+    }
+
+    return state;
+  }
+
+  private getCurrentFilterState(): Record<string, string | null> {
+    const state: Record<string, string | null> = {};
+
+    for (const name of this.filterParamNames) {
+      const value = this.editForm.get([name])?.value;
+
+      if (value === null || value === undefined || value === '') {
+        state[name] = null;
+      } else if (this.dateFilterParamNames.has(name)) {
+        const dateValue = moment(value);
+        state[name] = dateValue.isValid() ? dateValue.format(DATE_FORMAT) : null;
+      } else {
+        state[name] = String(value);
+      }
+    }
+
+    return state;
+  }
+
+  private getFilterQueryParams(): Record<string, string> {
+    const state = this.getCurrentFilterState();
+    const queryParams: Record<string, string> = {};
+
+    for (const name of this.filterParamNames) {
+      const value = state[name];
+
+      if (value !== null) {
+        queryParams[name] = value;
+      }
+    }
+
+    return queryParams;
+  }
+
+  private applyFiltersFromForm(): void {
+    this.query = {};
     if (this.editForm.get(['porRequestId'])?.value) {
       this.query['porRequestId.equals'] = this.editForm.get(['porRequestId'])?.value;
     }
@@ -171,7 +365,7 @@ export class PortabilityComponent implements OnInit {
       this.query['porNumber.equals'] = String(this.editForm.get(['porNumber'])?.value);
     }
     if (this.editForm.get(['porCrDate'])?.value) {
-      this.query['porCrDateSearch.greaterThanOrEqual'] =
+      this.query['porCrDate.greaterThanOrEqual'] =
         this.editForm.get(['porCrDate'])?.value != null
           ? moment(this.editForm.get(['porCrDate'])?.value)
               .set('h', 0)
@@ -179,7 +373,7 @@ export class PortabilityComponent implements OnInit {
               .set('s', 0)
               .format(DATE_TIME_FORMAT)
           : null;
-      this.query['porCrDateSearch.lessThan'] =
+      this.query['porCrDate.lessThan'] =
         this.editForm.get(['porCrDate'])?.value != null
           ? moment(this.editForm.get(['porCrDate'])?.value)
               .set('h', 23)
@@ -278,73 +472,21 @@ export class PortabilityComponent implements OnInit {
     if (this.editForm.get(['recipient'])?.value) {
       this.query['porOpr.equals'] = this.editForm.get(['recipient'])?.value;
     }
-
-    this.query['size'] = 20;
-    this.query['sort'] = this.sort();
-    this.portabilityService.query(this.query).subscribe(
-      (res: HttpResponse<IPortability[] | any>) => {
-        this.isLoading = false;
-
-        this.dataSource = new MatTableDataSource(this.portabilities);
-        this.onSuccess2(res.body, res.headers, 1, false);
-        this.dataSource.sort = this.empTbSort;
-        this.dataSource.sort.sortChange.subscribe((sort: Sort) => {
-          this.isLoading = true;
-          this.predicate = sort.active;
-          this.ascending = sort.direction !== ASC;
-          this.query['sort'] = this.sort();
-          this.portabilityService.query(this.query).subscribe(
-            (res2: HttpResponse<IPortability[] | any>) => {
-              this.isLoading = false;
-              this.onSuccess2(res2.body, res2.headers, this.pageToLoad, false);
-            },
-            error => {
-              this.isLoading = false;
-            }
-          );
-        });
-      },
-      () => {
-        this.isLoading = false;
-        this.editForm.reset();
-        this.query = {};
-        this.onError();
-      }
-    );
-    /* this.portabilityService.query(query).subscribe(this.onSuccess2(res => {
-       this.portabilities = res.body;
-       this.dataSource = res.body;
-     });*/
   }
-
-  porTypeChange(): void {
-    this.editForm.get('porStatus')?.setValue(null);
-  }
-
   protected sort(): string[] {
-    const result = [(this.predicate === 'porCrDate' ? 'porCrDateSearch' : this.predicate) + ',' + (this.ascending ? DESC : ASC)];
+    const direction = this.ascending ? ASC : DESC;
+    const result = [(this.predicate === 'porCrDate' ? 'porCrDate' : this.predicate) + ',' + direction];
+
     if (this.predicate !== 'id') {
-      result.push('id,' + (this.ascending ? DESC : ASC));
+      result.push('id,' + direction);
     }
+
     return result;
   }
 
-  protected handleNavigation(): void {
-    combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
-      const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
-      const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === ASC;
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
-    });
-  }
 
-  protected onSuccess(data: IPortability[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+
+  protected onSuccess(data: IPortability[] | undefined, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
@@ -353,28 +495,13 @@ export class PortabilityComponent implements OnInit {
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
-        },
-      });
-    }
-    this.portabilities = data ?? [];
-    this.ngbPaginationPage = this.page;
-  }
-
-  protected onSuccess2(data: IPortability[] | undefined, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/portability'], {
-        queryParams: {
-          page: this.page,
-          size: 2,
-          sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
+            ...this.getFilterQueryParams(),
         },
       });
     }
 
     this.portabilities = data;
-    this.dataSource.data = data;
+    this.dataSource.data = data ?? [];
 
     this.ngbPaginationPage = this.page;
   }

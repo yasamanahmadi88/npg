@@ -111,17 +111,16 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         // THEN
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['./dashboard']);
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
       });
     });
 
     describe('ngAfterViewInit', () => {
       it('should set focus to username input after the view has been initialized', () => {
         // GIVEN
-        const node = {
-          focus: jest.fn(),
-        };
-        comp.username = new ElementRef(node);
+        const node = document.createElement('input');
+        node.focus = jest.fn();
+        comp.username = new ElementRef<HTMLInputElement>(node);
 
         // WHEN
         comp.ngAfterViewInit();
@@ -132,6 +131,26 @@ describe('Component Tests', () => {
     });
 
     describe('login', () => {
+      it('should mark required fields and not authenticate when the form is invalid', () => {
+        // WHEN
+        comp.login();
+
+        // THEN
+        expect(comp.formSubmissionAttempted).toBe(true);
+        expect(comp.loginForm.get('username')?.touched).toBe(true);
+        expect(comp.loginForm.get('password')?.touched).toBe(true);
+        expect(comp.loginForm.get('userCaptchaInput')?.touched).toBe(true);
+        expect(mockLoginService.login).not.toHaveBeenCalled();
+      });
+
+      it('should expose a clear disabled state while captcha is unavailable', () => {
+        comp.captchaId = '';
+        comp.captchaLoading = false;
+        comp.captchaLoadError = true;
+
+        expect(comp.submitDisabled).toBe(true);
+      });
+
       it('should authenticate the user and navigate to dashboard', () => {
         // GIVEN
         comp.loginForm.patchValue({

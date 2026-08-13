@@ -75,6 +75,17 @@ describe('Component Tests', () => {
       expect(comp.timeFrames?.[0]).toEqual(expect.objectContaining({ id: 123 }));
     });
 
+    it('should clear stale time frames on error', () => {
+      // GIVEN
+      (comp as unknown as { timeFrames: unknown[] }).timeFrames = [{}];
+
+      // WHEN
+      (comp as unknown as { onError: () => void }).onError();
+
+      // THEN
+      expect(comp.timeFrames).toEqual([]);
+    });
+
     it('should calculate the sort attribute for an id', () => {
       // WHEN
       comp.ngOnInit();

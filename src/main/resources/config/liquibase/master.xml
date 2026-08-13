@@ -38,6 +38,8 @@
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210203133525_added_entity_constraints_ResourceAuthority.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- Synchronize security sequences before permission seed data. -->
+    <include file="config/liquibase/changelog/20260720160000_sync_security_sequences.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260628000100_add_file_report_generation_log_permission.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260705133000_add_file_report_generation_log_sequence.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

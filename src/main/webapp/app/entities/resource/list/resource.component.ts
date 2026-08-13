@@ -146,5 +146,6 @@ export class ResourceComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.resources = [];
   }
 }

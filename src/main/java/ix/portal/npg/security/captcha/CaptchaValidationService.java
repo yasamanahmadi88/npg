@@ -1,6 +1,6 @@
 package ix.portal.npg.security.captcha;
 
-import ix.portal.npg.security.captcha.exception.InvalidCaptchaException;
+import ix.portal.npg.web.rest.errors.InvalidCaptchaException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,30 +20,24 @@ public class CaptchaValidationService {
 
     public void validate(String captchaId, String captchaToken, String remoteIp) {
         if (!props.isEnabled()) {
-            log.trace("Local CAPTCHA validation bypassed because captcha.enabled=false.");
+            log.warn("CAPTCHA validation is disabled. This mode must only be used by isolated automated tests.");
             return;
         }
 
         if (props.isDevBypass()) {
-            log.trace("Local CAPTCHA validation bypassed because captcha.dev-bypass=true.");
+            log.warn("CAPTCHA development bypass is enabled. This mode must never be used for interactive login.");
             return;
         }
 
-        if (captchaId == null || captchaId.isBlank()) {
-            throw new InvalidCaptchaException("Invalid authentication request");
+        if (captchaId == null || captchaId.isBlank() || captchaToken == null || captchaToken.isBlank()) {
+            throw new InvalidCaptchaException();
         }
 
-        if (captchaToken == null || captchaToken.isBlank()) {
-            throw new InvalidCaptchaException("Invalid authentication request");
-        }
-
-        boolean valid = localCaptchaService.verifyAndConsume(
-            captchaId.trim(),
-            captchaToken.trim()
-        );
+        boolean valid = localCaptchaService.verifyAndConsume(captchaId.trim(), captchaToken.trim());
 
         if (!valid) {
-            throw new InvalidCaptchaException("Invalid authentication request");
+            log.debug("Rejected login because CAPTCHA validation failed for remote address {}.", remoteIp);
+            throw new InvalidCaptchaException();
         }
     }
 }

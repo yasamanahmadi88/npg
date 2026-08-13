@@ -1,9 +1,10 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { LoginService } from 'app/login/login.service';
+import { Router } from '@angular/router';
+
 import { AccountService } from 'app/core/auth/account.service';
+import { LoginService } from 'app/login/login.service';
 import { Login } from './login.model';
 
 @Component({
@@ -14,12 +15,14 @@ import { Login } from './login.model';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
-  username!: ElementRef;
+  username!: ElementRef<HTMLInputElement>;
 
   authenticationError = false;
   wrongCaptcha = false;
   captchaLoadError = false;
   loading = false;
+  captchaLoading = false;
+  formSubmissionAttempted = false;
   captchaId = '';
   captchaImageUrl = '';
 
@@ -30,7 +33,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     username: new UntypedFormControl('', { validators: [Validators.required] }),
     password: new UntypedFormControl('', { validators: [Validators.required] }),
     rememberMe: new UntypedFormControl(false),
-    userCaptchaInput: new UntypedFormControl('', { validators: [Validators.required] }),
+    userCaptchaInput: new UntypedFormControl('', {
+      validators: [Validators.required, Validators.minLength(6), Validators.maxLength(6)],
+    }),
   });
 
   constructor(
@@ -42,10 +47,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // if already authenticated then navigate to home page
     this.accountService.identity().subscribe(() => {
       if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['./dashboard']);
+        this.router.navigate(['/dashboard']);
       }
     });
   }
@@ -58,9 +62,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
+  get submitDisabled(): boolean {
+    return this.loading || this.captchaLoading || this.captchaLoadError || !this.captchaId;
+  }
+
+  isControlInvalid(controlName: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return Boolean(control?.invalid && (control.touched || this.formSubmissionAttempted));
+  }
+
   loadCaptcha(): void {
-    this.loading = true;
+    this.captchaLoading = true;
     this.captchaLoadError = false;
+    this.captchaId = '';
+    this.captchaImageUrl = '';
     this.changeDetectorRef.detectChanges();
 
     this.http.post<{ captchaId: string; captchaImageUrl: string }>('/api/captcha-endpoint', {}).subscribe({
@@ -69,22 +84,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
         const separator = response.captchaImageUrl.includes('?') ? '&' : '?';
         this.captchaImageUrl = `${response.captchaImageUrl}${separator}t=${Date.now()}`;
         this.loginForm.patchValue({ userCaptchaInput: '' });
-        this.loading = false;
+        this.captchaLoading = false;
         this.changeDetectorRef.detectChanges();
       },
       error: () => {
-        this.captchaId = '';
-        this.captchaImageUrl = '';
         this.captchaLoadError = true;
-        this.authenticationError = true;
-        this.loading = false;
+        this.captchaLoading = false;
         this.changeDetectorRef.detectChanges();
       },
     });
   }
 
   reloadCaptcha(): void {
-    if (!this.loading) {
+    if (!this.loading && !this.captchaLoading) {
       this.authenticationError = false;
       this.wrongCaptcha = false;
       this.captchaLoadError = false;
@@ -93,6 +105,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
+    this.formSubmissionAttempted = true;
     this.authenticationError = false;
     this.wrongCaptcha = false;
     this.tooManyFailedReq = false;
@@ -103,7 +116,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    if (!this.captchaId) {
+    if (!this.captchaId || this.captchaLoadError) {
       this.captchaLoadError = true;
       this.loadCaptcha();
       return;
@@ -121,27 +134,41 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.loginService.login(credentials).subscribe({
       next: () => {
+        this.loading = false;
         if (!this.router.getCurrentNavigation()) {
-          // There were no routing during login (eg from navigationToStoredUrl)
           this.router.navigate(['/dashboard']);
         }
-        this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
+
         if (error.status === 429) {
           this.tooManyFailedReq = true;
         } else if ('error.user.has.concurrent.session' === error.error?.detail) {
           this.concurrentSessionError = true;
-        } else if (error.error?.errorKey === 'captcha.validation') {
+        } else if (this.isCaptchaValidationError(error)) {
           this.wrongCaptcha = true;
         } else {
           this.authenticationError = true;
         }
 
-        // Captcha is one-time. Reload it after every failed login attempt.
+        // The server consumes every CAPTCHA attempt, successful or not.
         this.loadCaptcha();
       },
     });
+  }
+
+  private isCaptchaValidationError(error: HttpErrorResponse): boolean {
+    const body = error.error ?? {};
+    const type = String(body.type ?? '');
+    const message = String(body.message ?? '');
+
+    return (
+      body.errorKey === 'captcha.validation' ||
+      body.entityName === 'captchaValidation' ||
+      message === 'error.captcha.validation' ||
+      message === 'captcha.validation' ||
+      type.includes('invalid-captcha-validation')
+    );
   }
 }

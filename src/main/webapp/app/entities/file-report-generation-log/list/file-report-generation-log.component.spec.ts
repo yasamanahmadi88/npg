@@ -51,12 +51,21 @@ describe('Component Tests', () => {
       );
     });
 
-    it('Should initialize without loading from service', () => {
+    it('Should initialize by loading first page from service', () => {
       // WHEN
       comp.ngOnInit();
 
       // THEN
-      expect(service.query).not.toHaveBeenCalled();
+      expect(service.query).toHaveBeenCalledWith(
+        expect.objectContaining({
+          page: 0,
+          size: 10,
+          sort: ['id,asc'],
+        })
+      );
+      expect(comp.fileReportGenerationLogs?.[0]).toEqual(
+        expect.objectContaining({ id: 123 })
+      );
     });
 
     it('should load a page', () => {

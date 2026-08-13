@@ -1,0 +1,31 @@
+{
+  "name": "DayOfWeekTimeFrame",
+  "skipClient": true,
+  "skipServer": true,
+  "fields": [
+    {
+      "fieldName": "day",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "begin",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "end",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20210628195725",
+  "entityTableName": "TBL_DAY_OF_WEEK_TIME_FRAME",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

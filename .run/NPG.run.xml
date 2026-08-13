@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="NPG" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="11" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="-Doracle.jdbc.autoCommitSpecCompliant" value="false" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="ix.portal.npg.NpgPortalApp" />
+    <module name="npg-portal" />
+    <option name="PROGRAM_PARAMETERS" value="-Doracle.jdbc.autoCommitSpecCompliant=false" />
+    <option name="VM_PARAMETERS" value="-Doracle.jdbc.autoCommitSpecCompliant=false -Dix.spring.logging.level.root=INFO -Dix.module.name=portal " />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -108,8 +108,21 @@ class WebConfigurerTest {
     }
 
     @Test
-    void shouldCorsFilterOnOtherPath() throws Exception {
+    void shouldRejectWildcardOriginWithCredentials() {
         props.getCors().setAllowedOrigins(Collections.singletonList("*"));
+        props.getCors().setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        props.getCors().setAllowedHeaders(Collections.singletonList("*"));
+        props.getCors().setMaxAge(1800L);
+        props.getCors().setAllowCredentials(true);
+
+        assertThatCode(() -> webConfigurer.corsFilter())
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessageContaining("wildcard origin");
+    }
+
+    @Test
+    void shouldCorsFilterOnOtherPath() throws Exception {
+        props.getCors().setAllowedOrigins(Collections.singletonList("other.domain.com"));
         props.getCors().setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         props.getCors().setAllowedHeaders(Collections.singletonList("*"));
         props.getCors().setMaxAge(1800L);

@@ -1,320 +1,207 @@
-.npg-logo {
-  background-image: url('../../content/images/mci-logo.png');
-  width: 55%;
-  height: 227px;
-  background-repeat: no-repeat;
-}
-
-/* BASIC */
-
-html {
-  background-color: #56baed;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  height: 100vh;
-}
-
-a {
-  color: #92badd;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 400;
-}
-
-h2 {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  margin: 40px 8px 10px 8px;
-  color: #cccccc;
-}
-
-/* STRUCTURE */
-
-.wrapper {
+.login-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, var(--surface-ground, #eef4f8), var(--surface-card, #ffffff));
+}
+
+.login-card {
+  width: min(100%, 460px);
+  padding: 2rem;
+  border: 1px solid rgba(15, 52, 75, 0.12);
+  border-radius: 1rem;
+  background: var(--surface-card, #ffffff);
+  box-shadow: 0 1.5rem 3.5rem rgba(15, 52, 75, 0.16);
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.npg-logo {
+  width: 180px;
+  height: 110px;
+  background: url('../../content/images/mci-logo.png') center / contain no-repeat;
+}
+
+.login-title {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-color, #17324d);
+}
+
+.login-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.login-field {
+  display: grid;
+  gap: 0.4rem;
+  text-align: start;
+}
+
+.login-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color, #17324d);
+}
+
+.login-field input {
   width: 100%;
-  min-height: 100%;
-  padding: 20px;
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--surface-border, #c8d5df);
+  border-radius: 0.6rem;
+  background: var(--surface-card, #ffffff);
+  color: var(--text-color, #17324d);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
-#formContent {
-  -webkit-border-radius: 10px 10px 10px 10px;
-  border-radius: 10px 10px 10px 10px;
-  background: #fff;
-  padding: 30px;
-  width: 90%;
-  max-width: 450px;
-  position: relative;
-  padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-  text-align: center;
+.login-field input:focus-visible {
+  outline: 3px solid rgba(28, 142, 209, 0.22);
+  border-color: #1c8ed1;
 }
 
-#formFooter {
-  background-color: #f6f6f6;
-  border-top: 1px solid #dce8f1;
-  padding: 25px;
-  text-align: center;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-radius: 0 0 10px 10px;
+.login-field input.is-invalid {
+  border-color: #c62828;
+  background: rgba(198, 40, 40, 0.04);
 }
 
-/* TABS */
-
-h2.inactive {
-  color: #cccccc;
+.field-error {
+  color: #b42318;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
-h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
+.captcha-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, auto);
+  gap: 0.75rem;
+  align-items: end;
 }
 
-/* FORM TYPOGRAPHY*/
-input[type='text'],
-input[type='password'] {
-  border: 2px solid rgba(155, 255, 300, 0.5) !important;
-}
-input[type='button'],
-input[type='submit'],
-input[type='reset'] {
-  background-color: #56baed;
-  border: none;
-  color: white;
-  padding: 15px 80px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-input[type='button']:hover,
-input[type='submit']:hover,
-input[type='reset']:hover {
-  background-color: #39ace7;
-}
-
-input[type='button']:active,
-input[type='submit']:active,
-input[type='reset']:active {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
-  -ms-transform: scale(0.95);
-  transform: scale(0.95);
-}
-
-input[type='text'],
-input[type='password'] {
-  background-color: #f6f6f6;
-  border: none;
-  color: #0d0d0d;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 5px;
-  width: 85%;
-  border: 2px solid #f6f6f6;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-}
-
-input[type='text']:focus {
-  border: 2px solid #56baed;
-}
-
-input[type='text']::placeholder {
-  color: #cccccc;
-}
-
-input[type='password']:focus {
-  border: 2px solid #5fbae9;
-}
-
-input[type='password']::placeholder {
-  color: #cccccc;
-}
-
-/* ANIMATIONS */
-
-/* Simple CSS3 Fade-in-down Animation */
-.fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-}
-
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-  100% {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-/* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@-moz-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fadeIn {
-  opacity: 0;
-  -webkit-animation: fadeIn ease-in 1;
-  -moz-animation: fadeIn ease-in 1;
-  animation: fadeIn ease-in 1;
-
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-
-  -webkit-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  animation-duration: 1s;
-}
-
-.fadeIn.first {
-  -webkit-animation-delay: 0.4s;
-  -moz-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
-.fadeIn.second {
-  -webkit-animation-delay: 0.6s;
-  -moz-animation-delay: 0.6s;
-  animation-delay: 0.6s;
-}
-
-.fadeIn.third {
-  -webkit-animation-delay: 0.8s;
-  -moz-animation-delay: 0.8s;
-  animation-delay: 0.8s;
-}
-
-.fadeIn.fourth {
-  -webkit-animation-delay: 1s;
-  -moz-animation-delay: 1s;
-  animation-delay: 1s;
-}
-
-/* Simple CSS3 Fade-in Animation */
-.underlineHover:after {
-  display: block;
-  left: 0;
-  bottom: -10px;
-  width: 0;
-  height: 2px;
-  background-color: #56baed !important;
-  border: 1px solid #56baed !important;
-  content: '';
-  transition: width 0.2s;
-}
-
-.underlineHover:hover {
-  color: #0d0d0d;
-}
-
-.underlineHover:hover:after {
-  width: 100%;
-}
-
-/* OTHERS */
-
-*:focus {
-  outline: none;
-}
-
-#icon {
-  width: 60%;
+.captcha-preview {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid var(--surface-border, #c8d5df);
+  border-radius: 0.6rem;
+  background: var(--surface-ground, #f4f7f9);
 }
 
 .captcha-image {
-  height: 40px !important;
-  max-width: 200px;
+  width: 150px;
+  max-width: calc(100% - 46px);
+  height: 46px;
+  object-fit: contain;
+  border-radius: 0.35rem;
 }
 
-.captchaInput {
-  width: 32% !important;
-}
-.captchaInput input {
-  height: 40px;
-}
-.captcha-preview {
-  align-items: center;
-  gap: 0.5rem;
+.captcha-placeholder {
+  flex: 1;
+  padding-inline: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-color-secondary, #667786);
 }
 
 .captcha-refresh {
+  flex: 0 0 40px;
+  width: 40px;
   height: 40px;
-  min-width: 40px;
+  border: 1px solid #1c8ed1;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #1c8ed1;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.captcha-refresh:hover:not(:disabled),
+.captcha-refresh:focus-visible {
+  background: rgba(28, 142, 209, 0.1);
+}
+
+.captcha-refresh:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.login-alert {
+  margin: 0;
+  text-align: start;
+}
+
+.login-submit {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #0878b8;
+  border-radius: 0.65rem;
+  background: #0878b8;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 0.6rem 1.2rem rgba(8, 120, 184, 0.22);
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.login-submit:hover:not(:disabled) {
+  background: #06679f;
+  transform: translateY(-1px);
+  box-shadow: 0 0.8rem 1.5rem rgba(8, 120, 184, 0.28);
+}
+
+.login-submit:focus-visible {
+  outline: 3px solid rgba(28, 142, 209, 0.3);
+  outline-offset: 2px;
+}
+
+.login-submit:disabled,
+.login-submit--disabled {
+  border-color: #9daab5;
+  background: #c4ccd3;
+  color: #5d6872;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.submit-help {
+  margin: -0.35rem 0 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-color-secondary, #667786);
+}
+
+@media (max-width: 520px) {
+  .login-page {
+    padding: 0.75rem;
+  }
+
+  .login-card {
+    padding: 1.25rem;
+  }
+
+  .captcha-section {
+    grid-template-columns: 1fr;
+  }
+
+  .captcha-preview {
+    justify-content: space-between;
+  }
 }

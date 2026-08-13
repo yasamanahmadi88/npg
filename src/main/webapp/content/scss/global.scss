@@ -6,12 +6,8 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
 @import '../../content/scss/npg_varables';
-@import 'bootstrap/scss/functions';
-@import 'bootswatch/dist/lumen/variables';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/dist/css/bootstrap.min.css';
-
 @import '../../content/scss/ngp_theme';
+@import '../../content/scss/theme-tokens';
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* ==============================================================

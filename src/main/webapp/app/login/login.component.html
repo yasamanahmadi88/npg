@@ -1,88 +1,144 @@
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <div class="fadeIn first d-flex justify-content-center col-12">
+<div class="login-page">
+  <main id="formContent" class="login-card" aria-labelledby="login-title">
+    <div class="login-logo" aria-hidden="true">
       <div class="npg-logo"></div>
     </div>
 
-    <form class="form mt-3" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
-      <input
-        type="text"
-        class="fadeIn first"
-        name="username"
-        id="username"
-        placeholder="{{ 'global.form.username.placeholder' | translate }}"
-        formControlName="username"
-        #username
-        data-cy="username"
-      />
+    <h1 id="login-title" class="login-title" jhiTranslate="login.title">ورود به پرتال</h1>
 
-      <div class="form-group fadeIn second">
+    <form class="login-form" role="form" (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
+      @if (formSubmissionAttempted && loginForm.invalid) {
+        <div class="alert alert-warning login-alert" role="alert" jhiTranslate="login.error.requiredFields">
+          لطفاً همه فیلدهای ضروری را کامل کنید.
+        </div>
+      }
+
+      <div class="login-field">
+        <label for="username" jhiTranslate="login.form.username">نام کاربری</label>
         <input
-          type="password"
-          name="password"
-          id="password"
-          autocomplete="on"
-          placeholder="{{ 'login.form.password.placeholder' | translate }}"
-          formControlName="password"
-          data-cy="password"
+          #username
+          type="text"
+          id="username"
+          name="username"
+          autocomplete="username"
+          formControlName="username"
+          data-cy="username"
+          [class.is-invalid]="isControlInvalid('username')"
+          [attr.aria-invalid]="isControlInvalid('username')"
+          aria-describedby="username-error"
+          placeholder="{{ 'global.form.username.placeholder' | translate }}"
         />
+        @if (isControlInvalid('username')) {
+          <div id="username-error" class="field-error" jhiTranslate="global.validation.required">وارد کردن این فیلد ضروری است.</div>
+        }
       </div>
 
-      <div class="d-flex justify-content-center align-items-center">
-        <div class="form-group fadeIn first captchaInput">
+      <div class="login-field">
+        <label for="password" jhiTranslate="login.form.password">رمز عبور</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          formControlName="password"
+          data-cy="password"
+          [class.is-invalid]="isControlInvalid('password')"
+          [attr.aria-invalid]="isControlInvalid('password')"
+          aria-describedby="password-error"
+          placeholder="{{ 'login.form.password.placeholder' | translate }}"
+        />
+        @if (isControlInvalid('password')) {
+          <div id="password-error" class="field-error" jhiTranslate="global.validation.required">وارد کردن این فیلد ضروری است.</div>
+        }
+      </div>
+
+      <div class="captcha-section">
+        <div class="login-field captcha-field">
+          <label for="userCaptchaInput" jhiTranslate="login.form.captcha">کد امنیتی</label>
           <input
-            #userCaptchaInput
             type="text"
             id="userCaptchaInput"
             name="userCaptchaInput"
             formControlName="userCaptchaInput"
-            class="fadeIn second"
             autocomplete="off"
-            [maxLength]="6"
+            inputmode="text"
             maxlength="6"
+            [class.is-invalid]="isControlInvalid('userCaptchaInput')"
+            [attr.aria-invalid]="isControlInvalid('userCaptchaInput')"
+            aria-describedby="captcha-error"
           />
+          @if (isControlInvalid('userCaptchaInput')) {
+            <div id="captcha-error" class="field-error" jhiTranslate="login.error.captchaRequired">کد امنیتی شش‌کاراکتری را وارد کنید.</div>
+          }
         </div>
 
-        <div class="form-group fadeIn first d-flex">
-          <div class="input-group formsData captcha-preview">
-            @if (captchaImageUrl && !loading) {
-              <img class="captcha-image" [src]="captchaImageUrl" alt="Captcha" />
-            }
-            <button type="button" class="captcha-refresh" (click)="reloadCaptcha()" [disabled]="loading" title="Refresh Captcha">↻</button>
-          </div>
+        <div class="captcha-preview" aria-live="polite">
+          @if (captchaImageUrl && !captchaLoading) {
+            <img class="captcha-image" [src]="captchaImageUrl" alt="{{ 'login.form.captchaImageAlt' | translate }}" />
+          } @else {
+            <div class="captcha-placeholder" jhiTranslate="login.form.captchaLoading">در حال دریافت تصویر امنیتی...</div>
+          }
+
+          <button
+            type="button"
+            class="captcha-refresh"
+            (click)="reloadCaptcha()"
+            [disabled]="loading || captchaLoading"
+            title="{{ 'login.form.refreshCaptcha' | translate }}"
+            [attr.aria-label]="'login.form.refreshCaptcha' | translate"
+          >
+            ↻
+          </button>
         </div>
       </div>
 
       @if (authenticationError) {
-        <div class="alert alert-danger">
-          <span class="text-danger" [innerHTML]="'login.messages.error.authentication' | translate"></span>
+        <div class="alert alert-danger login-alert" role="alert">
+          <span [innerHTML]="'login.messages.error.authentication' | translate"></span>
         </div>
       }
       @if (concurrentSessionError) {
-        <div class="alert alert-danger">
-          <span jhiTranslate="error.user.has.concurrent.session" class="text-danger"></span>
+        <div class="alert alert-danger login-alert" role="alert">
+          <span jhiTranslate="error.user.has.concurrent.session"></span>
         </div>
       }
       @if (wrongCaptcha) {
-        <div class="alert alert-danger">
-          <span jhiTranslate="login.error.captcha" class="text-danger"></span>
+        <div class="alert alert-danger login-alert" role="alert">
+          <span jhiTranslate="login.error.captcha"></span>
         </div>
       }
       @if (tooManyFailedReq) {
-        <div class="alert alert-danger">
-          <span jhiTranslate="login.error.tooManyFailedReq" class="text-danger"></span>
+        <div class="alert alert-danger login-alert" role="alert">
+          <span jhiTranslate="login.error.tooManyFailedReq"></span>
         </div>
       }
       @if (captchaLoadError) {
-        <div class="alert alert-danger">
-          <span class="text-danger">Captcha could not be loaded.</span>
+        <div class="alert alert-danger login-alert" role="alert">
+          <span jhiTranslate="login.error.captchaLoad">تصویر امنیتی دریافت نشد. دوباره تلاش کنید.</span>
         </div>
       }
 
-      <input [disabled]="loading || loginForm.invalid" type="submit" class="fadeIn first" value="{{ 'global.menu.account.login' | translate }}" />
-      @if (loading) {
-        <fa-icon icon="sync" animation="spin"></fa-icon>
+      <button
+        type="submit"
+        class="login-submit"
+        [disabled]="submitDisabled"
+        [class.login-submit--disabled]="submitDisabled"
+        [attr.aria-busy]="loading"
+        data-cy="submit"
+      >
+        @if (loading) {
+          <fa-icon icon="sync" animation="spin"></fa-icon>
+          <span jhiTranslate="login.form.signingIn">در حال ورود...</span>
+        } @else if (captchaLoading) {
+          <span jhiTranslate="login.form.captchaLoading">در حال دریافت تصویر امنیتی...</span>
+        } @else {
+          <span jhiTranslate="login.form.button">ورود</span>
+        }
+      </button>
+
+      @if (submitDisabled && !loading && !captchaLoading) {
+        <p class="submit-help" jhiTranslate="login.form.captchaUnavailable">برای ورود ابتدا تصویر امنیتی را دوباره دریافت کنید.</p>
       }
     </form>
-  </div>
+  </main>
 </div>

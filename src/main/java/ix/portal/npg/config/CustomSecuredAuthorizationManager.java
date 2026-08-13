@@ -110,12 +110,17 @@ public class CustomSecuredAuthorizationManager implements AuthorizationManager<M
 
         return resources
             .stream()
-            .anyMatch(resourceAuthority ->
-                resourceAuthority.getResource() != null &&
-                resourceAuthority.getResource().getName() != null &&
-                resourceAuthority.getResource().getName().equalsIgnoreCase(resourceName) &&
-                resourceAuthority.getVerb() != null &&
-                resourceAuthority.getVerb().name().equalsIgnoreCase(method)
-            );
+            .anyMatch(resourceAuthority -> {
+                String grantedName = null;
+                if (resourceAuthority.getResource() != null && resourceAuthority.getResource().getName() != null) {
+                    grantedName = resourceAuthority.getResource().getName();
+                } else if (resourceAuthority.getResourceName() != null) {
+                    grantedName = resourceAuthority.getResourceName();
+                }
+                return grantedName != null &&
+                    grantedName.equalsIgnoreCase(resourceName) &&
+                    resourceAuthority.getVerb() != null &&
+                    resourceAuthority.getVerb().name().equalsIgnoreCase(method);
+            });
     }
 }

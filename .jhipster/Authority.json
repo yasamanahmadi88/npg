@@ -1,0 +1,37 @@
+{
+  "name": "Authority",
+  "skipClient": true,
+  "skipServer": true,
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": 50
+    },
+    {
+      "fieldName": "displayName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": 500
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "authority",
+      "otherEntityRelationshipName": "authorities",
+      "relationshipName": "parent",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210206174454",
+  "entityTableName": "JHI_AUTHORITY",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "applications": "*"
+}

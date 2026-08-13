@@ -2,7 +2,7 @@ package ix.portal.npg.config;
 
 import ix.portal.npg.security.AuthoritiesConstants;
 import ix.portal.npg.security.SecurityCache;
-import ix.portal.npg.security.jwt.JWTConfigurer;
+import ix.portal.npg.security.jwt.JWTFilter;
 import ix.portal.npg.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,9 +56,12 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // CSRF is disabled because authentication is Bearer JWT (stateless), not cookie-session form posts.
+        // Browser clients send Authorization headers; CSRF tokens are not applicable to this architecture.
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(AbstractHttpConfigurer::disable)
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JWTFilter(tokenProvider, securityCache), UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(problemSupport)
                 .accessDeniedHandler(problemSupport)
@@ -64,7 +69,8 @@ public class SecurityConfiguration {
             .headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
                 .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
-                .frameOptions(frameOptions -> frameOptions.deny())
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+                .contentTypeOptions(contentTypeOptions -> {})
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
@@ -77,8 +83,7 @@ public class SecurityConfiguration {
                     "/i18n/**",
                     "/content/**",
                     "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/test/**"
+                    "/v3/api-docs/**"
                 ).permitAll()
                 .requestMatchers(request -> {
                     String path = request.getRequestURI().substring(request.getContextPath().length());
@@ -99,16 +104,10 @@ public class SecurityConfiguration {
                 .requestMatchers("/management/threaddump").denyAll()
                 .requestMatchers("/management/jhimetrics").denyAll()
                 .requestMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                // SPA deep-link fallback and static assets are public; API/management remain protected above.
                 .anyRequest().permitAll()
-            )
-            .httpBasic(httpBasic -> {});
-
-        http.apply(securityConfigurerAdapter());
+            );
 
         return http.build();
-    }
-
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider, securityCache);
     }
 }

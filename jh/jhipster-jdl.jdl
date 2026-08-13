@@ -1,0 +1,21 @@
+
+
+entity FileReportGenerationLog {
+  reportName String required maxlength(255),
+  reportDate Long required,
+  fileName String required maxlength(255),
+  rowNumber Long required,
+  porNumber String required maxlength(16),
+  content String required maxlength(4000)
+}
+
+// تنظیمات pagination
+paginate FileReportGenerationLog with pagination
+
+// تنظیمات DTO
+dto FileReportGenerationLog with mapstruct
+
+// تنظیمات service
+service FileReportGenerationLog with serviceImpl
+
+filter all

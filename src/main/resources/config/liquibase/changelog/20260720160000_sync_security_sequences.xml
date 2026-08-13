@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        H2-only sequence alignment.
+
+        Local and test H2 databases may load explicit Faker identifiers
+        before RESRC_SEQ and RES_AUTH_SEQ are created. Both sequences were
+        previously created with startValue="1", which allowed their first
+        NEXTVAL to collide with an existing primary key.
+
+        These changesets execute only on H2. Oracle and every other DBMS
+        skip them and retain their existing sequence behavior.
+    -->
+
+    <changeSet
+        id="20260720160000-1-sync-resrc-seq-h2"
+        author="security-migration"
+        dbms="h2">
+
+        <preConditions
+            onFail="HALT"
+            onError="HALT">
+
+            <sequenceExists sequenceName="RESRC_SEQ"/>
+            <tableExists tableName="jhi_resource"/>
+        </preConditions>
+
+        <sql splitStatements="false">
+            EXECUTE IMMEDIATE
+                'ALTER SEQUENCE RESRC_SEQ RESTART WITH ' ||
+                CAST(
+                    (
+                        SELECT COALESCE(MAX(id), 0) + 1
+                        FROM jhi_resource
+                    )
+                    AS VARCHAR(30)
+                )
+        </sql>
+    </changeSet>
+
+    <changeSet
+        id="20260720160000-2-sync-res-auth-seq-h2"
+        author="security-migration"
+        dbms="h2">
+
+        <preConditions
+            onFail="HALT"
+            onError="HALT">
+
+            <sequenceExists sequenceName="RES_AUTH_SEQ"/>
+            <tableExists tableName="jhi_resource_authority"/>
+        </preConditions>
+
+        <sql splitStatements="false">
+            EXECUTE IMMEDIATE
+                'ALTER SEQUENCE RES_AUTH_SEQ RESTART WITH ' ||
+                CAST(
+                    (
+                        SELECT COALESCE(MAX(id), 0) + 1
+                        FROM jhi_resource_authority
+                    )
+                    AS VARCHAR(30)
+                )
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

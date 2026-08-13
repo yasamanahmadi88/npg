@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'cursor/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.2'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-fund --no-audit
+      - name: Lint
+        run: npm run lint
+      - name: Unit tests
+        run: npx jest --config jest.conf.js --watch=false --coverage=false
+      - name: Production build
+        run: npx ng build --configuration production
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      # origin/main stores mvnw with CRLF; Linux cannot exec a CRLF shebang ("required file not found").
+      # Do not renormalize the whole repo in this PR — strip CR only for the CI wrapper invocation.
+      - name: Backend verify
+        run: |
+          set -euo pipefail
+          sed 's/\r$//' mvnw > /tmp/mvnw.lf
+          chmod +x /tmp/mvnw.lf
+          /tmp/mvnw.lf -ntp -P-webapp clean verify --batch-mode
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.2'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-fund --no-audit
+      - name: npm audit (high+)
+        run: npm audit --audit-level=high || true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Maven dependency list
+        run: |
+          set -euo pipefail
+          sed 's/\r$//' mvnw > /tmp/mvnw.lf
+          chmod +x /tmp/mvnw.lf
+          /tmp/mvnw.lf -ntp -P-webapp dependency:tree -Dverbose=false --batch-mode | tee dependency-tree.txt
+      - name: Secret pattern scan (heuristic)
+        run: |
+          set -euo pipefail
+          if git grep -nE 'password:\s*['\''"]?pass#|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |OPENSSH )?PRIVATE KEY-----' -- ':!.env.example' ':!docs/**' ':!*.bak' ':!package-lock.json' ':!*.log'; then
+            echo 'Potential secret patterns found'
+            exit 1
+          fi
+          echo 'No high-confidence secret patterns found in tracked sources'

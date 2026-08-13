@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,8 +80,16 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
                 .with(VIOLATIONS_KEY, ((ConstraintViolationProblem) problem).getViolations())
                 .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION);
         } else {
-            builder.withCause(((DefaultProblem) problem).getCause()).withDetail(problem.getDetail()).withInstance(problem.getInstance());
-            problem.getParameters().forEach(builder::with);
+            builder.withDetail(problem.getDetail()).withInstance(problem.getInstance());
+            problem
+                .getParameters()
+                .forEach(
+                    (key, value) -> {
+                        if (!isSensitiveProblemParameter(key)) {
+                            builder.with(key, value);
+                        }
+                    }
+                );
             if (!problem.getParameters().containsKey(MESSAGE_KEY) && problem.getStatus() != null) {
                 builder.with(MESSAGE_KEY, "error.http." + problem.getStatus().getStatusCode());
             }
@@ -90,7 +98,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @Override
-    public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @Nonnull NativeWebRequest request) {
+    public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @NonNull NativeWebRequest request) {
         BindingResult result = ex.getBindingResult();
         List<FieldErrorVM> fieldErrors = result
             .getFieldErrors()
@@ -214,6 +222,16 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .withCause(
                 Optional.ofNullable(throwable.getCause()).filter(cause -> isCausalChainsEnabled()).map(this::toProblem).orElse(null)
             );
+    }
+
+    private boolean isSensitiveProblemParameter(String key) {
+        return (
+            "cause".equalsIgnoreCase(key) ||
+            "stackTrace".equalsIgnoreCase(key) ||
+            "stacktrace".equalsIgnoreCase(key) ||
+            "trace".equalsIgnoreCase(key) ||
+            "exception".equalsIgnoreCase(key)
+        );
     }
 
     private boolean containsPackageName(String message) {

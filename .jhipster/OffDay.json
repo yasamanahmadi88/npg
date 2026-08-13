@@ -1,0 +1,27 @@
+{
+  "name": "OffDay",
+  "skipClient": true,
+  "skipServer": true,
+  "fields": [
+    {
+      "fieldName": "offDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "fullOff",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20210628200425",
+  "entityTableName": "TBL_OFF_DAY",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

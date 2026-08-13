@@ -13,7 +13,7 @@ const portabilityRoute: Routes = [
     path: '',
     component: PortabilityComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'porCrDate,asc',
       params: ['portability', 'view'],
     },
     canActivate: [AuthActivateService],

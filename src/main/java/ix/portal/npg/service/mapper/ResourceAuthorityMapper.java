@@ -10,6 +10,9 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = { ResourceMapper.class })
 public interface ResourceAuthorityMapper extends EntityMapper<ResourceAuthorityDTO, ResourceAuthorityEntity> {
     @Mapping(target = "resource", source = "resource")
+    @Mapping(target = "resourceId", source = "resource.id")
+    @Mapping(target = "resourceName", source = "resource.name")
+    @Mapping(target = "resourceDisplayName", source = "resource.displayName")
     ResourceAuthorityDTO toDto(ResourceAuthorityEntity s);
 }
 

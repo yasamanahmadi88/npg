@@ -1,12 +1,12 @@
-import { Component, OnInit, RendererFactory2, Renderer2, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, RendererFactory2, Renderer2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import dayjs from 'dayjs';
 
 import { AccountService } from 'app/core/auth/account.service';
+import { ThemeService } from 'app/core/theme/theme.service';
 import { FindLanguageFromKeyPipe } from 'app/shared/language/find-language-from-key.pipe';
-import { LoginService } from '../../login/login.service';
 import { PublicService } from '../../shared/public.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -16,7 +16,7 @@ import { LocalStorageService } from 'ngx-webstorage';
   templateUrl: './main.component.html',
   standalone: false,
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit {
   private renderer: Renderer2;
 
   constructor(
@@ -26,16 +26,12 @@ export class MainComponent implements OnInit, OnDestroy {
     private findLanguageFromKeyPipe: FindLanguageFromKeyPipe,
     private translateService: TranslateService,
     rootRenderer: RendererFactory2,
-    private loginService: LoginService,
     private publicService: PublicService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    // Eagerly construct ThemeService so data-theme is applied before first paint of shell content.
+    _themeService: ThemeService
   ) {
     this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
-  }
-
-  @HostListener('window:beforeunload')
-  ngOnDestroy(): void {
-    this.loginService.logout();
   }
 
   ngOnInit(): void {
